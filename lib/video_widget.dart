@@ -11,11 +11,11 @@ class VideoWidget extends StatelessWidget {
         appBar: AppBar(
           flexibleSpace: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: const [
               TabBar(
                 tabs: [
                   Tab(
-                    text: 'Новости',
+                    text: 'Сюжеты',
                   ),
                   Tab(
                     text: 'Лекции',
