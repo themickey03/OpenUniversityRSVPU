@@ -1,7 +1,43 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'dart:ui' as ui;
+
+class TextWithHyphenation extends StatelessWidget {
+  const TextWithHyphenation(
+      this.data, {
+        Key? key,
+        this.style,
+      }) : super(key: key);
+
+  final String data;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, size) {
+      final String text = data;
+      final span = TextSpan(text: text, style: style);
+      final textPainter = TextPainter(
+          text: span, maxLines: 2, textDirection: ui.TextDirection.ltr)
+        ..layout(maxWidth: size.maxWidth);
+
+      final TextSelection selection =
+      TextSelection(baseOffset: 0, extentOffset: text.length);
+      final List<TextBox> boxes = textPainter.getBoxesForSelection(selection);
+      final int lines = boxes.length;
+      if (lines > 1) {
+        return Text(text.replaceFirst('\u00ad', '\u00ad-'), style: style);
+      } else {
+        return Text(text, style: style);
+      }
+    });
+  }
+}
+
+
 
 class NewsWidget extends StatefulWidget {
   const NewsWidget({Key? key}) : super(key: key);
@@ -32,7 +68,7 @@ class _WithNewsWidgetState extends State<NewsWidget>
   }
 
   @override
-  void initState(){
+  initState() {
     super.initState();
     fetchDataNews();
   }
@@ -73,56 +109,64 @@ class _WithNewsWidgetState extends State<NewsWidget>
             catch (err){
               truePublishDate = publish_date;
             }
-            return Card(
-                shadowColor: Colors.black,
-                elevation: 20,
-                child: SizedBox(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width-10.0,
-                          height: (MediaQuery.of(context).size.width-10.0)/16*9,
-                          child: Container(
-                              margin: EdgeInsets.all(7.0),
-                              child: Image.network(imagelink)
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: Text(title, style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          )
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: Text("    ${description}",
-                            style: TextStyle(
-                              fontSize: 16,
-                              overflow: TextOverflow.ellipsis,
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Card(
+                  shadowColor: Colors.black,
+                  elevation: 20,
+                  child: SizedBox(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width-10.0,
+                            height: (MediaQuery.of(context).size.width-10.0)/16*9,
+                            child: FadeInImage.assetNetwork(
+                              alignment: Alignment.topCenter,
+                              placeholder: 'images/Loading_icon.gif',
+                              image: imagelink,
+                              fit: BoxFit.cover,
+                              width: double.maxFinite,
+                              height: double.maxFinite,
                             ),
-                            maxLines: 2,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: Row(
-                            children: [
-                              Text("Просмотров: ${views}",style: TextStyle(
-                                  color: Colors.grey
-                              )
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8, top: 5),
+                            child: TextWithHyphenation("${title}", style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                overflow: TextOverflow.ellipsis
                               ),
-                              Spacer(),
-                              Text(truePublishDate, style: TextStyle(
-                                  color: Colors.grey
-                              )),
-                            ],
+                            ),
                           ),
-                        )
-                      ],
-                    )
-                )
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8, top: 5),
+                            child: TextWithHyphenation("${description}",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
+                            child: Row(
+                              children: [
+                                Text("Просмотров: ${views}",style: TextStyle(
+                                    color: Colors.grey
+                                )
+                                ),
+                                Spacer(),
+                                Text(truePublishDate, style: TextStyle(
+                                    color: Colors.grey
+                                )),
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                  )
+              ),
             );
           }
 

@@ -11,6 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     Map<int, Color> mainBlueMapColor =
@@ -29,11 +30,10 @@ class _MyAppState extends State<MyApp> {
     MaterialColor mainBlue = MaterialColor(0xFF224CA4, mainBlueMapColor);
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: mainBlue,
-        brightness: Brightness.light,
+        colorScheme: const ColorScheme.light().copyWith(secondary: mainBlue, primary: mainBlue)
       ),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
+          colorScheme: const ColorScheme.dark().copyWith(secondary: mainBlue[900])
       ),
       debugShowCheckedModeBanner: false,
       home: const MainWidget(),
