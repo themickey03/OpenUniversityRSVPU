@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
     };
     MaterialColor mainBlue = MaterialColor(0xFF224CA4, mainBlueMapColor);
     return MaterialApp(
+      locale: const Locale("ru", "RU"),
       theme: ThemeData(
         colorScheme: const ColorScheme.light().copyWith(secondary: mainBlue, primary: mainBlue)
       ),
