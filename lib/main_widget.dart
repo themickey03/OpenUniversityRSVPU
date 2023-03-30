@@ -51,7 +51,6 @@ class _WithMainWidgetState extends State<MainWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(setTitleFromId(_selectedIndex)),
