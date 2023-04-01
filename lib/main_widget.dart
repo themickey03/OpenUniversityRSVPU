@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/ContactWidget.dart';
-import 'news_widget.dart';
-import 'video_widget.dart';
+import 'package:open_university_rsvpu/Contacts/ContactWidget.dart';
+import 'News/news_widget.dart';
+import 'Videos/video_widget.dart';
 
 
 class MainWidget extends StatefulWidget {

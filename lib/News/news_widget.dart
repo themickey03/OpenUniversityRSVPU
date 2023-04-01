@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:open_university_rsvpu/SingleNewsModel.dart';
-import 'package:open_university_rsvpu/SingleNewsWidget.dart';
+import 'package:open_university_rsvpu/News/SingleNewsModel.dart';
+import 'package:open_university_rsvpu/News/SingleNewsWidget.dart';
 
 class NewsWidget extends StatefulWidget {
   const NewsWidget({Key? key}) : super(key: key);

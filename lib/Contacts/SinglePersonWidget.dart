@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/SinglePersonModel.dart';
+import 'package:open_university_rsvpu/Contacts/SinglePersonModel.dart';
 
 class SinglePersonWidget extends StatelessWidget {
   final SinglePersonModel singlePersonModel;

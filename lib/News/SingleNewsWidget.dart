@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/SingleNewsModel.dart';
+import 'package:open_university_rsvpu/News/SingleNewsModel.dart';
 
 class SingleNewsWidget extends StatelessWidget {
   final SingleNewsModel singleNewsModel;
