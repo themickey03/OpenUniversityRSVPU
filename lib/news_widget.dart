@@ -16,6 +16,7 @@ class NewsWidget extends StatefulWidget {
 
 class _WithNewsWidgetState extends State<NewsWidget>
     with AutomaticKeepAliveClientMixin<NewsWidget> {
+  //TODO change link
   final url = "https://koralex.fun/back/news";
   var _postsJson = [];
   void fetchDataNews() async {
@@ -59,15 +60,19 @@ class _WithNewsWidgetState extends State<NewsWidget>
               if (_postsJson[index]["title"] != null) {
                 title = _postsJson[index]["title"];
               }
+
               var description = "";
               if (_postsJson[index]["description"] != null) {
                 description = _postsJson[index]["description"];
               }
+
               var imagelink =
-                  "https://cdn-icons-png.flaticon.com/512/3858/3858629.png";
+              //TODO change link
+                  "http://koralex.fun:3000/_nuxt/assets/images/logo.png";
               if (_postsJson[index]["img"]["id"] != null &&
                   _postsJson[index]["img"]["format"] != null) {
                 imagelink =
+                //TODO change link
                     "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
               }
               var publishDate = "";
@@ -104,7 +109,9 @@ class _WithNewsWidgetState extends State<NewsWidget>
                                   description,
                                   truePublishDate,
                                   views),
-                            )));
+                            )
+                        )
+                      );
                     },
                     child: SizedBox(
                         child: Column(

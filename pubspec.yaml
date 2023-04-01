@@ -33,7 +33,7 @@ dependencies:
   http: 0.13.5
   auto_hyphenating_text: ^0.0.5
   intl: 0.17.0
-  hyphenator: 0.0.3
+  flutter_linkify: ^5.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
