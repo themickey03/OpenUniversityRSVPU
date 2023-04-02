@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'SingleLectionModel.dart';
+import 'SingleStorieModel.dart';
 
 
 
@@ -70,13 +70,13 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
 
   void saveData(data) async{
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt("lections_${widget.singleLectionModel.id.toString()}", data);
+    await prefs.setInt("stories_${widget.singleLectionModel.id.toString()}", data);
   }
 
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _savedPosition = prefs.getInt("lections_${widget.singleLectionModel.id.toString()}")!;
+      _savedPosition = prefs.getInt("stories_${widget.singleLectionModel.id.toString()}")!;
     });
   }
 

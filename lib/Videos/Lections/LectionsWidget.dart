@@ -43,7 +43,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
   void getData(id) async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _savedPosition = prefs.getInt(id.toString())!;
+      _savedPosition = prefs.getInt("lections_${id.toString()}")!;
     });
   }
 
@@ -51,9 +51,9 @@ class _LectionsWidgetState extends State<LectionsWidget>
     String result = "";
 
     var intTime = int.parse(duration);
-    var intTimeH = (intTime / 3600).round();
-    var intTimeM = ((intTime % 3600) / 60).round();
-    var intTimeS = ((intTime % 3600) % 60).round();
+    var intTimeH = intTime ~/ 3600;
+    var intTimeM = (intTime % 3600) ~/ 60;
+    var intTimeS = ((intTime % 3600) % 60).toInt();
 
     if (intTimeS != 0) {
       if (intTimeM != 0) {
@@ -64,7 +64,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
         }
       } else {
         if (intTimeS < 10) {
-          result = "0:" + "0" + intTimeS.toString();
+          result = "0:0$intTimeS";
         } else {
           result = "0:$intTimeS";
         }
