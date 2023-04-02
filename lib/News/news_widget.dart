@@ -141,7 +141,9 @@ class _WithNewsWidgetState extends State<NewsWidget>
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              overflow: TextOverflow.ellipsis),
+                              overflow: TextOverflow.ellipsis,
+                              ),
+
                           ),
                         ),
                         Padding(

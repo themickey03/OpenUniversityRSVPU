@@ -138,6 +138,7 @@ class _WithContactWidgetState extends State<ContactWidget>
                   );
                   },
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         margin: const EdgeInsets.all(5.0),
@@ -168,7 +169,7 @@ class _WithContactWidgetState extends State<ContactWidget>
                         padding: const EdgeInsets.only(bottom: 8.0, left: 10.0, right: 10.0),
                         child: Text(job_title, style: const TextStyle(
                           fontSize: 14
-                        ),
+                        ), textAlign: TextAlign.center,
                         ),
                       ),
                     ],

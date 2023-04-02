@@ -49,7 +49,7 @@ class SinglePersonWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
+            padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3.0),
             child: Column(
 
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +112,7 @@ class SinglePersonWidget extends StatelessWidget {
                 singlePersonModel.email != "" ? SelectableText.rich(TextSpan(
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: <TextSpan>[
-                      const TextSpan(text: "EMail для связи: ", style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline)),
+                      const TextSpan(text: "E-mail для связи: ", style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline)),
                       TextSpan(text: singlePersonModel.email)
                     ])) : Container(),
               ],

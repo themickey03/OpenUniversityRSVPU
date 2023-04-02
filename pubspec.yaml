@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   http: 0.13.5
-  auto_hyphenating_text: ^0.0.5
   intl: 0.17.0
   flutter_linkify: ^5.0.2
 
