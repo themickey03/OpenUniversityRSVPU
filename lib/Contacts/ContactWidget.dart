@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/Contacts/SinglePersonModel.dart';
@@ -17,6 +18,8 @@ class _WithContactWidgetState extends State<ContactWidget>
   //TODO change link
   final url = "https://koralex.fun/back/persons";
   var _postsJson = [];
+  var _postsJsonFiltered = [];
+  String _searchValue = '';
   void fetchDataPersons() async {
 
     try {
@@ -45,23 +48,43 @@ class _WithContactWidgetState extends State<ContactWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    if (_searchValue != "") {
+      _postsJsonFiltered.clear();
+      for (int i = 0; i < _postsJson.length; i++) {
+        if (_postsJson[i]["name"].toString().toLowerCase().contains(
+            _searchValue.toLowerCase()) || _postsJson[i]["description"]["Должность"].toString().toLowerCase().contains(_searchValue.toLowerCase())) {
+          _postsJsonFiltered.add(_postsJson[i]);
+        }
+      }
+    }
+    else{
+      _postsJsonFiltered.clear();
+      for (int i = 0; i < _postsJson.length; i++){
+        _postsJsonFiltered.add(_postsJson[i]);
+      }
+    }
+
     return Scaffold(
-      appBar: AppBar(
+      appBar: EasySearchBar(
         title: const Align(alignment: Alignment.centerLeft,child: Text("Наставники", style: TextStyle(fontSize: 24))),
+        onSearch: (value) {setState(() {
+          _searchValue = value;
+        });},
       ),
       body: RefreshIndicator(
         onRefresh: onRefresh,
         child: Center(
           child: ListView.builder(
-            itemCount: _postsJson.length,
+            itemCount: _postsJsonFiltered.length,
             itemBuilder: (context, index) {
               var name = "";
-              if (_postsJson[index]['name'] != "" && _postsJson[index]['name'] != null){
-                name = _postsJson[index]['name'];
+              if (_postsJsonFiltered[index]['name'] != "" && _postsJsonFiltered[index]['name'] != null){
+                name = _postsJsonFiltered[index]['name'];
               }
               var main_desc = Map<String, dynamic>();
-              if (_postsJson[index]['description'] != null){
-                main_desc = _postsJson[index]['description'];
+              if (_postsJsonFiltered[index]['description'] != null){
+                main_desc = _postsJsonFiltered[index]['description'];
               }
               var job_title = "";
               if (main_desc['Должность'] != "" && main_desc['Должность'] != null){
@@ -96,19 +119,19 @@ class _WithContactWidgetState extends State<ContactWidget>
                 publishing = main_desc['Значимые публикации'];
               }
               var phone = "";
-              if (_postsJson[index]['phone'] != "" && _postsJson[index]['phone'] != null){
-                phone = _postsJson[index]['phone'];
+              if (_postsJsonFiltered[index]['phone'] != "" && _postsJsonFiltered[index]['phone'] != null){
+                phone = _postsJsonFiltered[index]['phone'];
               }
               var email = "";
-              if (_postsJson[index]['email'] != "" && _postsJson[index]['email'] != null){
-                email = _postsJson[index]['email'];
+              if (_postsJsonFiltered[index]['email'] != "" && _postsJsonFiltered[index]['email'] != null){
+                email = _postsJsonFiltered[index]['email'];
               }
               var img_link = "";
-              if (_postsJson[index]['img'] != "" && _postsJson[index]['img'] != null){
-                if (_postsJson[index]['img']['id'] != "" && _postsJson[index]['img']['id'] != null){
-                  if (_postsJson[index]['img']['format'] != "" && _postsJson[index]['img']['format'] != null){
+              if (_postsJsonFiltered[index]['img'] != "" && _postsJsonFiltered[index]['img'] != null){
+                if (_postsJsonFiltered[index]['img']['id'] != "" && _postsJsonFiltered[index]['img']['id'] != null){
+                  if (_postsJsonFiltered[index]['img']['format'] != "" && _postsJsonFiltered[index]['img']['format'] != null){
                     //TODO change link
-                    img_link = "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                    img_link = "https://koralex.fun/back/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
                   }
                 }
               }
