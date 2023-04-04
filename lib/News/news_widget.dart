@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,9 @@ class _WithNewsWidgetState extends State<NewsWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        title: const Align(alignment: Alignment.centerLeft,child: Text("Новости", style: TextStyle(fontSize: 24))),
+      ),
       body: Center(
         child: RefreshIndicator(
           onRefresh: refresh,
@@ -73,7 +77,7 @@ class _WithNewsWidgetState extends State<NewsWidget>
                   _postsJson[index]["img"]["format"] != null) {
                 imagelink =
                 //TODO change link
-                    "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
               }
               var publishDate = "";
               if (_postsJson[index]["date"] != null) {
@@ -94,92 +98,93 @@ class _WithNewsWidgetState extends State<NewsWidget>
               return Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Card(
-                  shadowColor: Colors.black,
-                  elevation: 20,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                            SingleNewsWidget(
-                              singleNewsModel:
-                                SingleNewsModel(
-                                  title,
-                                  imagelink,
-                                  description,
-                                  truePublishDate,
-                                  views),
+                    shadowColor: Colors.black,
+                    elevation: 20,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SingleNewsWidget(
+                                      singleNewsModel:
+                                      SingleNewsModel(
+                                          title,
+                                          imagelink,
+                                          description,
+                                          truePublishDate,
+                                          views),
+                                    )
                             )
-                        )
-                      );
-                    },
-                    child: SizedBox(
-                        child: Column(
-                      crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width:
-                            MediaQuery.of(context).size.width - 10.0,
-                          height:
-                            (MediaQuery.of(context).size.width - 10.0) / 16 * 9,
-                          child: FadeInImage.assetNetwork(
-                            alignment: Alignment.topCenter,
-                            placeholder:
-                              'images/Loading_icon.gif',
-                            image: imagelink,
-                            fit: BoxFit.cover,
-                            width: double.maxFinite,
-                            height: double.maxFinite,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8, right: 8, top: 5),
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              overflow: TextOverflow.ellipsis,
-                              ),
-
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, top: 5),
-                          child: Text(
-                            description,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8,
-                              right: 8,
-                              top: 5,
-                              bottom: 5),
-                          child: Row(
+                        );
+                      },
+                      child: SizedBox(
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
                             children: [
-                              Text("Просмотров: $views",
+                              SizedBox(
+                                width:
+                                MediaQuery.of(context).size.width - 10.0,
+                                height:
+                                (MediaQuery.of(context).size.width - 10.0) / 16 * 9,
+                                child: FadeInImage.assetNetwork(
+                                  alignment: Alignment.topCenter,
+                                  placeholder:
+                                  'images/Loading_icon.gif',
+                                  image: imagelink,
+                                  fit: BoxFit.cover,
+                                  width: double.maxFinite,
+                                  height: double.maxFinite,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 5),
+                                child: Text(
+                                  title,
                                   style: const TextStyle(
-                                      color: Colors.grey)),
-                              const Spacer(),
-                              Text(truePublishDate,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 5),
+                                child: Text(
+                                  description,
                                   style: const TextStyle(
-                                      color: Colors.grey)),
+                                    fontSize: 16,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8,
+                                    right: 8,
+                                    top: 5,
+                                    bottom: 5),
+                                child: Row(
+                                  children: [
+                                    Text("Просмотров: $views",
+                                        style: const TextStyle(
+                                            color: Colors.grey)),
+                                    const Spacer(),
+                                    Text(truePublishDate,
+                                        style: const TextStyle(
+                                            color: Colors.grey)),
+                                  ],
+                                ),
+                              )
                             ],
-                          ),
-                        )
-                      ],
+                          )),
                     )),
-                  )),
               );
-            }))
+            })
+        )
       ),
     );
   }

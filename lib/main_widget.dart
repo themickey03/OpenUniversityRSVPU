@@ -16,7 +16,7 @@ class _WithMainWidgetState extends State<MainWidget> {
 
   static const List<Widget> _pages = <Widget>[
     NewsWidget(),
-    VideoWidget(),
+    VideoWidgetMain(),
     ContactWidget(),
   ];
 
@@ -49,16 +49,6 @@ class _WithMainWidgetState extends State<MainWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(setTitleFromId(_selectedIndex)),
-          ],
-        ),
-        elevation: 0,
-
-      ),
       body: IndexedStack(
         children: _pages,
         index: _selectedIndex,

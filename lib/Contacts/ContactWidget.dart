@@ -46,6 +46,9 @@ class _WithContactWidgetState extends State<ContactWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        title: const Align(alignment: Alignment.centerLeft,child: Text("Наставники", style: TextStyle(fontSize: 24))),
+      ),
       body: RefreshIndicator(
         onRefresh: onRefresh,
         child: Center(
