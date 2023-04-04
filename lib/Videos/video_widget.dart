@@ -10,6 +10,8 @@ class VideoWidgetMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: MediaQuery.of(context).platformBrightness != Brightness.dark ? const Color.fromRGBO(34,76,164, 1) : ThemeData.dark().primaryColor,
           title: const Align(alignment: Alignment.centerLeft,child: Text("Видео", style: TextStyle(fontSize: 24))),
           elevation: 0,
         ),
@@ -29,6 +31,7 @@ class VideoWidget extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: MediaQuery.of(context).platformBrightness != Brightness.dark ? const Color.fromRGBO(34,76,164, 1) : ThemeData.dark().primaryColor,
           flexibleSpace: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: const [

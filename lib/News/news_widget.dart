@@ -72,6 +72,8 @@ class _WithNewsWidgetState extends State<NewsWidget>
       appBar: EasySearchBar(
         title: const Align(alignment: Alignment.centerLeft,child: Text("Новости", style: TextStyle(fontSize: 24))),
         onSearch: (value) => setState(() => _searchValue = value),
+        foregroundColor: Colors.white,
+        backgroundColor: MediaQuery.of(context).platformBrightness != Brightness.dark ? const Color.fromRGBO(34,76,164, 1) : ThemeData.dark().primaryColor,
       ),
       body: Center(
         child: RefreshIndicator(

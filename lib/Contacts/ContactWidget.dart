@@ -67,6 +67,8 @@ class _WithContactWidgetState extends State<ContactWidget>
 
     return Scaffold(
       appBar: EasySearchBar(
+        foregroundColor: Colors.white,
+        backgroundColor: MediaQuery.of(context).platformBrightness != Brightness.dark ? const Color.fromRGBO(34,76,164, 1) : ThemeData.dark().primaryColor,
         title: const Align(alignment: Alignment.centerLeft,child: Text("Наставники", style: TextStyle(fontSize: 24))),
         onSearch: (value) {setState(() {
           _searchValue = value;

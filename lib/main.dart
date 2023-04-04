@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       locale: const Locale("ru", "RU"),
       theme: ThemeData(
-        colorScheme: const ColorScheme.light().copyWith(secondary: mainBlue, primary: mainBlue)
+        colorScheme: const ColorScheme.light().copyWith(secondary: mainBlue[900], primary: mainBlue[900])
       ),
       darkTheme: ThemeData(
           colorScheme: const ColorScheme.dark().copyWith(secondary: mainBlue[900])
