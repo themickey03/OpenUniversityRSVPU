@@ -3,7 +3,7 @@ import 'package:open_university_rsvpu/Videos/Lections/LectionsWidget.dart';
 import 'package:open_university_rsvpu/Videos/Stories/StoriesWidget.dart';
 
 class VideoWidget extends StatelessWidget {
-  const VideoWidget();
+  const VideoWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,13 @@ class VideoWidget extends StatelessWidget {
               TabBar(
                 tabs: [
                   Tab(
-                    text: 'Сюжеты',
+                    text: 'Истории',
                   ),
                   Tab(
                     text: 'Лекции',
                   ),
                 ],
+                indicatorColor: Colors.blueAccent,
               )
             ],
           ),

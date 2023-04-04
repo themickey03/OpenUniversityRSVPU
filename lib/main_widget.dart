@@ -36,7 +36,7 @@ class _WithMainWidgetState extends State<MainWidget> {
         result = "Видео";
         break;
       case 2:
-        result = "Контакты";
+        result = "Наставники";
         break;
       default:
         result = "Открытый университет РГППУ";
@@ -75,7 +75,7 @@ class _WithMainWidgetState extends State<MainWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            label: 'Контакты',
+            label: 'Наставники',
           ),
         ],
         currentIndex: _selectedIndex,
