@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/News/SingleNewsModel.dart';
 import 'package:open_university_rsvpu/News/SingleNewsWidget.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 
 class NewsWidget extends StatefulWidget {
   const NewsWidget({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _WithNewsWidgetState extends State<NewsWidget>
   //TODO change link
   final url = "https://koralex.fun/back/news";
   var _postsJson = [];
+  var _postsJsonFiltered = [];
+  String _searchValue = '';
   void fetchDataNews() async {
 
     try {
@@ -50,42 +53,58 @@ class _WithNewsWidgetState extends State<NewsWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    if (_searchValue != "") {
+      _postsJsonFiltered.clear();
+      for (int i = 0; i < _postsJson.length; i++) {
+        if (_postsJson[i]["title"].toString().toLowerCase().contains(
+            _searchValue.toLowerCase()) || _postsJson[i]["description"].toString().toLowerCase().contains(_searchValue.toLowerCase())) {
+          _postsJsonFiltered.add(_postsJson[i]);
+        }
+      }
+    }
+    else{
+      _postsJsonFiltered.clear();
+      for (int i = 0; i < _postsJson.length; i++){
+        _postsJsonFiltered.add(_postsJson[i]);
+      }
+    }
     return Scaffold(
-      appBar: AppBar(
+      appBar: EasySearchBar(
         title: const Align(alignment: Alignment.centerLeft,child: Text("Новости", style: TextStyle(fontSize: 24))),
+        onSearch: (value) => setState(() => _searchValue = value),
       ),
       body: Center(
         child: RefreshIndicator(
           onRefresh: refresh,
           child: ListView.builder(
-            itemCount: _postsJson.length,
+            itemCount: _postsJsonFiltered.length,
             itemBuilder: (context, index) {
               var title = "";
-              if (_postsJson[index]["title"] != null) {
-                title = _postsJson[index]["title"];
+              if (_postsJsonFiltered[index]["title"] != null) {
+                title = _postsJsonFiltered[index]["title"];
               }
 
               var description = "";
-              if (_postsJson[index]["description"] != null) {
-                description = _postsJson[index]["description"];
+              if (_postsJsonFiltered[index]["description"] != null) {
+                description = _postsJsonFiltered[index]["description"];
               }
 
               var imagelink =
               //TODO change link
                   "http://koralex.fun:3000/_nuxt/assets/images/logo.png";
-              if (_postsJson[index]["img"]["id"] != null &&
-                  _postsJson[index]["img"]["format"] != null) {
+              if (_postsJsonFiltered[index]["img"]["id"] != null &&
+                  _postsJsonFiltered[index]["img"]["format"] != null) {
                 imagelink =
                 //TODO change link
-                "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                "https://koralex.fun/back/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
               }
               var publishDate = "";
-              if (_postsJson[index]["date"] != null) {
-                publishDate = _postsJson[index]["date"];
+              if (_postsJsonFiltered[index]["date"] != null) {
+                publishDate = _postsJsonFiltered[index]["date"];
               }
               var views = "0";
-              if (_postsJson[index]["views"] != null) {
-                views = _postsJson[index]["views"].toString();
+              if (_postsJsonFiltered[index]["views"] != null) {
+                views = _postsJsonFiltered[index]["views"].toString();
               }
               var truePublishDate = "";
               var dt = DateTime.parse(publishDate);
