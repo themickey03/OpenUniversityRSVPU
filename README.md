@@ -3,7 +3,7 @@
 ## About
 
 Mobile app for Open University project on Russian state vocational pedagogical university
-Functions:
+#### Functions:
     - News
     - Persons of project
     - Video lectures
@@ -11,6 +11,6 @@ Functions:
 
 ## Stack of technologies
 
-For this app used:
+#### For this app used:
     - Flutter with dart
     - Video player: BetterPlayer
