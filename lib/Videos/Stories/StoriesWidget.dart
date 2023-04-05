@@ -49,6 +49,7 @@ class _StoriesWidgetState extends State<StoriesWidget>
 
   String do_time_from_string(duration) {
     String result = "";
+
     var intTime = int.parse(duration);
     var intTimeH = intTime ~/ 3600;
     var intTimeM = (intTime % 3600) ~/ 60;
@@ -61,7 +62,8 @@ class _StoriesWidgetState extends State<StoriesWidget>
         } else {
           result = intTimeS.toString();
         }
-      } else {
+      }
+      else {
         if (intTimeS < 10) {
           result = "0:0$intTimeS";
         } else {
@@ -69,11 +71,21 @@ class _StoriesWidgetState extends State<StoriesWidget>
         }
       }
     }
+    else{
+      if (intTimeM != 0 || intTimeH != 0){
+        result = "00";
+      }
+    }
     if (intTimeM != 0) {
       if (intTimeM < 10) {
         result = "0$intTimeM:$result";
       } else {
         result = "$intTimeM:$result";
+      }
+    }
+    else{
+      if (intTimeH != 0){
+        result = "00:$result";
       }
     }
     if (intTimeH != 0) {
@@ -141,7 +153,7 @@ class _StoriesWidgetState extends State<StoriesWidget>
               if (_postsJson[index]['path'] != "" &&
                   _postsJson[index]['path'] != null) {
                 videoLink =
-                    "http://koralex.fun:3000" + _postsJson[index]['path'];
+                    "http://koralex.fun/" + _postsJson[index]['path'];
               }
               return Card(
                   shadowColor: Colors.black,

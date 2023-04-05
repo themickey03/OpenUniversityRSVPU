@@ -43,7 +43,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
   void getData(id) async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _savedPosition = prefs.getInt("lections_${id.toString()}")!;
+      _savedPosition = prefs.getInt("stories_${id.toString()}")!;
     });
   }
 
@@ -62,7 +62,8 @@ class _LectionsWidgetState extends State<LectionsWidget>
         } else {
           result = intTimeS.toString();
         }
-      } else {
+      }
+      else {
         if (intTimeS < 10) {
           result = "0:0$intTimeS";
         } else {
@@ -70,11 +71,21 @@ class _LectionsWidgetState extends State<LectionsWidget>
         }
       }
     }
+    else{
+      if (intTimeM != 0 || intTimeH != 0){
+        result = "00";
+      }
+    }
     if (intTimeM != 0) {
       if (intTimeM < 10) {
         result = "0$intTimeM:$result";
       } else {
         result = "$intTimeM:$result";
+      }
+    }
+    else{
+      if (intTimeH != 0){
+        result = "00:$result";
       }
     }
     if (intTimeH != 0) {
@@ -142,7 +153,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
               if (_postsJson[index]['path'] != "" &&
                   _postsJson[index]['path'] != null) {
                 videoLink =
-                    "http://koralex.fun:3000" + _postsJson[index]['path'];
+                    "http://koralex.fun/" + _postsJson[index]['path'];
               }
               return Card(
                   shadowColor: Colors.black,
