@@ -1,16 +1,16 @@
-# open_university_rsvpu
+# App: Open University for RSVPU
 
-Open University for RSVPU
+## About
 
-## Getting Started
+Mobile app for Open University project on Russian state vocational pedagogical university
+Functions:
+    * News
+    * Persons of project
+    * Video lectures
+    * Video news about project
 
-This project is a starting point for a Flutter application.
+## Stack of technologies
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For this app used:
+    * Flutter with dart
+    * Video player: BetterPlayer
