@@ -111,10 +111,6 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                 },
               ),
               const Divider(),
-              const SizedBox(
-                height: 50,
-                child: Text(""),
-              ),
               const Padding(
                 padding: EdgeInsets.only(
                     top: 15.0, left: 5.0, right: 5.0, bottom: 5.0),
@@ -210,11 +206,16 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                     },
                   );
                 },
-                child: const ListTile(
+                child: ListTile(
                   visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                  title: Text("Отчистить историю просмотра",
-                      style: TextStyle(fontSize: 16)),
-                  leading: Icon(Icons.sd_storage),
+                  title: Row(
+                    children: [
+                      Icon(Icons.sd_storage),
+                      const Expanded(
+                          child: Text("   Очистить историю просмотра",
+                              style: TextStyle(fontSize: 16))),
+                    ]
+                  ),
                 ),
               ),
               const Divider()

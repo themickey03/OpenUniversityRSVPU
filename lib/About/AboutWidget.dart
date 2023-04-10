@@ -75,11 +75,6 @@ class _AboutWidgetState extends State<AboutWidget> {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
               ),
               const Divider(),
-              const SizedBox(
-                height: 40,
-                child: Text(""),
-              ),
-              const Divider(),
               // ListTile(
               //   onTap: (){
               //     Navigator.of(context).push(
