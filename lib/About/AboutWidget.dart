@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/About/Contacts/ContactWidget.dart';
+import 'package:open_university_rsvpu/About/Contacts/ContactWidgetNew.dart';
 import 'package:open_university_rsvpu/About/Information/AboutProject.dart';
 import 'package:open_university_rsvpu/About/Settings/AppSettings.dart';
 import 'package:open_university_rsvpu/About/Information/AboutApp.dart';
@@ -66,7 +66,7 @@ class _AboutWidgetState extends State<AboutWidget> {
               ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ContactWidget()));
+                      builder: (context) => const ContactWidgetNew()));
                 },
                 visualDensity:
                     const VisualDensity(vertical: -4, horizontal: -4),
