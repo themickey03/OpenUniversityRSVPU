@@ -16,6 +16,7 @@ class _StoriesWidgetState extends State<StoriesWidget>
   final url = "https://koralex.fun/back/stories";
   var _postsJson = [];
   int _savedPosition = 0;
+  var _isVideoStorySaved = true;
   void fetchDataPersons() async {
     try {
       final response = await get(Uri.parse(url));
@@ -45,6 +46,9 @@ class _StoriesWidgetState extends State<StoriesWidget>
     setState(() {
       if (prefs.getInt("stories_${id.toString()}") != null){
         _savedPosition = prefs.getInt("stories_${id.toString()}")!;
+      }
+      if (prefs.getBool("VideoWatchedSaving") != null){
+        _isVideoStorySaved = prefs.getBool("VideoWatchedSaving")!;
       }
     });
   }
@@ -97,10 +101,15 @@ class _StoriesWidgetState extends State<StoriesWidget>
         result = "$intTimeH:$result";
       }
     }
-    if (result == "") {
-      return result;
-    } else {
-      return "$result/";
+    if (_isVideoStorySaved == false){
+      return "";
+    }
+    else{
+      if (result == "") {
+        return result;
+      } else {
+        return "$result/";
+      }
     }
   }
 

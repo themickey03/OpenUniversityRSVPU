@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_university_rsvpu/About/Contacts/ContactWidget.dart';
 import 'package:open_university_rsvpu/About/Information/AboutProject.dart';
-import 'package:open_university_rsvpu/About/Settings/VideoSettings.dart';
 import 'package:open_university_rsvpu/About/Settings/AppSettings.dart';
 import 'package:open_university_rsvpu/About/Information/AboutApp.dart';
 
@@ -72,24 +71,24 @@ class _AboutWidgetState extends State<AboutWidget> {
             ),
             const Divider(),
             const SizedBox(
-              height: 10,
+              height: 40,
               child: Text(""),
             ),
             const Divider(),
-            ListTile(
-              onTap: (){
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const VideoSettingsWidget()
-                    )
-                );
-              },
-              visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-              title: const Text("Настройки видео", style:TextStyle(fontSize: 15)),
-              leading: const Icon(Icons.video_settings, size: 15.0),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
-            ),
-            const Divider(),
+            // ListTile(
+            //   onTap: (){
+            //     Navigator.of(context).push(
+            //         MaterialPageRoute(
+            //             builder: (context) => const VideoSettingsWidget()
+            //         )
+            //     );
+            //   },
+            //   visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
+            //   title: const Text("Настройки видео", style:TextStyle(fontSize: 15)),
+            //   leading: const Icon(Icons.video_settings, size: 15.0),
+            //   trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
+            // ),
+            // const Divider(),
             ListTile(
               onTap: (){
                 Navigator.of(context).push(
@@ -99,8 +98,8 @@ class _AboutWidgetState extends State<AboutWidget> {
                 );
               },
               visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-              title: const Text("Настройки приложения", style:TextStyle(fontSize: 15)),
-              leading: const Icon(Icons.settings_display, size: 15.0),
+              title: const Text("Настройки", style:TextStyle(fontSize: 15)),
+              leading: const Icon(Icons.settings, size: 15.0),
               trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
             ),
             const Divider(),

@@ -15,6 +15,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
     with AutomaticKeepAliveClientMixin<LectionsWidget> {
   final url = "https://koralex.fun/back/lections";
   var _postsJson = [];
+  var _isVideoStorySaved = true;
   int _savedPosition = 0;
   void fetchDataPersons() async {
     try {
@@ -45,6 +46,9 @@ class _LectionsWidgetState extends State<LectionsWidget>
     setState(() {
       if (prefs.getInt("lections_${id.toString()}") != null) {
         _savedPosition = prefs.getInt("lections_${id.toString()}")!;
+      }
+      if (prefs.getBool("VideoWatchedSaving") != null){
+        _isVideoStorySaved = prefs.getBool("VideoWatchedSaving")!;
       }
     });
   }
@@ -97,10 +101,15 @@ class _LectionsWidgetState extends State<LectionsWidget>
         result = "$intTimeH:$result";
       }
     }
-    if (result == "") {
-      return result;
-    } else {
-      return "$result/";
+    if (_isVideoStorySaved == false){
+      return "";
+    }
+    else{
+      if (result == "") {
+        return result;
+      } else {
+        return "$result/";
+      }
     }
   }
 

@@ -19,7 +19,8 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
 
   late GlobalKey _betterPlayerKey = GlobalKey();
   late int? _currentPosition;
-  late int _savedPosition = 1;
+  late int _savedPosition = 0;
+  var _isVideoStorySaving = true;
   late BetterPlayerController _betterPlayerController;
   void initState(){
     super.initState();
@@ -56,11 +57,12 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
         _betterPlayerController.setOverriddenFit(BoxFit.fill);
       }
       if (event.betterPlayerEventType.name == "progress"){
-        setState(() {
-          _currentPosition = _betterPlayerController.videoPlayerController?.value.position.inSeconds;
-          saveData(_currentPosition);
-
-        });
+        if (_isVideoStorySaving == true){
+          setState(() {
+            _currentPosition = _betterPlayerController.videoPlayerController?.value.position.inSeconds;
+            saveData(_currentPosition);
+          });
+        }
       }
     });
     _betterPlayerController.enablePictureInPicture(_betterPlayerKey);
@@ -78,6 +80,9 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
       if (prefs.getInt("lections_${widget.singleLectionModel.id.toString()}") != null) {
         _savedPosition =
         prefs.getInt("lections_${widget.singleLectionModel.id.toString()}")!;
+      }
+      if (prefs.getBool("VideoWatchedSaving") != null){
+        _isVideoStorySaving = prefs.getBool("VideoWatchedSaving")!;
       }
     });
   }
