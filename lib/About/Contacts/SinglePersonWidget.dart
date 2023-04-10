@@ -21,7 +21,6 @@ class SinglePersonWidget extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 5.0),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
-              color: Colors.blueAccent,
             ),
             child: SizedBox(
               width: 100,

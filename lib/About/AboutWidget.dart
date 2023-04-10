@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:open_university_rsvpu/About/Contacts/ContactWidget.dart';
-import 'package:open_university_rsvpu/About/Settings/AboutProject.dart';
+import 'package:open_university_rsvpu/About/Information/AboutProject.dart';
 import 'package:open_university_rsvpu/About/Settings/VideoSettings.dart';
 import 'package:open_university_rsvpu/About/Settings/AppSettings.dart';
-import 'package:open_university_rsvpu/About/Settings/AboutApp.dart';
+import 'package:open_university_rsvpu/About/Information/AboutApp.dart';
 
 
 class AboutWidget extends StatefulWidget {
