@@ -47,6 +47,9 @@ class _StoriesWidgetState extends State<StoriesWidget>
       if (prefs.getInt("stories_${id.toString()}") != null){
         _savedPosition = prefs.getInt("stories_${id.toString()}")!;
       }
+      else{
+        _savedPosition = 0;
+      }
       if (prefs.getBool("VideoWatchedSaving") != null){
         _isVideoStorySaved = prefs.getBool("VideoWatchedSaving")!;
       }

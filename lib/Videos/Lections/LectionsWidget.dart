@@ -47,6 +47,9 @@ class _LectionsWidgetState extends State<LectionsWidget>
       if (prefs.getInt("lections_${id.toString()}") != null) {
         _savedPosition = prefs.getInt("lections_${id.toString()}")!;
       }
+      else{
+        _savedPosition = 0;
+      }
       if (prefs.getBool("VideoWatchedSaving") != null){
         _isVideoStorySaved = prefs.getBool("VideoWatchedSaving")!;
       }

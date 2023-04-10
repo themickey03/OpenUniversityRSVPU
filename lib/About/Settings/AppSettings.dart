@@ -137,11 +137,38 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                 },
             ),
             const Divider(),
-            //TODO: при очистке Alert("Вы уверены?")
-            const ListTile(
-              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-              title: Text("Отчистить историю просмотра", style: TextStyle(fontSize: 16)),
-              leading: Icon(Icons.sd_storage),
+            InkWell(
+              onTap: (){
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Внимание!'),
+                      content: const Text('Ваша текущая история просмотра будет удалена. Вы согласны?'),
+                      actions: <Widget>[
+                        MaterialButton(
+                          child: const Text('Хорошо, я согласен'),
+                          onPressed: () {
+                            clearVideoCache();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        MaterialButton(
+                          child: const Text('Нет, оставить историю просмотра'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const ListTile(
+                visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                title: Text("Отчистить историю просмотра", style: TextStyle(fontSize: 16)),
+                leading: Icon(Icons.sd_storage),
+              ),
             ),
             const Divider()
           ],
