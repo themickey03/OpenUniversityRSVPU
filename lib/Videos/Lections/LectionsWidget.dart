@@ -43,7 +43,9 @@ class _LectionsWidgetState extends State<LectionsWidget>
   void getData(id) async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _savedPosition = prefs.getInt("lections_${id.toString()}")!;
+      if (prefs.getInt("lections_${id.toString()}") != null) {
+        _savedPosition = prefs.getInt("lections_${id.toString()}")!;
+      }
     });
   }
 

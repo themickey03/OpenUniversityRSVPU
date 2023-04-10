@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,10 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _savedPosition = prefs.getInt("lections_${widget.singleLectionModel.id.toString()}")!;
+      if (prefs.getInt("lections_${widget.singleLectionModel.id.toString()}") != null) {
+        _savedPosition =
+        prefs.getInt("lections_${widget.singleLectionModel.id.toString()}")!;
+      }
     });
   }
 

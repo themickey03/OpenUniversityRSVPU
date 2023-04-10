@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/Contacts/ContactWidget.dart';
 import 'News/news_widget.dart';
 import 'Videos/video_widget.dart';
+import 'About/AboutWidget.dart';
 
 
 class MainWidget extends StatefulWidget {
@@ -17,7 +17,7 @@ class _WithMainWidgetState extends State<MainWidget> {
   static const List<Widget> _pages = <Widget>[
     NewsWidget(),
     VideoWidgetMain(),
-    ContactWidget(),
+    AboutWidget(),
   ];
 
   void _onItemTapped(int index) {
@@ -25,33 +25,13 @@ class _WithMainWidgetState extends State<MainWidget> {
       _selectedIndex = index;
     });
   }
-
-  String setTitleFromId(int index){
-    String result = 'Открытый университет РГППУ';
-    switch (index) {
-      case 0:
-        result = "Новости";
-        break;
-      case 1:
-        result = "Видео";
-        break;
-      case 2:
-        result = "Наставники";
-        break;
-      default:
-        result = "Открытый университет РГППУ";
-        break;
-    }
-    return result;
-  }
-  
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        children: _pages,
         index: _selectedIndex,
+        children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -64,8 +44,8 @@ class _WithMainWidgetState extends State<MainWidget> {
             label: 'Видео',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Наставники',
+            icon: Icon(Icons.info_outline),
+            label: 'О нас',
           ),
         ],
         currentIndex: _selectedIndex,

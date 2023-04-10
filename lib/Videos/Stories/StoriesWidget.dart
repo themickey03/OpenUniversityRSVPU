@@ -43,7 +43,9 @@ class _StoriesWidgetState extends State<StoriesWidget>
   void getData(id) async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _savedPosition = prefs.getInt("stories_${id.toString()}")!;
+      if (prefs.getInt("stories_${id.toString()}") != null){
+        _savedPosition = prefs.getInt("stories_${id.toString()}")!;
+      }
     });
   }
 

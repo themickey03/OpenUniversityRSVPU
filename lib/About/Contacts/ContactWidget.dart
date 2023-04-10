@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:open_university_rsvpu/Contacts/SinglePersonModel.dart';
-import 'package:open_university_rsvpu/Contacts/SinglePersonWidget.dart';
+import 'package:open_university_rsvpu/About/Contacts/SinglePersonModel.dart';
+import 'package:open_university_rsvpu/About/Contacts/SinglePersonWidget.dart';
 
 class ContactWidget extends StatefulWidget {
   const ContactWidget({Key? key}) : super(key: key);
