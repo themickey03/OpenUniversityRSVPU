@@ -46,7 +46,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                       padding: EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
                       child: Text("С его помощью Вы можете проверять новости нашего проекта, "
                           "просматривать наши лекции и истории в видео-формате, а также узнать о наших Наставниках, "
-                          "которые помогают нам быть лучше", textAlign: TextAlign.justify,),
+                          "которые помогают нам быть лучше", textAlign: TextAlign.left,),
                     ),
                   ),
                   Align(
