@@ -140,11 +140,7 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                 ),
                 value: _isVideoWatchedSaving,
                 onChanged: (bool value) {
-                  setState(() {
-                    _isVideoWatchedSaving = !_isVideoWatchedSaving;
-                  });
-                  setSettings("VideoWatchedSaving", _isVideoWatchedSaving);
-                  if (_isVideoWatchedSaving == false) {
+                  if (_isVideoWatchedSaving == true) {
                     showDialog<void>(
                       context: context,
                       builder: (BuildContext context) {
@@ -157,6 +153,10 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                               child: const Text('Хорошо, я согласен'),
                               onPressed: () {
                                 clearVideoCache();
+                                setSettings("VideoWatchedSaving", !_isVideoWatchedSaving);
+                                setState(() {
+                                  _isVideoWatchedSaving = !_isVideoWatchedSaving;
+                                });
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -164,10 +164,6 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                               child:
                                   const Text('Нет, оставить историю просмотра'),
                               onPressed: () {
-                                setState(() {
-                                  _isVideoWatchedSaving =
-                                      !_isVideoWatchedSaving;
-                                });
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -175,6 +171,12 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                         );
                       },
                     );
+                  }
+                  else{
+                    setSettings("VideoWatchedSaving", !_isVideoWatchedSaving);
+                    setState(() {
+                      _isVideoWatchedSaving = !_isVideoWatchedSaving;
+                    });
                   }
                 },
               ),
