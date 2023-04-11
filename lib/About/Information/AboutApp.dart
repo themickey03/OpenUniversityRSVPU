@@ -30,7 +30,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
           child: ListView(
             children: [
               SizedBox(
-                height: 40,
+                height: 80,
                 child: Text(""),
               ),
               Align(
@@ -51,19 +51,6 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                             fontSize: 24, fontWeight: FontWeight.bold)),
                     Text("Приложение-компаньон для веб-ресурса",
                         style: TextStyle(fontSize: 18)),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
-                        child: Text(
-                          "С его помощью Вы можете проверять новости нашего проекта, "
-                          "просматривать наши лекции и истории в видео-формате, а также узнать о наших Наставниках, "
-                          "которые помогают нам быть лучше",
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(

@@ -7,6 +7,9 @@ PODS:
     - PINCache
   - Cache (6.0.0)
   - Flutter (1.0.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - GCDWebServer (3.5.4):
     - GCDWebServer/Core (= 3.5.4)
   - GCDWebServer/Core (3.5.4)
@@ -27,6 +30,9 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
   - wakelock (0.0.1):
     - Flutter
 
@@ -35,11 +41,13 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
   trunk:
     - Cache
+    - FMDB
     - GCDWebServer
     - HLSCachingReverseProxyServer
     - PINCache
@@ -54,6 +62,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
 
@@ -61,12 +71,14 @@ SPEC CHECKSUMS:
   better_player: 2406bfe8175203c7a46fa15f9d778d73b12e1646
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: 36db08bdb298865203a6b824c1216d852ec9a0fa

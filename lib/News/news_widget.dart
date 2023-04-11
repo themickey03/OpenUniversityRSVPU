@@ -10,6 +10,8 @@ import 'package:open_university_rsvpu/News/SingleNewsWidget.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class NewsWidget extends StatefulWidget {
   const NewsWidget({Key? key}) : super(key: key);
@@ -20,8 +22,7 @@ class NewsWidget extends StatefulWidget {
 
 class _WithNewsWidgetState extends State<NewsWidget>
     with AutomaticKeepAliveClientMixin<NewsWidget> {
-  //TODO change link
-  final url = "https://koralex.fun/back/news";
+  final url = "http://api.bytezone.online/news";
   var _postsJson = [];
   var _postsJsonFiltered = [];
   String _searchValue = '';
@@ -30,11 +31,18 @@ class _WithNewsWidgetState extends State<NewsWidget>
       final response = await get(Uri.parse(url));
       final jsonData = jsonDecode(response.body) as List;
 
+      final prefs = await SharedPreferences.getInstance();
       setState(() {
+        prefs.setString("news_output", json.encode(jsonData));
         _postsJson = jsonData;
       });
     } catch (err) {
-      print(err);
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        if (prefs.containsKey("news_output")){
+          _postsJson = json.decode(prefs.getString("news_output")!);
+        }
+      });
     }
   }
 
@@ -104,21 +112,15 @@ class _WithNewsWidgetState extends State<NewsWidget>
                       }
 
                       var imagelink =
-                          //TODO change link
                           "http://koralex.fun:3000/_nuxt/assets/images/logo.png";
                       if (_postsJsonFiltered[index]["img"]["id"] != null &&
                           _postsJsonFiltered[index]["img"]["format"] != null) {
                         imagelink =
-                            //TODO change link
-                            "https://koralex.fun/back/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                            "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
                       }
                       var publishDate = "";
                       if (_postsJsonFiltered[index]["date"] != null) {
                         publishDate = _postsJsonFiltered[index]["date"];
-                      }
-                      var views = "0";
-                      if (_postsJsonFiltered[index]["views"] != null) {
-                        views = _postsJsonFiltered[index]["views"].toString();
                       }
                       var truePublishDate = "";
                       var dt = DateTime.parse(publishDate);
@@ -141,8 +143,7 @@ class _WithNewsWidgetState extends State<NewsWidget>
                                               title,
                                               imagelink,
                                               description,
-                                              truePublishDate,
-                                              views),
+                                              truePublishDate),
                                         )));
                               },
                               child: SizedBox(
@@ -156,13 +157,13 @@ class _WithNewsWidgetState extends State<NewsWidget>
                                             10.0) /
                                         16 *
                                         9,
-                                    child: FadeInImage.assetNetwork(
-                                      alignment: Alignment.topCenter,
-                                      placeholder: 'images/Loading_icon.gif',
-                                      image: imagelink,
+                                    child: CachedNetworkImage(
+                                      placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                                      imageUrl: imagelink,
                                       fit: BoxFit.cover,
                                       width: double.maxFinite,
                                       height: double.maxFinite,
+                                      alignment: Alignment.topCenter,
                                     ),
                                   ),
                                   Padding(
@@ -193,13 +194,13 @@ class _WithNewsWidgetState extends State<NewsWidget>
                                         left: 8, right: 8, top: 5, bottom: 5),
                                     child: Row(
                                       children: [
-                                        Text("Просмотров: $views",
+                                        Spacer(),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Text(truePublishDate,
                                             style: const TextStyle(
-                                                color: Colors.grey)),
-                                        const Spacer(),
-                                        Text(truePublishDate,
-                                            style: const TextStyle(
-                                                color: Colors.grey)),
+                                                color: Colors.grey), textAlign: TextAlign.right,),
+                                        ),
                                       ],
                                     ),
                                   )

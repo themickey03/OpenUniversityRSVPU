@@ -36,6 +36,8 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
         enableAudioTracks: false,
         enableQualities: false,
         enablePlaybackSpeed: false,
+        showControlsOnInitialize: false,
+        enableOverflowMenu: false
       ),
       autoPlay: false,
       looping: false,

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:flutter/material.dart';
@@ -45,15 +46,13 @@ class SinglePersonWidget extends StatelessWidget {
                   ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                      child: FadeInImage.assetNetwork(
-                        alignment: Alignment.topCenter,
-                        placeholder: 'images/Loading_icon.gif',
-                        image: singlePersonModelNew.img_link != ""
-                            ? singlePersonModelNew.img_link
-                            : "http://koralex.fun:3000/_nuxt/assets/images/logo.png",
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                        imageUrl: singlePersonModelNew.img_link,
                         fit: BoxFit.contain,
                         width: double.maxFinite,
                         height: double.maxFinite,
+                        alignment: Alignment.topCenter,
                       ),
                     ),
                   ),
@@ -77,12 +76,14 @@ class SinglePersonWidget extends StatelessWidget {
                   singlePersonModelNew.job_title != ""
                       ? Align(
                           alignment: Alignment.center,
-                          child: Text(
-                            singlePersonModelNew.job_title,
-                            style: const TextStyle(fontSize: 18.0),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
+                          child: singlePersonModelNew.job_title_and != ""
+                              ? Text(
+                                  "${singlePersonModelNew.job_title}, ${singlePersonModelNew.job_title_and}",
+                                  style: const TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.center)
+                              : Text(singlePersonModelNew.job_title,
+                                  style: const TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.center))
                       : Container(),
                   singlePersonModelNew.prizes != ""
                       ? Align(

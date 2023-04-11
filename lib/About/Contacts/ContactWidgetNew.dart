@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/About/Contacts/SinglePersonModelNew.dart';
 import 'package:open_university_rsvpu/About/Contacts/SinglePersonWidgetNew.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ContactWidgetNew extends StatefulWidget {
   const ContactWidgetNew({Key? key}) : super(key: key);
@@ -16,21 +18,26 @@ class ContactWidgetNew extends StatefulWidget {
 
 class _WithContactWidgetNewState extends State<ContactWidgetNew>
     with AutomaticKeepAliveClientMixin<ContactWidgetNew> {
-  //TODO change link
-  final url = "http://koralex.fun/back/persons";
+  final url = "http://api.bytezone.online/persons";
   var _postsJson = [];
   var _postsJsonFiltered = [];
   String _searchValue = '';
   void fetchDataPersons() async {
     try {
       final response = await get(Uri.parse(url));
-      final jsonData = jsonDecode(response.body) as List;
-
+      var jsonData = jsonDecode(response.body) as List;
+      var prefs = await SharedPreferences.getInstance();
       setState(() {
+        prefs.setString("persons_output", json.encode(jsonData));
         _postsJson = jsonData;
       });
     } catch (err) {
-      print(err);
+      var prefs = await SharedPreferences.getInstance();
+      if (prefs.containsKey("persons_output")){
+        setState(() {
+          _postsJson = json.decode(prefs.getString("persons_output")!);
+        });
+      }
     }
   }
 
@@ -108,6 +115,11 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                     mainDesc['Должность'] != null) {
                   job_title = mainDesc['Должность'];
                 }
+                var job_title_and = "";
+                if (mainDesc['Кандидат'] != "" &&
+                    mainDesc['Кандидат'] != null) {
+                  job_title_and = mainDesc['Кандидат'];
+                }
                 var prizes = "";
                 if (mainDesc['Награды'] != "" &&
                     mainDesc['Награды'] != null) {
@@ -121,7 +133,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                   interview = interview.replaceAll(r"\n", br);
 
                 }
-                var img_link = "";
+                var imgLink = "";
                 if (_postsJsonFiltered[index]['img'] != "" &&
                     _postsJsonFiltered[index]['img'] != null) {
                   if (_postsJsonFiltered[index]['img']['id'] != "" &&
@@ -129,8 +141,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                     if (_postsJsonFiltered[index]['img']['format'] != "" &&
                         _postsJsonFiltered[index]['img']['format'] != null) {
                       //TODO change link
-                      img_link =
-                          "http://koralex.fun/back/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                      imgLink =
+                          "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
                     }
                   }
                 }
@@ -142,7 +154,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SinglePersonWidget(
                               singlePersonModelNew: SinglePersonModelNew(name,
-                                  job_title, prizes, interview, img_link))));
+                                  job_title, job_title_and, prizes, interview, imgLink))));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -158,16 +170,21 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                           child: SizedBox(
                             width: 200,
                             height: 200,
-                            child: FadeInImage.assetNetwork(
-                              alignment: Alignment.topCenter,
-                              placeholder: 'images/Loading_icon.gif',
-                              //TODO change link
-                              image: img_link != ""
-                                  ? img_link
-                                  : "http://koralex.fun:3000/_nuxt/assets/images/logo.png",
-                              fit: BoxFit.cover,
-                              width: double.maxFinite,
-                              height: double.maxFinite,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width -
+                                  10.0,
+                              height: (MediaQuery.of(context).size.width -
+                                  10.0) /
+                                  16 *
+                                  9,
+                              child: CachedNetworkImage(
+                                placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                                imageUrl: imgLink,
+                                fit: BoxFit.cover,
+                                width: double.maxFinite,
+                                height: double.maxFinite,
+                                alignment: Alignment.topCenter,
+                              ),
                             ),
                           ),
                         ),

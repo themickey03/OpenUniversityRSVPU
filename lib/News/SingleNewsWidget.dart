@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:open_university_rsvpu/News/SingleNewsModel.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class SingleNewsWidget extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(""),
+          title: const Text(""),
           foregroundColor: Colors.white,
           backgroundColor:
           !themeNotifier.isDark
@@ -23,7 +24,22 @@ class SingleNewsWidget extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            Image.network(singleNewsModel.ImageUrl),
+            SizedBox(
+              width: MediaQuery.of(context).size.width -
+                  10.0,
+              height: (MediaQuery.of(context).size.width -
+                  10.0) /
+                  16 *
+                  9,
+              child: CachedNetworkImage(
+                placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                imageUrl: singleNewsModel.ImageUrl,
+                fit: BoxFit.cover,
+                width: double.maxFinite,
+                height: double.maxFinite,
+                alignment: Alignment.topCenter,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 8, right: 10.0),
               child: Align(
@@ -48,7 +64,7 @@ class SingleNewsWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Text(singleNewsModel.desc,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                   softWrap: true,
                   textAlign: TextAlign.justify),
             )

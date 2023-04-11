@@ -42,6 +42,20 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
       prefs.remove(list[i]);
     }
   }
+  void clearDataCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs
+        .getKeys()
+        .where((String key) =>
+        key.toString().toLowerCase().contains("news_output") ||
+        key.toString().toLowerCase().contains("stories_output") ||
+        key.toString().toLowerCase().contains("lections_output") ||
+        key.toString().toLowerCase().contains("persons_output"))
+        .toList();
+    for (int i = 0; i < list.length; i++) {
+      prefs.remove(list[i]);
+    }
+  }
 
   void setSettings(id, value) async {
     final prefs = await SharedPreferences.getInstance();
@@ -212,13 +226,54 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                     children: [
                       Icon(Icons.sd_storage),
                       const Expanded(
-                          child: Text("   Очистить историю просмотра",
+                          child: Text("   Очистить историю просмотра видео",
                               style: TextStyle(fontSize: 16))),
                     ]
                   ),
                 ),
               ),
-              const Divider()
+              const Divider(),
+              InkWell(
+                onTap: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Внимание!'),
+                        content: const Text(
+                            'Сохраненные данные новостей, информация о видео, и наставниках будет удалена. Вы согласны?'),
+                        actions: <Widget>[
+                          MaterialButton(
+                            child: const Text('Хорошо, я согласен'),
+                            onPressed: () {
+                              clearDataCache();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          MaterialButton(
+                            child:
+                            const Text('Нет, оставить загруженные данные'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: ListTile(
+                  visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                  title: Row(
+                      children: const [
+                        Icon(Icons.newspaper_sharp),
+                        Expanded(
+                            child: Text("   Очистить предзагруженные данные",
+                                style: TextStyle(fontSize: 16))),
+                      ]
+                  ),
+                ),
+              )
             ],
           ),
         ),

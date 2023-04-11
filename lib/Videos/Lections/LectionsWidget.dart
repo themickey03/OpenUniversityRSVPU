@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/Videos/Lections/SingleLectionModel.dart';
@@ -15,20 +16,34 @@ class LectionsWidget extends StatefulWidget {
 
 class _LectionsWidgetState extends State<LectionsWidget>
     with AutomaticKeepAliveClientMixin<LectionsWidget> {
-  final url = "https://koralex.fun/back/lections";
+  final url = "http://api.bytezone.online/lections";
   var _postsJson = [];
   var _isVideoStorySaved = true;
-  int _savedPosition = 0;
+  var _savedPosition = List.filled(999, 0);
   void fetchDataPersons() async {
     try {
       final response = await get(Uri.parse(url));
       final jsonData = jsonDecode(response.body) as List;
 
+      final prefs = await SharedPreferences.getInstance();
       setState(() {
+        prefs.setString("lections_output", json.encode(jsonData));
         _postsJson = jsonData;
+        if (_savedPosition.isEmpty){
+          _savedPosition = List.filled(_postsJson.length+1, 0);
+        }
       });
     } catch (err) {
-      print(err);
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+          if (prefs.containsKey("lections_output")){
+            _postsJson = json.decode(prefs.getString("lections_output")!);
+          }
+          if (_savedPosition.isEmpty){
+            _savedPosition = List.filled(_postsJson.length+1, 0);
+          }
+        }
+      );
     }
   }
 
@@ -47,9 +62,9 @@ class _LectionsWidgetState extends State<LectionsWidget>
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       if (prefs.getInt("lections_${id.toString()}") != null) {
-        _savedPosition = prefs.getInt("lections_${id.toString()}")!;
+        _savedPosition[id] = prefs.getInt("lections_${id.toString()}")!;
       } else {
-        _savedPosition = 0;
+        _savedPosition[id] = 0;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaved = prefs.getBool("VideoWatchedSaving")!;
@@ -146,9 +161,8 @@ class _LectionsWidgetState extends State<LectionsWidget>
                       _postsJson[index]['img']['id'] != null) {
                     if (_postsJson[index]['img']['format'] != "" &&
                         _postsJson[index]['img']['format'] != null) {
-                      //TODO change link
                       imgLink =
-                          "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                          "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
                     }
                   }
                 }
@@ -165,7 +179,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
                 var videoLink = "";
                 if (_postsJson[index]['path'] != "" &&
                     _postsJson[index]['path'] != null) {
-                  videoLink = "http://koralex.fun/" + _postsJson[index]['path'];
+                  videoLink = _postsJson[index]['path'];
                 }
                 return Card(
                     shadowColor: Colors.black,
@@ -192,13 +206,13 @@ class _LectionsWidgetState extends State<LectionsWidget>
                                       9,
                                   child: Stack(
                                     children: [
-                                      FadeInImage.assetNetwork(
-                                        alignment: Alignment.topCenter,
-                                        placeholder: 'images/Loading_icon.gif',
-                                        image: imgLink,
+                                      CachedNetworkImage(
+                                        placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                                        imageUrl: imgLink,
                                         fit: BoxFit.cover,
                                         width: double.maxFinite,
                                         height: double.maxFinite,
+                                        alignment: Alignment.topCenter,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -211,7 +225,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
                                               child: Container(
                                                 width: 9.0 *
                                                     (do_time_from_string(
-                                                                _savedPosition
+                                                                _savedPosition[id]
                                                                     .toString())
                                                             .length +
                                                         duration.length),
@@ -221,7 +235,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
                                                 child: Center(
                                                   child: Text(
                                                       do_time_from_string(
-                                                              _savedPosition
+                                                              _savedPosition[id]
                                                                   .toString()) +
                                                           duration,
                                                       style: const TextStyle(

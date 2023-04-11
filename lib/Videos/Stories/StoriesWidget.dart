@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/Videos/Stories/SingleStorieModel.dart';
@@ -15,20 +16,33 @@ class StoriesWidget extends StatefulWidget {
 
 class _StoriesWidgetState extends State<StoriesWidget>
     with AutomaticKeepAliveClientMixin<StoriesWidget> {
-  final url = "https://koralex.fun/back/stories";
+  final url = "http://api.bytezone.online/stories";
   var _postsJson = [];
-  int _savedPosition = 0;
+  var _savedPosition = List.filled(999, 0);
   var _isVideoStorySaved = true;
   void fetchDataPersons() async {
     try {
       final response = await get(Uri.parse(url));
       final jsonData = jsonDecode(response.body) as List;
 
+      final prefs = await SharedPreferences.getInstance();
       setState(() {
+        prefs.setString("stories_output", json.encode(jsonData));
         _postsJson = jsonData;
+        if (_savedPosition.isEmpty) {
+          _savedPosition = List.filled(_postsJson.length + 1, 0);
+        }
       });
     } catch (err) {
-      print(err);
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        if (prefs.containsKey("stories_output")){
+          _postsJson = json.decode(prefs.getString("stories_output")!);
+        }
+        if (_savedPosition.isEmpty) {
+          _savedPosition = List.filled(_postsJson.length + 1, 0);
+        }
+      });
     }
   }
 
@@ -47,9 +61,9 @@ class _StoriesWidgetState extends State<StoriesWidget>
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       if (prefs.getInt("stories_${id.toString()}") != null) {
-        _savedPosition = prefs.getInt("stories_${id.toString()}")!;
+        _savedPosition[id] = prefs.getInt("stories_${id.toString()}")!;
       } else {
-        _savedPosition = 0;
+        _savedPosition[id] = 0;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaved = prefs.getBool("VideoWatchedSaving")!;
@@ -146,9 +160,8 @@ class _StoriesWidgetState extends State<StoriesWidget>
                       _postsJson[index]['img']['id'] != null) {
                     if (_postsJson[index]['img']['format'] != "" &&
                         _postsJson[index]['img']['format'] != null) {
-                      //TODO change link
                       imgLink =
-                          "https://koralex.fun/back/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                          "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
                     }
                   }
                 }
@@ -165,7 +178,7 @@ class _StoriesWidgetState extends State<StoriesWidget>
                 var videoLink = "";
                 if (_postsJson[index]['path'] != "" &&
                     _postsJson[index]['path'] != null) {
-                  videoLink = "http://koralex.fun/" + _postsJson[index]['path'];
+                  videoLink = _postsJson[index]['path'];
                 }
                 return Card(
                     shadowColor: Colors.black,
@@ -192,13 +205,13 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                       9,
                                   child: Stack(
                                     children: [
-                                      FadeInImage.assetNetwork(
-                                        alignment: Alignment.topCenter,
-                                        placeholder: 'images/Loading_icon.gif',
-                                        image: imgLink,
+                                      CachedNetworkImage(
+                                        placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                                        imageUrl: imgLink,
                                         fit: BoxFit.cover,
                                         width: double.maxFinite,
                                         height: double.maxFinite,
+                                        alignment: Alignment.topCenter,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -211,7 +224,8 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                               child: Container(
                                                 width: 9.0 *
                                                     (do_time_from_string(
-                                                                _savedPosition
+                                                                _savedPosition[
+                                                                        id]
                                                                     .toString())
                                                             .length +
                                                         duration.length),
@@ -221,7 +235,7 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                                 child: Center(
                                                   child: Text(
                                                       do_time_from_string(
-                                                              _savedPosition
+                                                              _savedPosition[id]
                                                                   .toString()) +
                                                           duration,
                                                       style: const TextStyle(
@@ -246,17 +260,22 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8, right: 8, top: 5, bottom: 7),
-                                  child: Text(
-                                    desc,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                )
+                                desc == ""
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8,
+                                            right: 8,
+                                            top: 5,
+                                            bottom: 7),
+                                        child: Text(
+                                          desc,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      )
+                                    : const Text("")
                               ]))
                         ],
                       ),
