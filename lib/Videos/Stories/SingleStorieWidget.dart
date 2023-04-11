@@ -28,6 +28,13 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.singleLectionModel.video_link,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: widget.singleLectionModel.name,
+        author: "Открытый университет РГППУ",
+        imageUrl: widget.singleLectionModel.img_link,
+        activityName: "MainActivity",
+      )
     );
     BetterPlayerConfiguration betterPlayerConfiguration =
         const BetterPlayerConfiguration(
@@ -39,7 +46,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
         showControlsOnInitialize: false,
         enableOverflowMenu: false
       ),
-      autoPlay: false,
+      autoPlay: true,
       looping: false,
       deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
       deviceOrientationsOnFullScreen: [
