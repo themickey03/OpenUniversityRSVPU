@@ -188,11 +188,15 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                             ),
                           ),
                         ),
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         Padding(

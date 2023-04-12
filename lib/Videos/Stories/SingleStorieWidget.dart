@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.d
 
 class SingleLectionWidget extends StatefulWidget {
   final SingleLectionModel singleLectionModel;
-  const SingleLectionWidget({Key? key, required this.singleLectionModel})
+  final String path;
+  const SingleLectionWidget({Key? key, required this.singleLectionModel, required this.path})
       : super(key: key);
 
   @override
@@ -22,20 +24,50 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   var _isVideoStorySaving = true;
   late int _savedPosition = 0;
   late BetterPlayerController _betterPlayerController;
+  late BetterPlayerDataSource _betterPlayerDataSource;
+
+  @override
   void initState() {
     super.initState();
     getData();
-    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      widget.singleLectionModel.video_link,
-      notificationConfiguration: BetterPlayerNotificationConfiguration(
-        showNotification: true,
-        title: widget.singleLectionModel.name,
-        author: "Открытый университет РГППУ",
-        imageUrl: widget.singleLectionModel.img_link,
-        activityName: "MainActivity",
-      )
-    );
+    if (File(widget.path).existsSync()){
+      _betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.file,
+        widget.path,
+        notificationConfiguration: BetterPlayerNotificationConfiguration(
+          showNotification: true,
+          title: widget.singleLectionModel.name,
+          author: "Открытый университет РГППУ",
+          imageUrl: widget.singleLectionModel.img_link,
+          activityName: "MainActivity",
+        ),
+        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+          minBufferMs: 50000,
+          maxBufferMs: 13107200,
+          bufferForPlaybackMs: 2500,
+          bufferForPlaybackAfterRebufferMs: 5000,
+        ),
+      );
+    }
+    else{
+      _betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        widget.singleLectionModel.video_link,
+        notificationConfiguration: BetterPlayerNotificationConfiguration(
+          showNotification: true,
+          title: widget.singleLectionModel.name,
+          author: "Открытый университет РГППУ",
+          imageUrl: widget.singleLectionModel.img_link,
+          activityName: "MainActivity",
+        ),
+        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+          minBufferMs: 50000,
+          maxBufferMs: 13107200,
+          bufferForPlaybackMs: 2500,
+          bufferForPlaybackAfterRebufferMs: 5000,
+        ),
+      );
+    }
     BetterPlayerConfiguration betterPlayerConfiguration =
         const BetterPlayerConfiguration(
       controlsConfiguration: BetterPlayerControlsConfiguration(
@@ -57,7 +89,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     );
 
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration,
-        betterPlayerDataSource: betterPlayerDataSource);
+        betterPlayerDataSource: _betterPlayerDataSource);
     _betterPlayerController.addEventsListener((event) {
       if (event.betterPlayerEventType.name == "initialized") {
         _betterPlayerController.seekTo(Duration(seconds: _savedPosition));

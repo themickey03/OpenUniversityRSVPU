@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.d
 
 class SingleLectionWidget extends StatefulWidget {
   final SingleLectionModel singleLectionModel;
-  const SingleLectionWidget({Key? key, required this.singleLectionModel})
+  final String path;
+  const SingleLectionWidget({Key? key, required this.singleLectionModel, required this.path})
       : super(key: key);
 
   @override
@@ -17,34 +19,65 @@ class SingleLectionWidget extends StatefulWidget {
 
 class _SingleLectionWidgetState extends State<SingleLectionWidget>
     with AutomaticKeepAliveClientMixin<SingleLectionWidget> {
+
   late GlobalKey _betterPlayerKey = GlobalKey();
   late int? _currentPosition;
-  late int _savedPosition = 0;
   var _isVideoStorySaving = true;
+  late int _savedPosition = 0;
   late BetterPlayerController _betterPlayerController;
+  late BetterPlayerDataSource _betterPlayerDataSource;
+
+  @override
   void initState() {
     super.initState();
     getData();
-    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      widget.singleLectionModel.video_link,
-      notificationConfiguration: BetterPlayerNotificationConfiguration(
-        showNotification: true,
-        title: widget.singleLectionModel.name,
-        author: "Открытый университет РГППУ",
-        imageUrl: widget.singleLectionModel.img_link,
-        activityName: "MainActivity",
-      )
-    );
+    if (File(widget.path).existsSync()){
+      _betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.file,
+        widget.path,
+        notificationConfiguration: BetterPlayerNotificationConfiguration(
+          showNotification: true,
+          title: widget.singleLectionModel.name,
+          author: "Открытый университет РГППУ",
+          imageUrl: widget.singleLectionModel.img_link,
+          activityName: "MainActivity",
+        ),
+        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+          minBufferMs: 50000,
+          maxBufferMs: 13107200,
+          bufferForPlaybackMs: 2500,
+          bufferForPlaybackAfterRebufferMs: 5000,
+        ),
+      );
+    }
+    else{
+      _betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        widget.singleLectionModel.video_link,
+        notificationConfiguration: BetterPlayerNotificationConfiguration(
+          showNotification: true,
+          title: widget.singleLectionModel.name,
+          author: "Открытый университет РГППУ",
+          imageUrl: widget.singleLectionModel.img_link,
+          activityName: "MainActivity",
+        ),
+        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+          minBufferMs: 50000,
+          maxBufferMs: 13107200,
+          bufferForPlaybackMs: 2500,
+          bufferForPlaybackAfterRebufferMs: 5000,
+        ),
+      );
+    }
     BetterPlayerConfiguration betterPlayerConfiguration =
-        const BetterPlayerConfiguration(
+    const BetterPlayerConfiguration(
       controlsConfiguration: BetterPlayerControlsConfiguration(
-        enableSubtitles: false,
-        enableAudioTracks: false,
-        enableQualities: false,
-        enablePlaybackSpeed: false,
-        showControlsOnInitialize: false,
-        enableOverflowMenu: false
+          enableSubtitles: false,
+          enableAudioTracks: false,
+          enableQualities: false,
+          enablePlaybackSpeed: false,
+          showControlsOnInitialize: false,
+          enableOverflowMenu: false
       ),
       autoPlay: true,
       looping: false,
@@ -57,7 +90,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     );
 
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration,
-        betterPlayerDataSource: betterPlayerDataSource);
+        betterPlayerDataSource: _betterPlayerDataSource);
     _betterPlayerController.addEventsListener((event) {
       if (event.betterPlayerEventType.name == "initialized") {
         _betterPlayerController.seekTo(Duration(seconds: _savedPosition));
@@ -84,77 +117,76 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void saveData(data) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(
-        "lections_${widget.singleLectionModel.id.toString()}", data);
+        "Lections_${widget.singleLectionModel.id.toString()}", data);
   }
 
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getInt("lections_${widget.singleLectionModel.id.toString()}") !=
+      if (prefs.getInt("Lections_${widget.singleLectionModel.id.toString()}") !=
           null) {
-        _savedPosition = prefs
-            .getInt("lections_${widget.singleLectionModel.id.toString()}")!;
+        _savedPosition =
+        prefs.getInt("Lections_${widget.singleLectionModel.id.toString()}")!;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaving = prefs.getBool("VideoWatchedSaving")!;
       }
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text(""),
-          foregroundColor: Colors.white,
-          backgroundColor: !themeNotifier.isDark
-              ? const Color.fromRGBO(34, 76, 164, 1)
-              : ThemeData.dark().primaryColor,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 16 * 9,
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: BetterPlayer(
-                      controller: _betterPlayerController,
-                      key: _betterPlayerKey,
-                    ),
-                  )),
-              Padding(
-                padding:
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text(""),
+              foregroundColor: Colors.white,
+              backgroundColor: !themeNotifier.isDark
+                  ? const Color.fromRGBO(34, 76, 164, 1)
+                  : ThemeData.dark().primaryColor,
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 16 * 9,
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: BetterPlayer(
+                          controller: _betterPlayerController,
+                          key: _betterPlayerKey,
+                        ),
+                      )),
+                  Padding(
+                    padding:
                     const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
-                child: Text(
-                  widget.singleLectionModel.name,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
-                  child: Text(
-                    widget.singleLectionModel.desc,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    child: Text(
+                      widget.singleLectionModel.name,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    textAlign: TextAlign.justify,
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    });
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding:
+                      const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
+                      child: Text(
+                        widget.singleLectionModel.desc,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.justify,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
