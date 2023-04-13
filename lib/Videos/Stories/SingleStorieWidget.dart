@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +6,18 @@ import 'SingleStorieModel.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 
-class SingleLectionWidget extends StatefulWidget {
-  final SingleLectionModel singleLectionModel;
-  final String path;
-  const SingleLectionWidget({Key? key, required this.singleLectionModel, required this.path})
+class SingleStorieWidget extends StatefulWidget {
+  final SingleStorieModel singleStorieModel;
+  const SingleStorieWidget({Key? key, required this.singleStorieModel})
       : super(key: key);
 
   @override
-  _SingleLectionWidgetState createState() => _SingleLectionWidgetState();
+  State<SingleStorieWidget> createState() => _SingleStorieWidgetState();
 }
 
-class _SingleLectionWidgetState extends State<SingleLectionWidget>
-    with AutomaticKeepAliveClientMixin<SingleLectionWidget> {
-  late GlobalKey _betterPlayerKey = GlobalKey();
+class _SingleStorieWidgetState extends State<SingleStorieWidget>
+    with AutomaticKeepAliveClientMixin<SingleStorieWidget> {
+  final GlobalKey _betterPlayerKey = GlobalKey();
   late int? _currentPosition;
   var _isVideoStorySaving = true;
   late int _savedPosition = 0;
@@ -30,44 +28,23 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void initState() {
     super.initState();
     getData();
-    if (File(widget.path).existsSync()){
-      _betterPlayerDataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.file,
-        widget.path,
-        notificationConfiguration: BetterPlayerNotificationConfiguration(
-          showNotification: true,
-          title: widget.singleLectionModel.name,
-          author: "Открытый университет РГППУ",
-          imageUrl: widget.singleLectionModel.img_link,
-          activityName: "MainActivity",
-        ),
-        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
-          minBufferMs: 50000,
-          maxBufferMs: 13107200,
-          bufferForPlaybackMs: 2500,
-          bufferForPlaybackAfterRebufferMs: 5000,
-        ),
-      );
-    }
-    else{
-      _betterPlayerDataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network,
-        widget.singleLectionModel.video_link,
-        notificationConfiguration: BetterPlayerNotificationConfiguration(
-          showNotification: true,
-          title: widget.singleLectionModel.name,
-          author: "Открытый университет РГППУ",
-          imageUrl: widget.singleLectionModel.img_link,
-          activityName: "MainActivity",
-        ),
-        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
-          minBufferMs: 50000,
-          maxBufferMs: 13107200,
-          bufferForPlaybackMs: 2500,
-          bufferForPlaybackAfterRebufferMs: 5000,
-        ),
-      );
-    }
+    _betterPlayerDataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      widget.singleStorieModel.video_link,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: widget.singleStorieModel.name,
+        author: "Открытый университет РГППУ",
+        imageUrl: widget.singleStorieModel.img_link,
+        activityName: "MainActivity",
+      ),
+      bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+        minBufferMs: 50000,
+        maxBufferMs: 13107200,
+        bufferForPlaybackMs: 2500,
+        bufferForPlaybackAfterRebufferMs: 5000,
+      ),
+    );
     BetterPlayerConfiguration betterPlayerConfiguration =
         const BetterPlayerConfiguration(
       controlsConfiguration: BetterPlayerControlsConfiguration(
@@ -116,16 +93,16 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void saveData(data) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(
-        "stories_${widget.singleLectionModel.id.toString()}", data);
+        "stories_${widget.singleStorieModel.id.toString()}", data);
   }
 
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getInt("stories_${widget.singleLectionModel.id.toString()}") !=
+      if (prefs.getInt("stories_${widget.singleStorieModel.id.toString()}") !=
           null) {
         _savedPosition =
-            prefs.getInt("stories_${widget.singleLectionModel.id.toString()}")!;
+            prefs.getInt("stories_${widget.singleStorieModel.id.toString()}")!;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaving = prefs.getBool("VideoWatchedSaving")!;
@@ -135,6 +112,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
@@ -163,7 +141,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
                 padding:
                     const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
                 child: Text(
-                  widget.singleLectionModel.name,
+                  widget.singleStorieModel.name,
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -174,7 +152,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
                   padding:
                       const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
                   child: Text(
-                    widget.singleLectionModel.desc,
+                    widget.singleStorieModel.desc,
                     style: const TextStyle(
                       fontSize: 16,
                     ),

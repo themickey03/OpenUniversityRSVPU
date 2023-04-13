@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +8,16 @@ import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.d
 
 class SingleLectionWidget extends StatefulWidget {
   final SingleLectionModel singleLectionModel;
-  final String path;
-  const SingleLectionWidget({Key? key, required this.singleLectionModel, required this.path})
+  const SingleLectionWidget({Key? key, required this.singleLectionModel})
       : super(key: key);
 
   @override
-  _SingleLectionWidgetState createState() => _SingleLectionWidgetState();
+  State<SingleLectionWidget> createState() => _SingleLectionWidgetState();
 }
 
 class _SingleLectionWidgetState extends State<SingleLectionWidget>
     with AutomaticKeepAliveClientMixin<SingleLectionWidget> {
-
-  late GlobalKey _betterPlayerKey = GlobalKey();
+  final GlobalKey _betterPlayerKey = GlobalKey();
   late int? _currentPosition;
   var _isVideoStorySaving = true;
   late int _savedPosition = 0;
@@ -31,44 +28,23 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void initState() {
     super.initState();
     getData();
-    if (File(widget.path).existsSync()){
-      _betterPlayerDataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.file,
-        widget.path,
-        notificationConfiguration: BetterPlayerNotificationConfiguration(
-          showNotification: true,
-          title: widget.singleLectionModel.name,
-          author: "Открытый университет РГППУ",
-          imageUrl: widget.singleLectionModel.img_link,
-          activityName: "MainActivity",
-        ),
-        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
-          minBufferMs: 50000,
-          maxBufferMs: 13107200,
-          bufferForPlaybackMs: 2500,
-          bufferForPlaybackAfterRebufferMs: 5000,
-        ),
-      );
-    }
-    else{
-      _betterPlayerDataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network,
-        widget.singleLectionModel.video_link,
-        notificationConfiguration: BetterPlayerNotificationConfiguration(
-          showNotification: true,
-          title: widget.singleLectionModel.name,
-          author: "Открытый университет РГППУ",
-          imageUrl: widget.singleLectionModel.img_link,
-          activityName: "MainActivity",
-        ),
-        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
-          minBufferMs: 50000,
-          maxBufferMs: 13107200,
-          bufferForPlaybackMs: 2500,
-          bufferForPlaybackAfterRebufferMs: 5000,
-        ),
-      );
-    }
+    _betterPlayerDataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      widget.singleLectionModel.video_link,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: widget.singleLectionModel.name,
+        author: "Открытый университет РГППУ",
+        imageUrl: widget.singleLectionModel.img_link,
+        activityName: "MainActivity",
+      ),
+      bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+        minBufferMs: 50000,
+        maxBufferMs: 13107200,
+        bufferForPlaybackMs: 2500,
+        bufferForPlaybackAfterRebufferMs: 5000,
+      ),
+    );
     BetterPlayerConfiguration betterPlayerConfiguration =
     const BetterPlayerConfiguration(
       controlsConfiguration: BetterPlayerControlsConfiguration(
@@ -117,24 +93,26 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void saveData(data) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(
-        "Lections_${widget.singleLectionModel.id.toString()}", data);
+        "lections_${widget.singleLectionModel.id.toString()}", data);
   }
 
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getInt("Lections_${widget.singleLectionModel.id.toString()}") !=
+      if (prefs.getInt("lections_${widget.singleLectionModel.id.toString()}") !=
           null) {
         _savedPosition =
-        prefs.getInt("Lections_${widget.singleLectionModel.id.toString()}")!;
+        prefs.getInt("lections_${widget.singleLectionModel.id.toString()}")!;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaving = prefs.getBool("VideoWatchedSaving")!;
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
           return Scaffold(

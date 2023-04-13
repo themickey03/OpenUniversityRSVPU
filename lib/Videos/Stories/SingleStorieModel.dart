@@ -1,7 +1,7 @@
-class SingleLectionModel{
+class SingleStorieModel{
   final int id;
   final String name, duration, video_link, desc, img_link;
-  SingleLectionModel(
+  SingleStorieModel(
       this.id,
       this.name,
       this.video_link,
