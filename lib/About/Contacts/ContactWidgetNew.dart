@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
@@ -18,13 +19,23 @@ class ContactWidgetNew extends StatefulWidget {
 
 class _WithContactWidgetNewState extends State<ContactWidgetNew>
     with AutomaticKeepAliveClientMixin<ContactWidgetNew> {
-  final url = "http://api.bytezone.online/persons";
+  var _url = "";
   var _postsJson = [];
   var _postsJsonFiltered = [];
   String _searchValue = '';
   void fetchDataPersons() async {
     try {
-      final response = await get(Uri.parse(url));
+      if (kIsWeb) {
+        setState(() {
+          _url = "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/persons";
+        });
+      }
+      else{
+        setState(() {
+          _url = 'http://api.bytezone.online/persons';
+        });
+      }
+      final response = await get(Uri.parse(_url));
       var jsonData = jsonDecode(response.body) as List;
       var prefs = await SharedPreferences.getInstance();
       setState(() {
@@ -140,9 +151,13 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                       _postsJsonFiltered[index]['img']['id'] != null) {
                     if (_postsJsonFiltered[index]['img']['format'] != "" &&
                         _postsJsonFiltered[index]['img']['format'] != null) {
-                      //TODO change link
-                      imgLink =
-                          "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                      if (kIsWeb) {
+                        imgLink = "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                      }
+                      else{
+                        imgLink =
+                        "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                      }
                     }
                   }
                 }

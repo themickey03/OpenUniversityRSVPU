@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/News/SingleNewsModelNew.dart';
@@ -116,7 +117,12 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                           "http://koralex.fun:3000/_nuxt/assets/images/logo.png";
                       if (_postsJsonFiltered[index]["img_link"] != null &&
                           _postsJsonFiltered[index]["img_link"] != "") {
-                        imagelink = _postsJsonFiltered[index]["img_link"];
+                        if (kIsWeb) {
+                          imagelink = "https://koralex.fun/news_api/buffer.php?type=image&link=${_postsJsonFiltered[index]["img_link"]}";
+                        }
+                        else{
+                          imagelink = _postsJsonFiltered[index]["img_link"];
+                        }
                       }
                       var publishDate = "";
                       if (_postsJsonFiltered[index]["publish_date"] != null) {

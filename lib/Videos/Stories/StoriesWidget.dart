@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:open_university_rsvpu/Videos/Stories/SingleStorieModel.dart';
 import 'package:open_university_rsvpu/Videos/Stories/SingleStorieWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,14 +18,24 @@ class StoriesWidget extends StatefulWidget {
 
 class _StoriesWidgetState extends State<StoriesWidget>
     with AutomaticKeepAliveClientMixin<StoriesWidget> {
-  final url = "http://api.bytezone.online/stories";
+  var _url = "";
   var _postsJson = [];
   var _savedPosition = List.filled(999, 0);
   var _isVideoStorySaved = true;
 
   void fetchDataPersons() async {
     try {
-      final response = await get(Uri.parse(url));
+      if (kIsWeb) {
+        setState(() {
+          _url = "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/stories";
+        });
+      }
+      else{
+        setState(() {
+          _url = 'http://api.bytezone.online/stories';
+        });
+      }
+      final response = await get(Uri.parse(_url));
       final jsonData = jsonDecode(response.body) as List;
 
       final prefs = await SharedPreferences.getInstance();
@@ -164,8 +175,13 @@ class _StoriesWidgetState extends State<StoriesWidget>
                       _postsJson[index]['img']['id'] != null) {
                     if (_postsJson[index]['img']['format'] != "" &&
                         _postsJson[index]['img']['format'] != null) {
-                      imgLink =
-                          "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                      if (kIsWeb) {
+                        imgLink = "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                      }
+                      else{
+                        imgLink =
+                        "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                      }
                     }
                   }
                 }
@@ -182,7 +198,12 @@ class _StoriesWidgetState extends State<StoriesWidget>
                 var videoLink = "";
                 if (_postsJson[index]['path'] != "" &&
                     _postsJson[index]['path'] != null) {
-                  videoLink = _postsJson[index]['path'];
+                  if (kIsWeb) {
+                    videoLink = "https://koralex.fun/news_api/buffer.php?type=video&link=${_postsJson[index]['path']}";
+                  }
+                  else{
+                    videoLink = _postsJson[index]['path'];
+                  }
                 }
                 return Card(
                     shadowColor: Colors.black,

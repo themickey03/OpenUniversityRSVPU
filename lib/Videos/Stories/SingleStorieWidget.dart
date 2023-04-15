@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -48,13 +49,12 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
     BetterPlayerConfiguration betterPlayerConfiguration =
         const BetterPlayerConfiguration(
       controlsConfiguration: BetterPlayerControlsConfiguration(
-        enableSubtitles: false,
-        enableAudioTracks: false,
-        enableQualities: false,
-        enablePlaybackSpeed: false,
-        showControlsOnInitialize: false,
-        enableOverflowMenu: false
-      ),
+          enableSubtitles: false,
+          enableAudioTracks: false,
+          enableQualities: false,
+          enablePlaybackSpeed: false,
+          showControlsOnInitialize: false,
+          enableOverflowMenu: false),
       autoPlay: true,
       looping: false,
       deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
@@ -127,16 +127,32 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 16 * 9,
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: BetterPlayer(
-                      controller: _betterPlayerController,
-                      key: _betterPlayerKey,
-                    ),
-                  )),
+              kIsWeb
+                  ? Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          color: Colors.red,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8.0))),
+                      child: const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Тут находится видео",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 16 * 9,
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: BetterPlayer(
+                          controller: _betterPlayerController,
+                          key: _betterPlayerKey,
+                        ),
+                      )),
               Padding(
                 padding:
                     const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),

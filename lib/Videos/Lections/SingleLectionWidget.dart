@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   late int _savedPosition = 0;
   late BetterPlayerController _betterPlayerController;
   late BetterPlayerDataSource _betterPlayerDataSource;
-
   @override
   void initState() {
     super.initState();
@@ -46,15 +46,14 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
       ),
     );
     BetterPlayerConfiguration betterPlayerConfiguration =
-    const BetterPlayerConfiguration(
+        const BetterPlayerConfiguration(
       controlsConfiguration: BetterPlayerControlsConfiguration(
           enableSubtitles: false,
           enableAudioTracks: false,
           enableQualities: false,
           enablePlaybackSpeed: false,
           showControlsOnInitialize: false,
-          enableOverflowMenu: false
-      ),
+          enableOverflowMenu: false),
       autoPlay: true,
       looping: false,
       deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
@@ -101,8 +100,8 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     setState(() {
       if (prefs.getInt("lections_${widget.singleLectionModel.id.toString()}") !=
           null) {
-        _savedPosition =
-        prefs.getInt("lections_${widget.singleLectionModel.id.toString()}")!;
+        _savedPosition = prefs
+            .getInt("lections_${widget.singleLectionModel.id.toString()}")!;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaving = prefs.getBool("VideoWatchedSaving")!;
@@ -115,19 +114,35 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text(""),
-              foregroundColor: Colors.white,
-              backgroundColor: !themeNotifier.isDark
-                  ? const Color.fromRGBO(34, 76, 164, 1)
-                  : ThemeData.dark().primaryColor,
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(""),
+          foregroundColor: Colors.white,
+          backgroundColor: !themeNotifier.isDark
+              ? const Color.fromRGBO(34, 76, 164, 1)
+              : ThemeData.dark().primaryColor,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              kIsWeb
+                  ? Container(
+                        height: 300,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            color: Colors.red,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8.0))),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Тут находится видео",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                  : SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.width / 16 * 9,
                       child: AspectRatio(
@@ -137,34 +152,34 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
                           key: _betterPlayerKey,
                         ),
                       )),
-                  Padding(
-                    padding:
+              Padding(
+                padding:
                     const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
-                    child: Text(
-                      widget.singleLectionModel.name,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
-                      child: Text(
-                        widget.singleLectionModel.desc,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  )
-                ],
+                child: Text(
+                  widget.singleLectionModel.name,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          );
-        });
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
+                  child: Text(
+                    widget.singleLectionModel.desc,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   @override
