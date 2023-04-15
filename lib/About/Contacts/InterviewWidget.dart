@@ -33,7 +33,9 @@ class _InterviewWidgetState extends State<InterviewWidget> {
           child: ListView(
             children: [
               kIsWeb
-                  ? Text(widget.data)
+                  ? Html(
+                    data: widget.data
+                  )
                   : Html(data: widget.data, style: {
                       "H1": Style(
                           fontSize: Platform.isIOS == true

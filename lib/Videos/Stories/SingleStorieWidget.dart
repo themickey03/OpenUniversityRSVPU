@@ -29,6 +29,7 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
   void initState() {
     super.initState();
     getData();
+
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.singleStorieModel.video_link,
