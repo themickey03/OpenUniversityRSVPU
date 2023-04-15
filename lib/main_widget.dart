@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'News/news_widget.dart';
+import 'News/news_widget_new.dart';
 import 'Videos/video_widget.dart';
 import 'About/AboutWidget.dart';
 
@@ -15,7 +15,7 @@ class _WithMainWidgetState extends State<MainWidget> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    NewsWidget(),
+    NewsWidgetNew(),
     VideoWidgetMain(),
     AboutWidget(),
   ];

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AppSettingsWidget extends StatefulWidget {
   const AppSettingsWidget({super.key});
@@ -44,6 +47,9 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
   }
   void clearDataCache() async {
     final prefs = await SharedPreferences.getInstance();
+    final Directory tempDir = await getTemporaryDirectory();
+    final Directory libCacheDir = Directory("${tempDir.path}/libCachedImageData");
+    await libCacheDir.delete(recursive: true);
     final list = prefs
         .getKeys()
         .where((String key) =>
