@@ -95,6 +95,7 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
         body: Center(
             child: RefreshIndicator(
                 onRefresh: refresh,
+                color: const Color.fromRGBO(34, 76, 164, 1),
                 child: ListView.builder(
                     itemCount: _postsJsonFiltered.length,
                     itemBuilder: (context, index) {

@@ -149,6 +149,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
           return Scaffold(
             body: Center(
               child: RefreshIndicator(
+                color: const Color.fromRGBO(34, 76, 164, 1),
                 onRefresh: onRefresh,
                 child: ListView.builder(
                   itemCount: _postsJson.length,

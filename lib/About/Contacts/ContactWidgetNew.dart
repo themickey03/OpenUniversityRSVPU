@@ -105,6 +105,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
           },
         ),
         body: RefreshIndicator(
+          color: const Color.fromRGBO(34, 76, 164, 1),
           onRefresh: onRefresh,
           child: Center(
             child: ListView.builder(
