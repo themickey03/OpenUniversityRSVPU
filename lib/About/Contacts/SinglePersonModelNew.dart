@@ -1,11 +1,9 @@
 class SinglePersonModelNew{
-  final String name, job_title, job_title_and,
-            prizes, interview, img_link;
+  final String name, interview, img_link;
+  final Map<String, dynamic> description;
   SinglePersonModelNew(
       this.name,
-      this.job_title,
-      this.job_title_and,
-      this.prizes,
+      this.description,
       this.interview,
       this.img_link);
 }

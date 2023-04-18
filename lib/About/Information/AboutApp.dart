@@ -17,10 +17,9 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
       return Scaffold(
         appBar: AppBar(
           foregroundColor: Colors.white,
-          backgroundColor:
-              !themeNotifier.isDark
-                  ? const Color.fromRGBO(34, 76, 164, 1)
-                  : ThemeData.dark().primaryColor,
+          backgroundColor: !themeNotifier.isDark
+              ? const Color.fromRGBO(34, 76, 164, 1)
+              : ThemeData.dark().primaryColor,
           title: const Align(
               alignment: Alignment.centerLeft,
               child: Text("О приложении", style: TextStyle(fontSize: 24))),
@@ -29,7 +28,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
         body: Center(
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 80,
                 child: Text(""),
               ),
@@ -46,11 +45,25 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                         height: 141,
                       ),
                     ),
-                    Text("Открытый университет РГППУ",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold)),
-                    Text("Приложение-компаньон для веб-ресурса",
-                        style: TextStyle(fontSize: 18)),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Открытый университет РГППУ",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Приложение-компаньон для веб-ресурса",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18)),
+                      ),
+                    ),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(

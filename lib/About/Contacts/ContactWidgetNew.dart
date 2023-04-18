@@ -14,14 +14,14 @@ class ContactWidgetNew extends StatefulWidget {
   const ContactWidgetNew({Key? key}) : super(key: key);
 
   @override
-  _WithContactWidgetNewState createState() => _WithContactWidgetNewState();
+  State<ContactWidgetNew> createState() => _WithContactWidgetNewState();
 }
 
 class _WithContactWidgetNewState extends State<ContactWidgetNew>
     with AutomaticKeepAliveClientMixin<ContactWidgetNew> {
   var _url = "";
   var _postsJson = [];
-  var _postsJsonFiltered = [];
+  final _postsJsonFiltered = [];
   String _searchValue = '';
   void fetchDataPersons() async {
     try {
@@ -51,7 +51,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
       }
     }
   }
-
+  @override
   void initState() {
     super.initState();
     fetchDataPersons();
@@ -115,28 +115,18 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                 if (_postsJsonFiltered[index]['name'] != "" &&
                     _postsJsonFiltered[index]['name'] != null) {
                   name = _postsJsonFiltered[index]['name'];
-                  name = name.replaceAll("\n", "");
+                  name = name.replaceAll(r"\n", "");
                   name = name.toUpperCase();
                 }
                 var mainDesc = <String, dynamic>{};
                 if (_postsJsonFiltered[index]['description'] != null) {
                   mainDesc = _postsJsonFiltered[index]['description'];
                 }
-                var job_title = "";
-                if (mainDesc['Должность'] != "" &&
-                    mainDesc['Должность'] != null) {
-                  job_title = mainDesc['Должность'];
+                var jobTitle = "";
+                if (mainDesc['Должность'] != null && mainDesc['Должность'] != "") {
+                  jobTitle = mainDesc['Должность'];
                 }
-                var job_title_and = "";
-                if (mainDesc['Кандидат'] != "" &&
-                    mainDesc['Кандидат'] != null) {
-                  job_title_and = mainDesc['Кандидат'];
-                }
-                var prizes = "";
-                if (mainDesc['Награды'] != "" &&
-                    mainDesc['Награды'] != null) {
-                  prizes = mainDesc['Награды'];
-                }
+
                 var interview = "";
                 if (_postsJsonFiltered[index]['interview'] != "" &&
                     _postsJsonFiltered[index]['interview'] != null) {
@@ -170,7 +160,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SinglePersonWidget(
                               singlePersonModelNew: SinglePersonModelNew(name,
-                                  job_title, job_title_and, prizes, interview, imgLink))));
+                                  mainDesc,interview, imgLink))));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -219,7 +209,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                           padding: const EdgeInsets.only(
                               bottom: 8.0, left: 10.0, right: 10.0),
                           child: Text(
-                            job_title,
+                            jobTitle,
                             style: const TextStyle(fontSize: 14),
                             textAlign: TextAlign.center,
                           ),

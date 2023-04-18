@@ -18,7 +18,7 @@ class SinglePersonWidget extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(singlePersonModelNew.name),
+          title: const Text(""),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
@@ -47,7 +47,8 @@ class SinglePersonWidget extends StatelessWidget {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
                       child: CachedNetworkImage(
-                        placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                        placeholder: (context, url) => const Image(
+                            image: AssetImage('images/Loading_icon.gif')),
                         imageUrl: singlePersonModelNew.img_link,
                         fit: BoxFit.contain,
                         width: double.maxFinite,
@@ -73,31 +74,31 @@ class SinglePersonWidget extends StatelessWidget {
                             fontSize: 20, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       )),
-                  singlePersonModelNew.job_title != ""
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: singlePersonModelNew.job_title_and != ""
-                              ? Text(
-                                  "${singlePersonModelNew.job_title}, ${singlePersonModelNew.job_title_and}",
-                                  style: const TextStyle(fontSize: 18.0),
-                                  textAlign: TextAlign.center)
-                              : Text(singlePersonModelNew.job_title,
-                                  style: const TextStyle(fontSize: 18.0),
-                                  textAlign: TextAlign.center))
-                      : Container(),
-                  singlePersonModelNew.prizes != ""
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0),
-                            child: Text(
-                              singlePersonModelNew.prizes,
-                              style: const TextStyle(fontSize: 16.0),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
-                      : Container(),
+                  ListView.builder(
+                      itemCount: singlePersonModelNew.description.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 8.0, bottom: 5.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text.rich(TextSpan(
+                                  style: const TextStyle(
+                                      fontSize: 15), //apply style to all
+                                  children: [
+                                    TextSpan(
+                                        text:
+                                            "${singlePersonModelNew.description.keys.elementAt(index)}:",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    TextSpan(
+                                        text:
+                                            " ${singlePersonModelNew.description.values.elementAt(index)}")
+                                  ])),
+                            ));
+                      }),
                   singlePersonModelNew.interview != ""
                       ? Column(
                           children: [
@@ -125,17 +126,6 @@ class SinglePersonWidget extends StatelessWidget {
                             const Divider()
                           ],
                         )
-                      // ? SelectableText.rich(TextSpan(
-                      // style: Theme.of(context).textTheme.bodyMedium,
-                      // children: [
-                      //   const TextSpan(
-                      //       text: "Интервью: \n",
-                      //       style: TextStyle(
-                      //           fontWeight: FontWeight.bold,
-                      //           decoration: TextDecoration.underline)),
-                      //   //TextSpan(text: singlePersonModelNew.interview)
-                      //   Html(data: singlePersonModelNew.interview)
-                      // ]))
                       : Container(),
                 ],
               ),

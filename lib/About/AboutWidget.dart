@@ -43,10 +43,11 @@ class _AboutWidgetState extends State<AboutWidget> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 10.0),
+                padding: EdgeInsets.only(left: 8.0, right: 8.0,bottom: 10.0),
                 child: Align(
                     alignment: Alignment.center,
                     child: Text("Открытый университет РГППУ",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold))),
               ),
