@@ -30,9 +30,17 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
     super.initState();
     getData();
 
+    Map<String, String> resolutions = {
+      "1080p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}1080.mp4",
+      "720p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}720.mp4",
+      "480p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}480.mp4",
+      "360p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}360.mp4",
+
+    };
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.singleStorieModel.video_link,
+      resolutions: resolutions,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
         showNotification: true,
         title: widget.singleStorieModel.name,
@@ -48,14 +56,28 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
       ),
     );
     BetterPlayerConfiguration betterPlayerConfiguration =
-        const BetterPlayerConfiguration(
-      controlsConfiguration: BetterPlayerControlsConfiguration(
+        BetterPlayerConfiguration(
+      controlsConfiguration: const BetterPlayerControlsConfiguration(
           enableSubtitles: false,
           enableAudioTracks: false,
-          enableQualities: false,
-          enablePlaybackSpeed: false,
+          enableQualities: true,
+          enablePlaybackSpeed: true,
           showControlsOnInitialize: false,
-          enableOverflowMenu: false),
+          enableOverflowMenu: true),
+      translations: [
+        BetterPlayerTranslations(
+          languageCode: "ru",
+          generalDefaultError: "Ошибка. Видео не может быть произведено",
+          generalNone: "Ошибка :(",
+          generalDefault: "Ошибка :(",
+          playlistLoadingNextVideo: "Загружается следующее видео",
+          controlsLive: "ПРЯМОЙ ЭФИР",
+          controlsNextVideoIn: "Следующее видео",
+          overflowMenuPlaybackSpeed: "Скорость видео",
+          overflowMenuSubtitles: "Субтитры",
+          overflowMenuQuality: "Качество видео",
+        )
+      ],
       autoPlay: true,
       looping: false,
       deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
