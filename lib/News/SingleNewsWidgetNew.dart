@@ -31,7 +31,7 @@ class SingleNewsWidgetNew extends StatelessWidget {
                 placeholder: (context, url) =>
                     const Image(image: AssetImage('images/Loading_icon.gif')),
                 imageUrl: singleNewsModelNew.img_link,
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
                 width: double.maxFinite,
                 height: double.maxFinite,
                 alignment: Alignment.topCenter,

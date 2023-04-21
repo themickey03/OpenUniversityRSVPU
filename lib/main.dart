@@ -3,6 +3,7 @@ import 'main_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,14 @@ class _MyAppState extends State<MyApp> {
           };
           MaterialColor mainBlue = MaterialColor(0xFF224CA4, mainBlueMapColor);
           return MaterialApp(
-            locale: const Locale("ru", "RU"),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('ru'),
+            ],
             theme: themeNotifier.isDark
             ? ThemeData(colorScheme: const ColorScheme.dark().copyWith(secondary: mainBlue[900]))
             : ThemeData(colorScheme: const ColorScheme.light().copyWith( secondary: mainBlue[900], primary: mainBlue[900])),

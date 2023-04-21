@@ -93,6 +93,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     _betterPlayerController.addEventsListener((event) {
       if (event.betterPlayerEventType.name == "initialized") {
         _betterPlayerController.seekTo(Duration(seconds: _savedPosition));
+        _betterPlayerController.play();
       }
       if (event.betterPlayerEventType.name == "openFullscreen") {
         _betterPlayerController.setOverriddenFit(BoxFit.fitHeight);

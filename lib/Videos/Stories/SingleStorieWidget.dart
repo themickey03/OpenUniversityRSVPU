@@ -59,6 +59,7 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
         BetterPlayerConfiguration(
       controlsConfiguration: const BetterPlayerControlsConfiguration(
           enableSubtitles: false,
+          enablePip: true,
           enableAudioTracks: false,
           enableQualities: true,
           enablePlaybackSpeed: true,
@@ -93,6 +94,7 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
     _betterPlayerController.addEventsListener((event) {
       if (event.betterPlayerEventType.name == "initialized") {
         _betterPlayerController.seekTo(Duration(seconds: _savedPosition));
+        _betterPlayerController.play();
       }
       if (event.betterPlayerEventType.name == "openFullscreen") {
         _betterPlayerController.setOverriddenFit(BoxFit.fitHeight);

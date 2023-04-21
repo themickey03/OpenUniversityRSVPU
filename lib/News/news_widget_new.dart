@@ -175,7 +175,7 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                                       fit: BoxFit.cover,
                                       width: double.maxFinite,
                                       height: double.maxFinite,
-                                      alignment: Alignment.topCenter,
+                                      alignment: Alignment.center,
                                     ),
                                   ),
                                   newsTags != ""
