@@ -115,7 +115,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                 if (_postsJsonFiltered[index]['name'] != "" &&
                     _postsJsonFiltered[index]['name'] != null) {
                   name = _postsJsonFiltered[index]['name'];
-                  name = name.replaceAll(r"\n", "");
+                  name = name.replaceAll(r"\n", " ");
+                  name = name.replaceAll(r"/n", " ");
                   name = name.toUpperCase();
                 }
                 var mainDesc = <String, dynamic>{};
@@ -125,13 +126,15 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                 var jobTitle = "";
                 if (mainDesc['Должность'] != null && mainDesc['Должность'] != "") {
                   jobTitle = mainDesc['Должность'];
+                  jobTitle = jobTitle.replaceAll(r"/n", " ");
+                  jobTitle = jobTitle.replaceAll(r"\n", " ");
                 }
 
                 var interview = "";
                 if (_postsJsonFiltered[index]['interview'] != "" &&
                     _postsJsonFiltered[index]['interview'] != null) {
                   interview = _postsJsonFiltered[index]['interview'];
-                  String br = "";
+                  String br = " ";
                   interview = interview.replaceAll(r"\n", br);
 
                 }

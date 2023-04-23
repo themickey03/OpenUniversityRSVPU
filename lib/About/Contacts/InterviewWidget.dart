@@ -9,7 +9,7 @@ class InterviewWidget extends StatefulWidget {
   const InterviewWidget({super.key, required this.data});
 
   @override
-  _InterviewWidgetState createState() => _InterviewWidgetState();
+  State<InterviewWidget> createState() => _InterviewWidgetState();
 }
 
 class _InterviewWidgetState extends State<InterviewWidget> {

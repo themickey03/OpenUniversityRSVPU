@@ -28,7 +28,6 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
   void initState() {
     super.initState();
     getData();
-
     Map<String, String> resolutions = {
       "1080p" : "${widget.singleLectionModel.video_link.substring(0, widget.singleLectionModel.video_link.length-4)}1080.mp4",
       "720p" : "${widget.singleLectionModel.video_link.substring(0, widget.singleLectionModel.video_link.length-4)}720.mp4",
@@ -66,7 +65,7 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
             enableOverflowMenu: true),
         translations: [
           BetterPlayerTranslations(
-            languageCode: "RU",
+            languageCode: "ru",
             generalDefaultError: "Ошибка. Видео не может быть произведено",
             generalNone: "Ошибка :(",
             generalDefault: "Ошибка :(",
@@ -139,6 +138,24 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
+          _betterPlayerController.setBetterPlayerControlsConfiguration(
+              BetterPlayerControlsConfiguration(
+                  enableSubtitles: false,
+                  enableAudioTracks: false,
+                  enableQualities: true,
+                  enablePlaybackSpeed: true,
+                  showControlsOnInitialize: false,
+                  enableOverflowMenu: true,
+                  overflowMenuIconsColor: !themeNotifier.isDark
+                      ? Colors.black
+                      : Colors.white,
+                  overflowModalColor: !themeNotifier.isDark
+                      ? Colors.white
+                      : ThemeData.dark().primaryColor,
+                  overflowModalTextColor: !themeNotifier.isDark
+                      ? Colors.black
+                      : Colors.white)
+          );
       return Scaffold(
         appBar: AppBar(
           title: const Text(""),

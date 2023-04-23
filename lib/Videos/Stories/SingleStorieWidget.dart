@@ -140,6 +140,24 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
     super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
+          _betterPlayerController.setBetterPlayerControlsConfiguration(
+              BetterPlayerControlsConfiguration(
+                  enableSubtitles: false,
+                  enableAudioTracks: false,
+                  enableQualities: true,
+                  enablePlaybackSpeed: true,
+                  showControlsOnInitialize: false,
+                  enableOverflowMenu: true,
+                  overflowMenuIconsColor: !themeNotifier.isDark
+                      ? Colors.black
+                      : Colors.white,
+                  overflowModalColor: !themeNotifier.isDark
+                      ? Colors.white
+                      : ThemeData.dark().primaryColor,
+                  overflowModalTextColor: !themeNotifier.isDark
+                      ? Colors.black
+                      : Colors.white)
+          );
       return Scaffold(
         appBar: AppBar(
           title: const Text(""),

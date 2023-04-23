@@ -69,7 +69,7 @@ class SinglePersonWidget extends StatelessWidget {
                   Align(
                       alignment: Alignment.center,
                       child: Text(
-                        singlePersonModelNew.name,
+                        singlePersonModelNew.name.replaceAll(r"/n", " ").replaceAll(r"\n", " "),
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
@@ -90,12 +90,12 @@ class SinglePersonWidget extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                         text:
-                                            "${singlePersonModelNew.description.keys.elementAt(index)}:",
+                                            "${singlePersonModelNew.description.keys.elementAt(index).replaceAll(r"/n", " ").replaceAll(r"\n", " ")}:",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     TextSpan(
                                         text:
-                                            " ${singlePersonModelNew.description.values.elementAt(index)}")
+                                            " ${singlePersonModelNew.description.values.elementAt(index).replaceAll(r"/n", " ").replaceAll(r"\n", " ")}")
                                   ])),
                             ));
                       }),
