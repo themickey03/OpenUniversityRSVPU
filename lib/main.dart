@@ -9,13 +9,15 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
-      .then((value) => runApp(MyApp()));
-  runApp(MyApp());
+      .then((value) => runApp(const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -48,8 +50,12 @@ class _MyAppState extends State<MyApp> {
               Locale('ru'),
             ],
             theme: themeNotifier.isDark
-            ? ThemeData(colorScheme: const ColorScheme.dark().copyWith(secondary: mainBlue[900]))
-            : ThemeData(colorScheme: const ColorScheme.light().copyWith( secondary: mainBlue[900], primary: mainBlue[900])),
+                ? ThemeData(
+                    colorScheme: const ColorScheme.dark()
+                        .copyWith(secondary: mainBlue[900]))
+                : ThemeData(
+                    colorScheme: const ColorScheme.light().copyWith(
+                        secondary: mainBlue[900], primary: mainBlue[900])),
             debugShowCheckedModeBanner: false,
             home: const MainWidget(),
           );

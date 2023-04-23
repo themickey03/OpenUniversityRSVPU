@@ -3,12 +3,11 @@ import 'News/news_widget_new.dart';
 import 'Videos/video_widget.dart';
 import 'About/AboutWidget.dart';
 
-
 class MainWidget extends StatefulWidget {
   const MainWidget({Key? key}) : super(key: key);
 
   @override
-  _WithMainWidgetState createState() => _WithMainWidgetState();
+  State<MainWidget> createState() => _WithMainWidgetState();
 }
 
 class _WithMainWidgetState extends State<MainWidget> {
@@ -25,7 +24,7 @@ class _WithMainWidgetState extends State<MainWidget> {
       _selectedIndex = index;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

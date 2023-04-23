@@ -10,7 +10,7 @@ class AppSettingsWidget extends StatefulWidget {
   const AppSettingsWidget({super.key});
 
   @override
-  _AppSettingsWidgetState createState() => _AppSettingsWidgetState();
+  State<AppSettingsWidget> createState() => _AppSettingsWidgetState();
 }
 
 class _AppSettingsWidgetState extends State<AppSettingsWidget> {
@@ -45,18 +45,20 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
       prefs.remove(list[i]);
     }
   }
+
   void clearDataCache() async {
     final prefs = await SharedPreferences.getInstance();
     final Directory tempDir = await getTemporaryDirectory();
-    final Directory libCacheDir = Directory("${tempDir.path}/libCachedImageData");
+    final Directory libCacheDir =
+        Directory("${tempDir.path}/libCachedImageData");
     await libCacheDir.delete(recursive: true);
     final list = prefs
         .getKeys()
         .where((String key) =>
-        key.toString().toLowerCase().contains("news_output") ||
-        key.toString().toLowerCase().contains("stories_output") ||
-        key.toString().toLowerCase().contains("lections_output") ||
-        key.toString().toLowerCase().contains("persons_output"))
+            key.toString().toLowerCase().contains("news_output") ||
+            key.toString().toLowerCase().contains("stories_output") ||
+            key.toString().toLowerCase().contains("lections_output") ||
+            key.toString().toLowerCase().contains("persons_output"))
         .toList();
     for (int i = 0; i < list.length; i++) {
       prefs.remove(list[i]);
@@ -79,7 +81,6 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
         prefs.setDouble(id, value);
         break;
     }
-    ;
   }
 
   @override
@@ -169,9 +170,11 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                               child: const Text('Хорошо, я согласен'),
                               onPressed: () {
                                 clearVideoCache();
-                                setSettings("VideoWatchedSaving", !_isVideoWatchedSaving);
+                                setSettings("VideoWatchedSaving",
+                                    !_isVideoWatchedSaving);
                                 setState(() {
-                                  _isVideoWatchedSaving = !_isVideoWatchedSaving;
+                                  _isVideoWatchedSaving =
+                                      !_isVideoWatchedSaving;
                                 });
                                 Navigator.of(context).pop();
                               },
@@ -187,8 +190,7 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                         );
                       },
                     );
-                  }
-                  else{
+                  } else {
                     setSettings("VideoWatchedSaving", !_isVideoWatchedSaving);
                     setState(() {
                       _isVideoWatchedSaving = !_isVideoWatchedSaving;
@@ -227,15 +229,13 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                   );
                 },
                 child: ListTile(
-                  visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                  title: Row(
-                    children: [
-                      Icon(Icons.sd_storage),
-                      const Expanded(
-                          child: Text("   Очистить историю просмотра видео",
-                              style: TextStyle(fontSize: 16))),
-                    ]
-                  ),
+                  visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                  title:  Row(children: const [
+                    Icon(Icons.sd_storage),
+                    Expanded(
+                        child: Text("   Очистить историю просмотра видео",
+                            style: TextStyle(fontSize: 16))),
+                  ]),
                 ),
               ),
               const Divider(),
@@ -258,7 +258,7 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                           ),
                           MaterialButton(
                             child:
-                            const Text('Нет, оставить загруженные данные'),
+                                const Text('Нет, оставить загруженные данные'),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -269,15 +269,13 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                   );
                 },
                 child: ListTile(
-                  visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                  title: Row(
-                      children: const [
-                        Icon(Icons.newspaper_sharp),
-                        Expanded(
-                            child: Text("   Очистить предзагруженные данные",
-                                style: TextStyle(fontSize: 16))),
-                      ]
-                  ),
+                  visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                  title: Row(children: const [
+                    Icon(Icons.newspaper_sharp),
+                    Expanded(
+                        child: Text("   Очистить предзагруженные данные",
+                            style: TextStyle(fontSize: 16))),
+                  ]),
                 ),
               )
             ],

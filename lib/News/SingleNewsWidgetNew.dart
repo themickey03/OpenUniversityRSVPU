@@ -30,7 +30,7 @@ class SingleNewsWidgetNew extends StatelessWidget {
               child: CachedNetworkImage(
                 placeholder: (context, url) =>
                     const Image(image: AssetImage('images/Loading_icon.gif')),
-                imageUrl: singleNewsModelNew.img_link,
+                imageUrl: singleNewsModelNew.imgLink,
                 fit: BoxFit.fitHeight,
                 width: double.maxFinite,
                 height: double.maxFinite,
@@ -52,7 +52,7 @@ class SingleNewsWidgetNew extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                          "Дата публикации: ${singleNewsModelNew.publish_time}",
+                          "Дата публикации: ${singleNewsModelNew.publishTime}",
                           style: const TextStyle(color: Colors.grey),
                           textAlign: TextAlign.right),
                     ),
@@ -90,13 +90,13 @@ class SingleNewsWidgetNew extends StatelessWidget {
                     ),
                   )
                 : Container(),
-            singleNewsModelNew.news_tags != ""
+            singleNewsModelNew.newsTags != ""
                 ? Padding(
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 8.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(singleNewsModelNew.news_tags,
+                      child: Text(singleNewsModelNew.newsTags,
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                           softWrap: true,

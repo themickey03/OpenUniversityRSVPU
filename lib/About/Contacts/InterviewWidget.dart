@@ -34,9 +34,8 @@ class _InterviewWidgetState extends State<InterviewWidget> {
               kIsWeb
                   ? HtmlWidget(widget.data)
                   : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: HtmlWidget(widget.data)
-              )
+                      padding: const EdgeInsets.all(8.0),
+                      child: HtmlWidget(widget.data))
             ],
           ),
         ),

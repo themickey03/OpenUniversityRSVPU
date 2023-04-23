@@ -1,11 +1,6 @@
-class SingleStorieModel{
+class SingleStorieModel {
   final int id;
-  final String name, duration, video_link, desc, img_link;
-  SingleStorieModel(
-      this.id,
-      this.name,
-      this.video_link,
-      this.duration,
-      this.desc,
-      this.img_link);
+  final String name, duration, videoLink, desc, imgLink;
+  SingleStorieModel(this.id, this.name, this.videoLink, this.duration,
+      this.desc, this.imgLink);
 }

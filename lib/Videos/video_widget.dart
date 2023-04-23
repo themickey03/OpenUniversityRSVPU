@@ -21,7 +21,7 @@ class VideoWidgetMain extends StatelessWidget {
                 child: Text("Видео", style: TextStyle(fontSize: 24))),
             elevation: 0,
           ),
-          body: VideoWidget());
+          body: const VideoWidget());
     });
   }
 }
@@ -37,10 +37,9 @@ class VideoWidget extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor:
-                !themeNotifier.isDark
-                    ? const Color.fromRGBO(34, 76, 164, 1)
-                    : ThemeData.dark().primaryColor,
+            backgroundColor: !themeNotifier.isDark
+                ? const Color.fromRGBO(34, 76, 164, 1)
+                : ThemeData.dark().primaryColor,
             flexibleSpace: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: const [
@@ -58,7 +57,7 @@ class VideoWidget extends StatelessWidget {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               StoriesWidget(),
               LectionsWidget(),

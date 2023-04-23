@@ -244,37 +244,41 @@ class _LectionsWidgetState extends State<LectionsWidget>
                                         alignment: Alignment.topCenter,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 12.0, bottom: 6.0),
-                                        child: Align(
+                                          padding: const EdgeInsets.only(
+                                              right: 12.0, bottom: 6.0),
+                                          child: Align(
                                             alignment: Alignment.bottomRight,
                                             child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black.withOpacity(0.7),
-                                                  borderRadius: BorderRadius.circular(10)
-                                                ),
-                                                constraints: const BoxConstraints(
-                                                  maxWidth: 300.0,
-                                                  minWidth: 30.0,
-                                                ),
-                                                child: Wrap(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(4.0),
-                                                      child: Text(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              constraints: const BoxConstraints(
+                                                maxWidth: 300.0,
+                                                minWidth: 30.0,
+                                              ),
+                                              child: Wrap(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            4.0),
+                                                    child: Text(
                                                         doTimeFromString(
-                                                                _savedPosition[id]
+                                                                _savedPosition[
+                                                                        id]
                                                                     .toString()) +
                                                             duration,
                                                         style: const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 14)),
-                                                    )
-                                                  ],
-                                                ),
+                                                  )
+                                                ],
                                               ),
-                                            )
-                                      ),
+                                            ),
+                                          )),
                                     ],
                                   ),
                                 ),

@@ -28,10 +28,10 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
     try {
       if (kIsWeb) {
         setState(() {
-          _url = "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/persons";
+          _url =
+              "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/persons";
         });
-      }
-      else{
+      } else {
         setState(() {
           _url = 'http://api.bytezone.online/persons';
         });
@@ -45,13 +45,14 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
       });
     } catch (err) {
       var prefs = await SharedPreferences.getInstance();
-      if (prefs.containsKey("persons_output")){
+      if (prefs.containsKey("persons_output")) {
         setState(() {
           _postsJson = json.decode(prefs.getString("persons_output")!);
         });
       }
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -92,8 +93,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
 
       return Scaffold(
         appBar: EasySearchBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white),
+          systemOverlayStyle:
+              const SystemUiOverlayStyle(statusBarColor: Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
@@ -106,7 +107,6 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
               _searchValue = value;
             });
           },
-
         ),
         body: RefreshIndicator(
           color: const Color.fromRGBO(34, 76, 164, 1),
@@ -128,7 +128,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                   mainDesc = _postsJsonFiltered[index]['description'];
                 }
                 var jobTitle = "";
-                if (mainDesc['Должность'] != null && mainDesc['Должность'] != "") {
+                if (mainDesc['Должность'] != null &&
+                    mainDesc['Должность'] != "") {
                   jobTitle = mainDesc['Должность'];
                   jobTitle = jobTitle.replaceAll(r"/n", " ");
                   jobTitle = jobTitle.replaceAll(r"\n", " ");
@@ -140,7 +141,6 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                   interview = _postsJsonFiltered[index]['interview'];
                   String br = " ";
                   interview = interview.replaceAll(r"\n", br);
-
                 }
                 var imgLink = "";
                 if (_postsJsonFiltered[index]['img'] != "" &&
@@ -150,11 +150,11 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                     if (_postsJsonFiltered[index]['img']['format'] != "" &&
                         _postsJsonFiltered[index]['img']['format'] != null) {
                       if (kIsWeb) {
-                        imgLink = "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
-                      }
-                      else{
                         imgLink =
-                        "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                            "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
+                      } else {
+                        imgLink =
+                            "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
                       }
                     }
                   }
@@ -166,8 +166,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SinglePersonWidget(
-                              singlePersonModelNew: SinglePersonModelNew(name,
-                                  mainDesc,interview, imgLink))));
+                              singlePersonModelNew: SinglePersonModelNew(
+                                  name, mainDesc, interview, imgLink))));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -184,14 +184,15 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                             width: 200,
                             height: 200,
                             child: SizedBox(
-                              width: MediaQuery.of(context).size.width -
-                                  10.0,
-                              height: (MediaQuery.of(context).size.width -
-                                  10.0) /
-                                  16 *
-                                  9,
+                              width: MediaQuery.of(context).size.width - 10.0,
+                              height:
+                                  (MediaQuery.of(context).size.width - 10.0) /
+                                      16 *
+                                      9,
                               child: CachedNetworkImage(
-                                placeholder: (context, url) => const Image(image: AssetImage('images/Loading_icon.gif')),
+                                placeholder: (context, url) => const Image(
+                                    image:
+                                        AssetImage('images/Loading_icon.gif')),
                                 imageUrl: imgLink,
                                 fit: BoxFit.cover,
                                 width: double.maxFinite,

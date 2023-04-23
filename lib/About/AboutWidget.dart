@@ -10,7 +10,7 @@ class AboutWidget extends StatefulWidget {
   const AboutWidget({super.key});
 
   @override
-  _AboutWidgetState createState() => _AboutWidgetState();
+  State<AboutWidget> createState() => _AboutWidgetState();
 }
 
 class _AboutWidgetState extends State<AboutWidget> {
@@ -21,10 +21,9 @@ class _AboutWidgetState extends State<AboutWidget> {
       return Scaffold(
         appBar: AppBar(
           foregroundColor: Colors.white,
-          backgroundColor:
-              !themeNotifier.isDark
-                  ? const Color.fromRGBO(34, 76, 164, 1)
-                  : ThemeData.dark().primaryColor,
+          backgroundColor: !themeNotifier.isDark
+              ? const Color.fromRGBO(34, 76, 164, 1)
+              : ThemeData.dark().primaryColor,
           title: const Align(
               alignment: Alignment.centerLeft,
               child: Text("О нас", style: TextStyle(fontSize: 24))),
@@ -43,7 +42,7 @@ class _AboutWidgetState extends State<AboutWidget> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 8.0, right: 8.0,bottom: 10.0),
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
                 child: Align(
                     alignment: Alignment.center,
                     child: Text("Открытый университет РГППУ",

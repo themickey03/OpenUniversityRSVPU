@@ -31,21 +31,24 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
     getData();
 
     Map<String, String> resolutions = {
-      "1080p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}1080.mp4",
-      "720p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}720.mp4",
-      "480p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}480.mp4",
-      "360p" : "${widget.singleStorieModel.video_link.substring(0, widget.singleStorieModel.video_link.length-4)}360.mp4",
-
+      "1080p":
+          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}1080.mp4",
+      "720p":
+          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}720.mp4",
+      "480p":
+          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}480.mp4",
+      "360p":
+          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}360.mp4",
     };
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      widget.singleStorieModel.video_link,
+      widget.singleStorieModel.videoLink,
       resolutions: resolutions,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
         showNotification: true,
         title: widget.singleStorieModel.name,
         author: "Открытый университет РГППУ",
-        imageUrl: widget.singleStorieModel.img_link,
+        imageUrl: widget.singleStorieModel.imgLink,
         activityName: "MainActivity",
       ),
       bufferingConfiguration: const BetterPlayerBufferingConfiguration(
@@ -140,24 +143,21 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
     super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-          _betterPlayerController.setBetterPlayerControlsConfiguration(
-              BetterPlayerControlsConfiguration(
-                  enableSubtitles: false,
-                  enableAudioTracks: false,
-                  enableQualities: true,
-                  enablePlaybackSpeed: true,
-                  showControlsOnInitialize: false,
-                  enableOverflowMenu: true,
-                  overflowMenuIconsColor: !themeNotifier.isDark
-                      ? Colors.black
-                      : Colors.white,
-                  overflowModalColor: !themeNotifier.isDark
-                      ? Colors.white
-                      : ThemeData.dark().primaryColor,
-                  overflowModalTextColor: !themeNotifier.isDark
-                      ? Colors.black
-                      : Colors.white)
-          );
+      _betterPlayerController.setBetterPlayerControlsConfiguration(
+          BetterPlayerControlsConfiguration(
+              enableSubtitles: false,
+              enableAudioTracks: false,
+              enableQualities: true,
+              enablePlaybackSpeed: true,
+              showControlsOnInitialize: false,
+              enableOverflowMenu: true,
+              overflowMenuIconsColor:
+                  !themeNotifier.isDark ? Colors.black : Colors.white,
+              overflowModalColor: !themeNotifier.isDark
+                  ? Colors.white
+                  : ThemeData.dark().primaryColor,
+              overflowModalTextColor:
+                  !themeNotifier.isDark ? Colors.black : Colors.white));
       return Scaffold(
         appBar: AppBar(
           title: const Text(""),

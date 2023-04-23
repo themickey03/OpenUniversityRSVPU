@@ -27,10 +27,10 @@ class _StoriesWidgetState extends State<StoriesWidget>
     try {
       if (kIsWeb) {
         setState(() {
-          _url = "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/stories";
+          _url =
+              "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/stories";
         });
-      }
-      else{
+      } else {
         setState(() {
           _url = 'http://api.bytezone.online/stories';
         });
@@ -177,11 +177,11 @@ class _StoriesWidgetState extends State<StoriesWidget>
                     if (_postsJson[index]['img']['format'] != "" &&
                         _postsJson[index]['img']['format'] != null) {
                       if (kIsWeb) {
-                        imgLink = "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
-                      }
-                      else{
                         imgLink =
-                        "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                            "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
+                      } else {
+                        imgLink =
+                            "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
                       }
                     }
                   }
@@ -200,9 +200,9 @@ class _StoriesWidgetState extends State<StoriesWidget>
                 if (_postsJson[index]['path'] != "" &&
                     _postsJson[index]['path'] != null) {
                   if (kIsWeb) {
-                    videoLink = "https://koralex.fun/news_api/buffer.php?type=video&link=${_postsJson[index]['path']}";
-                  }
-                  else{
+                    videoLink =
+                        "https://koralex.fun/news_api/buffer.php?type=video&link=${_postsJson[index]['path']}";
+                  } else {
                     videoLink = _postsJson[index]['path'];
                   }
                 }
@@ -249,9 +249,11 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                             alignment: Alignment.bottomRight,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: Colors.black.withOpacity(0.7),
-                                                  borderRadius: BorderRadius.circular(10)
-                                              ),
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
                                               constraints: const BoxConstraints(
                                                 maxWidth: 300.0,
                                                 minWidth: 30.0,
@@ -259,11 +261,14 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                               child: Wrap(
                                                 children: [
                                                   Padding(
-                                                    padding: const EdgeInsets.all(4.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            4.0),
                                                     child: Text(
                                                         doTimeFromString(
-                                                            _savedPosition[id]
-                                                                .toString()) +
+                                                                _savedPosition[
+                                                                        id]
+                                                                    .toString()) +
                                                             duration,
                                                         style: const TextStyle(
                                                             color: Colors.white,
@@ -272,8 +277,7 @@ class _StoriesWidgetState extends State<StoriesWidget>
                                                 ],
                                               ),
                                             ),
-                                          )
-                                      ),
+                                          )),
                                     ],
                                   ),
                                 ),

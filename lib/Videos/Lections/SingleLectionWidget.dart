@@ -29,22 +29,25 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     super.initState();
     getData();
     Map<String, String> resolutions = {
-      "1080p" : "${widget.singleLectionModel.video_link.substring(0, widget.singleLectionModel.video_link.length-4)}1080.mp4",
-      "720p" : "${widget.singleLectionModel.video_link.substring(0, widget.singleLectionModel.video_link.length-4)}720.mp4",
-      "480p" : "${widget.singleLectionModel.video_link.substring(0, widget.singleLectionModel.video_link.length-4)}480.mp4",
-      "360p" : "${widget.singleLectionModel.video_link.substring(0, widget.singleLectionModel.video_link.length-4)}360.mp4",
-
+      "1080p":
+          "${widget.singleLectionModel.videoLink.substring(0, widget.singleLectionModel.videoLink.length - 4)}1080.mp4",
+      "720p":
+          "${widget.singleLectionModel.videoLink.substring(0, widget.singleLectionModel.videoLink.length - 4)}720.mp4",
+      "480p":
+          "${widget.singleLectionModel.videoLink.substring(0, widget.singleLectionModel.videoLink.length - 4)}480.mp4",
+      "360p":
+          "${widget.singleLectionModel.videoLink.substring(0, widget.singleLectionModel.videoLink.length - 4)}360.mp4",
     };
 
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      widget.singleLectionModel.video_link,
+      widget.singleLectionModel.videoLink,
       resolutions: resolutions,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
         showNotification: true,
         title: widget.singleLectionModel.name,
         author: "Открытый университет РГППУ",
-        imageUrl: widget.singleLectionModel.img_link,
+        imageUrl: widget.singleLectionModel.imgLink,
         activityName: "MainActivity",
       ),
       bufferingConfiguration: const BetterPlayerBufferingConfiguration(
@@ -56,27 +59,27 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     );
     BetterPlayerConfiguration betterPlayerConfiguration =
         BetterPlayerConfiguration(
-          controlsConfiguration: const BetterPlayerControlsConfiguration(
-            enableSubtitles: false,
-            enableAudioTracks: false,
-            enableQualities: true,
-            enablePlaybackSpeed: true,
-            showControlsOnInitialize: false,
-            enableOverflowMenu: true),
-        translations: [
-          BetterPlayerTranslations(
-            languageCode: "ru",
-            generalDefaultError: "Ошибка. Видео не может быть произведено",
-            generalNone: "Ошибка :(",
-            generalDefault: "Ошибка :(",
-            playlistLoadingNextVideo: "Загружается следующее видео",
-            controlsLive: "ПРЯМОЙ ЭФИР",
-            controlsNextVideoIn: "Следующее видео",
-            overflowMenuPlaybackSpeed: "Скорость видео",
-            overflowMenuSubtitles: "Субтитры",
-            overflowMenuQuality: "Качество видео",
-          )
-        ],
+      controlsConfiguration: const BetterPlayerControlsConfiguration(
+          enableSubtitles: false,
+          enableAudioTracks: false,
+          enableQualities: true,
+          enablePlaybackSpeed: true,
+          showControlsOnInitialize: false,
+          enableOverflowMenu: true),
+      translations: [
+        BetterPlayerTranslations(
+          languageCode: "ru",
+          generalDefaultError: "Ошибка. Видео не может быть произведено",
+          generalNone: "Ошибка :(",
+          generalDefault: "Ошибка :(",
+          playlistLoadingNextVideo: "Загружается следующее видео",
+          controlsLive: "ПРЯМОЙ ЭФИР",
+          controlsNextVideoIn: "Следующее видео",
+          overflowMenuPlaybackSpeed: "Скорость видео",
+          overflowMenuSubtitles: "Субтитры",
+          overflowMenuQuality: "Качество видео",
+        )
+      ],
       autoPlay: true,
       looping: false,
       deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
@@ -138,24 +141,21 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
     super.build(context);
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-          _betterPlayerController.setBetterPlayerControlsConfiguration(
-              BetterPlayerControlsConfiguration(
-                  enableSubtitles: false,
-                  enableAudioTracks: false,
-                  enableQualities: true,
-                  enablePlaybackSpeed: true,
-                  showControlsOnInitialize: false,
-                  enableOverflowMenu: true,
-                  overflowMenuIconsColor: !themeNotifier.isDark
-                      ? Colors.black
-                      : Colors.white,
-                  overflowModalColor: !themeNotifier.isDark
-                      ? Colors.white
-                      : ThemeData.dark().primaryColor,
-                  overflowModalTextColor: !themeNotifier.isDark
-                      ? Colors.black
-                      : Colors.white)
-          );
+      _betterPlayerController.setBetterPlayerControlsConfiguration(
+          BetterPlayerControlsConfiguration(
+              enableSubtitles: false,
+              enableAudioTracks: false,
+              enableQualities: true,
+              enablePlaybackSpeed: true,
+              showControlsOnInitialize: false,
+              enableOverflowMenu: true,
+              overflowMenuIconsColor:
+                  !themeNotifier.isDark ? Colors.black : Colors.white,
+              overflowModalColor: !themeNotifier.isDark
+                  ? Colors.white
+                  : ThemeData.dark().primaryColor,
+              overflowModalTextColor:
+                  !themeNotifier.isDark ? Colors.black : Colors.white));
       return Scaffold(
         appBar: AppBar(
           title: const Text(""),
@@ -170,20 +170,20 @@ class _SingleLectionWidgetState extends State<SingleLectionWidget>
             children: [
               kIsWeb
                   ? Container(
-                        height: 300,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            color: Colors.red,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8.0))),
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Тут находится видео",
-                            textAlign: TextAlign.center,
-                          ),
+                      height: 300,
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          color: Colors.red,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8.0))),
+                      child: const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Тут находится видео",
+                          textAlign: TextAlign.center,
                         ),
-                      )
+                      ),
+                    )
                   : SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.width / 16 * 9,

@@ -41,7 +41,7 @@ class SinglePersonWidget extends StatelessWidget {
                 child: Stack(alignment: Alignment.center, children: [
                   Opacity(
                       opacity: 0.3,
-                      child: Image.network(singlePersonModelNew.img_link,
+                      child: Image.network(singlePersonModelNew.imgLink,
                           color: Colors.black)),
                   ClipRect(
                     child: BackdropFilter(
@@ -49,7 +49,7 @@ class SinglePersonWidget extends StatelessWidget {
                       child: CachedNetworkImage(
                         placeholder: (context, url) => const Image(
                             image: AssetImage('images/Loading_icon.gif')),
-                        imageUrl: singlePersonModelNew.img_link,
+                        imageUrl: singlePersonModelNew.imgLink,
                         fit: BoxFit.contain,
                         width: double.maxFinite,
                         height: double.maxFinite,
@@ -69,7 +69,9 @@ class SinglePersonWidget extends StatelessWidget {
                   Align(
                       alignment: Alignment.center,
                       child: Text(
-                        singlePersonModelNew.name.replaceAll(r"/n", " ").replaceAll(r"\n", " "),
+                        singlePersonModelNew.name
+                            .replaceAll(r"/n", " ")
+                            .replaceAll(r"\n", " "),
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
