@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:open_university_rsvpu/News/SingleNewsModelNew.dart';
 import 'package:open_university_rsvpu/News/SingleNewsWidgetNew.dart';
@@ -83,6 +84,8 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: EasySearchBar(
+          systemOverlayStyle:
+              const SystemUiOverlayStyle(statusBarColor: Colors.white),
           title: const Align(
               alignment: Alignment.centerLeft,
               child: Text("Новости", style: TextStyle(fontSize: 24))),
@@ -119,9 +122,9 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                       if (_postsJsonFiltered[index]["img_link"] != null &&
                           _postsJsonFiltered[index]["img_link"] != "") {
                         if (kIsWeb) {
-                          imagelink = "https://koralex.fun/news_api/buffer.php?type=image&link=${_postsJsonFiltered[index]["img_link"]}";
-                        }
-                        else{
+                          imagelink =
+                              "https://koralex.fun/news_api/buffer.php?type=image&link=${_postsJsonFiltered[index]["img_link"]}";
+                        } else {
                           imagelink = _postsJsonFiltered[index]["img_link"];
                         }
                       }

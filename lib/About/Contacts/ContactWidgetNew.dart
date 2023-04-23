@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
@@ -91,6 +92,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
 
       return Scaffold(
         appBar: EasySearchBar(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
@@ -103,6 +106,7 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
               _searchValue = value;
             });
           },
+
         ),
         body: RefreshIndicator(
           color: const Color.fromRGBO(34, 76, 164, 1),
