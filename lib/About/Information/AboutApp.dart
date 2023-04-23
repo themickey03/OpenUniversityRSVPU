@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' show Platform;
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 
 class AboutAppWidget extends StatefulWidget {
@@ -10,6 +12,21 @@ class AboutAppWidget extends StatefulWidget {
 }
 
 class _AboutAppWidgetState extends State<AboutAppWidget> {
+
+  String _versionNumber = "9.9.9";
+
+  void getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      setState(() {
+        _versionNumber = packageInfo.version.toString();
+      });
+    });
+  }
+  @override
+  void initState(){
+    super.initState();
+    getVersion();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
@@ -35,8 +52,8 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
               Align(
                 alignment: Alignment.center,
                 child: Column(
-                  children: const [
-                    Padding(
+                  children: [
+                    const Padding(
                       padding: EdgeInsets.only(
                           top: 15.0, bottom: 15.0, left: 5.0, right: 5.0),
                       child: Image(
@@ -45,7 +62,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                         height: 141,
                       ),
                     ),
-                    Align(
+                    const Align(
                       alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
@@ -55,7 +72,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                             textAlign: TextAlign.center),
                       ),
                     ),
-                    Align(
+                    const Align(
                       alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
@@ -67,11 +84,11 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
                         child: Text(
-                          "Версия: 1.0.0\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
-                          style: TextStyle(color: Colors.grey),
+                          "Версия: ${_versionNumber} - ${Platform.isIOS ? "IOS" : "Android"}\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
+                          style: const TextStyle(color: Colors.grey),
                           textAlign: TextAlign.center,
                         ),
                       ),
