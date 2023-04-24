@@ -84,8 +84,8 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: EasySearchBar(
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: Colors.white),
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(statusBarIconBrightness: Brightness.light),
           title: const Align(
               alignment: Alignment.centerLeft,
               child: Text("Новости", style: TextStyle(fontSize: 24))),

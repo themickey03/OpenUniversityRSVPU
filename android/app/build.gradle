@@ -35,14 +35,11 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.mickey.open_university_rsvpu"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
+        applicationId "com.themickey03.open_university_rsvpu"
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled = true
-        versionCode flutterVersionCode
+        versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 

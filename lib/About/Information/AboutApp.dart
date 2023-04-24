@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
@@ -87,7 +88,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                         padding: const EdgeInsets.only(
                             top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
                         child: Text(
-                          "Версия: ${_versionNumber} - ${Platform.isIOS ? "IOS" : "Android"}\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
+                          "Версия: $_versionNumber - ${!kIsWeb ? Platform.isIOS ? "IOS" : "Android" : "Browser Version"}\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
                           style: const TextStyle(color: Colors.grey),
                           textAlign: TextAlign.center,
                         ),
