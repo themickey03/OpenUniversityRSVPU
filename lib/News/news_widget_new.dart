@@ -7,10 +7,12 @@ import 'package:http/http.dart';
 import 'package:open_university_rsvpu/News/SingleNewsModelNew.dart';
 import 'package:open_university_rsvpu/News/SingleNewsWidgetNew.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:open_university_rsvpu/rsvpu_icon_class_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 
 class NewsWidgetNew extends StatefulWidget {
   const NewsWidgetNew({Key? key}) : super(key: key);
@@ -84,6 +86,7 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: EasySearchBar(
+          leading: const Icon(RsvpuIconClass.universityLogo, color: Colors.white),
           systemOverlayStyle: const SystemUiOverlayStyle()
               .copyWith(statusBarIconBrightness: Brightness.light),
           title: const Align(

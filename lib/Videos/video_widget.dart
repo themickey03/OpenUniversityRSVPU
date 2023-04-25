@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_university_rsvpu/Videos/Lections/LectionsWidget.dart';
 import 'package:open_university_rsvpu/Videos/Stories/StoriesWidget.dart';
 import 'package:provider/provider.dart';
+import 'package:open_university_rsvpu/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 
 class VideoWidgetMain extends StatelessWidget {
@@ -12,6 +13,12 @@ class VideoWidgetMain extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
           appBar: AppBar(
+            leadingWidth: 40,
+            leading:
+              const Padding(
+                padding: EdgeInsets.only(left: 3),
+                child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
+              ),
             foregroundColor: Colors.white,
             backgroundColor: !themeNotifier.isDark
                 ? const Color.fromRGBO(34, 76, 164, 1)
