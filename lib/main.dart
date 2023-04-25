@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main_widget.dart';
+import 'package:open_university_rsvpu/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:flutter/services.dart';
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
                     colorScheme: const ColorScheme.light().copyWith(
                         secondary: mainBlue[900], primary: mainBlue[900])),
             debugShowCheckedModeBanner: false,
-            home: const MainWidget(),
+            home: const SplashScreen(),
           );
         }));
   }

@@ -58,7 +58,7 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
                       padding: EdgeInsets.only(
                           top: 15.0, bottom: 15.0, left: 5.0, right: 5.0),
                       child: Image(
-                        image: AssetImage('images/Logo.png'),
+                        image: AssetImage('images/logo.png'),
                         width: 250,
                         height: 141,
                       ),
