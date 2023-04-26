@@ -1,13 +1,15 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:open_university_rsvpu/About/Contacts/SinglePersonModel.dart';
+import 'package:open_university_rsvpu/About/Contacts/InterviewWidget.dart';
 
 class SinglePersonWidget extends StatelessWidget {
-  final SinglePersonModel singlePersonModel;
+  final SinglePersonModelNew singlePersonModelNew;
 
-  const SinglePersonWidget({Key? key, required this.singlePersonModel})
+  const SinglePersonWidget({Key? key, required this.singlePersonModelNew})
       : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class SinglePersonWidget extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(singlePersonModel.name),
+          title: const Text(""),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
@@ -25,9 +27,9 @@ class SinglePersonWidget extends StatelessWidget {
         body: ListView(
           children: [
             Container(
-              height: 400,
+              height: 300,
               width: 150,
-              margin: EdgeInsets.only(bottom: 5.0),
+              margin: const EdgeInsets.only(bottom: 5.0),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(5.0),
@@ -39,20 +41,19 @@ class SinglePersonWidget extends StatelessWidget {
                 child: Stack(alignment: Alignment.center, children: [
                   Opacity(
                       opacity: 0.3,
-                      child: Image.network(singlePersonModel.img_link,
+                      child: Image.network(singlePersonModelNew.imgLink,
                           color: Colors.black)),
                   ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                      child: FadeInImage.assetNetwork(
-                        alignment: Alignment.topCenter,
-                        placeholder: 'images/Loading_icon.gif',
-                        image: singlePersonModel.img_link != ""
-                            ? singlePersonModel.img_link
-                            : "http://koralex.fun:3000/_nuxt/assets/images/logo.png",
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) => const Image(
+                            image: AssetImage('images/Loading_icon.gif')),
+                        imageUrl: singlePersonModelNew.imgLink,
                         fit: BoxFit.contain,
                         width: double.maxFinite,
                         height: double.maxFinite,
+                        alignment: Alignment.topCenter,
                       ),
                     ),
                   ),
@@ -60,135 +61,73 @@ class SinglePersonWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3.0),
+              padding:
+                  const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Align(
                       alignment: Alignment.center,
-                      child: Text(singlePersonModel.name,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold))),
-                  singlePersonModel.job_title != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Должность: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.job_title)
-                            ]))
-                      : Container(),
-                  singlePersonModel.structure != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Структурное подразделение: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.structure)
-                            ]))
-                      : Container(),
-                  singlePersonModel.academic_degree != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Ученая степень: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.academic_degree)
-                            ]))
-                      : Container(),
-                  singlePersonModel.academic_title != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Ученое звание: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.academic_title)
-                            ]))
-                      : Container(),
-                  singlePersonModel.desc != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Краткие биографические данные: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.desc)
-                            ]))
-                      : Container(),
-                  singlePersonModel.scientific_interests != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Область научных интересов: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(
-                                  text: singlePersonModel.scientific_interests)
-                            ]))
-                      : Container(),
-                  singlePersonModel.prizes != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Награды: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.prizes)
-                            ]))
-                      : Container(),
-                  singlePersonModel.publishing != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Значимые публикации: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.publishing)
-                            ]))
-                      : Container(),
-                  singlePersonModel.phone != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "Телефон для связи: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.phone)
-                            ]))
-                      : Container(),
-                  singlePersonModel.email != ""
-                      ? SelectableText.rich(TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <TextSpan>[
-                              const TextSpan(
-                                  text: "E-mail для связи: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: singlePersonModel.email)
-                            ]))
+                      child: Text(
+                        singlePersonModelNew.name
+                            .replaceAll(r"/n", " ")
+                            .replaceAll(r"\n", " "),
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      )),
+                  ListView.builder(
+                      itemCount: singlePersonModelNew.description.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 8.0, bottom: 5.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text.rich(TextSpan(
+                                  style: const TextStyle(
+                                      fontSize: 15), //apply style to all
+                                  children: [
+                                    TextSpan(
+                                        text:
+                                            "${singlePersonModelNew.description.keys.elementAt(index).replaceAll(r"/n", " ").replaceAll(r"\n", " ")}:",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    TextSpan(
+                                        text:
+                                            " ${singlePersonModelNew.description.values.elementAt(index).replaceAll(r"/n", " ").replaceAll(r"\n", " ")}")
+                                  ])),
+                            ));
+                      }),
+                  singlePersonModelNew.interview != ""
+                      ? Column(
+                          children: [
+                            const Divider(),
+                            ListTile(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => InterviewWidget(
+                                        data: singlePersonModelNew.interview)));
+                              },
+                              visualDensity: const VisualDensity(
+                                  vertical: -4, horizontal: -4),
+                              title: Row(
+                                children: const [
+                                  Icon(Icons.textsms, size: 15.0),
+                                  Expanded(
+                                    child: Text("    Интервью",
+                                        style: TextStyle(fontSize: 15)),
+                                  ),
+                                ],
+                              ),
+                              trailing: const Icon(Icons.arrow_forward_ios,
+                                  size: 15.0),
+                            ),
+                            const Divider()
+                          ],
+                        )
                       : Container(),
                 ],
               ),
