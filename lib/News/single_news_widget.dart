@@ -4,23 +4,46 @@ import 'package:open_university_rsvpu/News/single_news_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SingleNewsWidgetNew extends StatelessWidget {
   final SingleNewsModelNew singleNewsModelNew;
 
   const SingleNewsWidgetNew({Key? key, required this.singleNewsModelNew})
       : super(key: key);
+
+
+  void _onShare(context, shareText, shareSubject) async{
+    final box = context.findRenderObject() as RenderBox?;
+    await Share.share(
+      shareText,
+      subject: shareSubject,
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text(""),
+          title: const Text("Новость", style: TextStyle(fontSize: 24),),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
               : ThemeData.dark().primaryColor,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: InkWell(
+                onTap: (){
+                  _onShare(context, "Новость РГППУ: ${singleNewsModelNew.linkToNews}", "Новость РГППУ: ${singleNewsModelNew.linkToNews}");
+                },
+                child: const Icon(Icons.share),
+              ),
+            )
+          ],
         ),
         body: ListView(
           children: [

@@ -115,6 +115,11 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                         subtitle = _postsJsonFiltered[index]["subtitle"];
                       }
 
+                      var linkToNews = "";
+                      if (_postsJsonFiltered[index]["link"] != null) {
+                        linkToNews = _postsJsonFiltered[index]["link"];
+                      }
+
                       var newsTags = "";
                       if (_postsJsonFiltered[index]["news_tags"] != null) {
                         newsTags = _postsJsonFiltered[index]["news_tags"];
@@ -158,6 +163,7 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                                             newsTags,
                                             imagelink,
                                             publishDate,
+                                            linkToNews,
                                             views,
                                             content))));
                               },

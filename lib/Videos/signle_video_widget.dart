@@ -158,7 +158,7 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                   !themeNotifier.isDark ? Colors.black : Colors.white));
       return Scaffold(
         appBar: AppBar(
-          title: const Text(""),
+          title: const Text("Видео"),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
