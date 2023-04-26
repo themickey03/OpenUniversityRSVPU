@@ -44,7 +44,8 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
 
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      widget.singleVideoModel.videoLink,
+      "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}1080.mp4",
+      videoExtension: "mp4",
       resolutions: resolutions,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
         showNotification: true,
@@ -75,6 +76,7 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
           generalDefaultError: "Ошибка. Видео не может быть произведено",
           generalNone: "Ошибка :(",
           generalDefault: "Ошибка :(",
+          generalRetry: "Повторить",
           playlistLoadingNextVideo: "Загружается следующее видео",
           controlsLive: "ПРЯМОЙ ЭФИР",
           controlsNextVideoIn: "Следующее видео",
@@ -97,8 +99,13 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
         betterPlayerDataSource: _betterPlayerDataSource);
     _betterPlayerController.addEventsListener((event) {
       if (event.betterPlayerEventType.name == "initialized") {
-        _betterPlayerController.seekTo(Duration(seconds: _savedPosition));
-        _betterPlayerController.play();
+        _betterPlayerController.play().then((_) => _betterPlayerController.seekTo(Duration(seconds: _savedPosition)).then((_) => {
+          _betterPlayerController.play().then((_) => {
+            _betterPlayerController.pause().then((_) => {
+              _betterPlayerController.play()
+            })
+          })
+        }));
       }
       if (event.betterPlayerEventType.name == "openFullscreen") {
         _betterPlayerController.setOverriddenFit(BoxFit.fitHeight);
