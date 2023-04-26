@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 
 class AboutProjectWidget extends StatefulWidget {
   const AboutProjectWidget({super.key});

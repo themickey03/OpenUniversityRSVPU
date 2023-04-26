@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/About/Contacts/SinglePersonModel.dart';
-import 'package:open_university_rsvpu/About/Contacts/InterviewWidget.dart';
+import 'package:open_university_rsvpu/About/Contacts/single_person_model.dart';
+import 'package:open_university_rsvpu/About/Contacts/interview_widget.dart';
 
 class SinglePersonWidget extends StatelessWidget {
   final SinglePersonModelNew singlePersonModelNew;

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/Videos/VideoListWidget.dart';
+import 'package:open_university_rsvpu/Videos/video_list_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/rsvpu_icon_class_icons.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
-
+import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 class VideoWidgetMain extends StatelessWidget {
   const VideoWidgetMain({super.key});
   @override

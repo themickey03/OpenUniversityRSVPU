@@ -3,12 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:open_university_rsvpu/About/Contacts/SinglePersonModel.dart';
-import 'package:open_university_rsvpu/About/Contacts/SinglePersonWidget.dart';
+import 'package:open_university_rsvpu/About/Contacts/single_person_model.dart';
+import 'package:open_university_rsvpu/About/Contacts/single_person_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ContactWidgetNew extends StatefulWidget {

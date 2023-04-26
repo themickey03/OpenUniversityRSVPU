@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'News/NewsWidget.dart';
-import 'Videos/VideoWidget.dart';
-import 'About/AboutWidget.dart';
+import 'News/news_widget.dart';
+import 'Videos/video_widget_entrypoint.dart';
+import 'About/about_widget.dart';
 
 class MainWidget extends StatefulWidget {
   const MainWidget({Key? key}) : super(key: key);

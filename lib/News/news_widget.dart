@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:open_university_rsvpu/News/SingleNewsModel.dart';
-import 'package:open_university_rsvpu/News/SingleNewsWidget.dart';
+import 'package:open_university_rsvpu/News/single_news_model.dart';
+import 'package:open_university_rsvpu/News/single_news_widget.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
-import 'package:open_university_rsvpu/rsvpu_icon_class_icons.dart';
+import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
