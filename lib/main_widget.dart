@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'News/news_widget_new.dart';
+import 'News/NewsWidget.dart';
 import 'Videos/VideoWidget.dart';
 import 'About/AboutWidget.dart';
 
