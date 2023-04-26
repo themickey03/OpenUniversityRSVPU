@@ -3,9 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'SingleVideoModel.dart';
+import 'single_video_model.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 
 class SingleVideoWidget extends StatefulWidget {
   final SingleVideoModel singleVideoModel;

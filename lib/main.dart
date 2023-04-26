@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/SplashScreen.dart';
+import 'package:open_university_rsvpu/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

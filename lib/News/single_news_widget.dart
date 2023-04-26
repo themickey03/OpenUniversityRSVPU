@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/News/SingleNewsModel.dart';
+import 'package:open_university_rsvpu/News/single_news_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 
 class SingleNewsWidgetNew extends StatelessWidget {
   final SingleNewsModelNew singleNewsModelNew;

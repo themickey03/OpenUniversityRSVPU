@@ -3,10 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:open_university_rsvpu/Videos/SingleVideoWidget.dart';
-import 'package:open_university_rsvpu/Videos/SingleVideoModel.dart';
+import 'package:open_university_rsvpu/Videos/signle_video_widget.dart';
+import 'package:open_university_rsvpu/Videos/single_video_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
+import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:provider/provider.dart';
 
 class VideoListWidget extends StatefulWidget {
