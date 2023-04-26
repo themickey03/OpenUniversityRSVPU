@@ -198,6 +198,8 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                                 width: double.maxFinite,
                                 height: double.maxFinite,
                                 alignment: Alignment.topCenter,
+                                fadeInDuration: const Duration(milliseconds: 0),
+                                fadeOutDuration: const Duration(milliseconds: 0),
                               ),
                             ),
                           ),

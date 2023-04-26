@@ -188,6 +188,8 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                                       width: double.maxFinite,
                                       height: double.maxFinite,
                                       alignment: Alignment.center,
+                                      fadeInDuration: const Duration(milliseconds: 0),
+                                      fadeOutDuration: const Duration(milliseconds: 0),
                                     ),
                                   ),
                                   newsTags != ""

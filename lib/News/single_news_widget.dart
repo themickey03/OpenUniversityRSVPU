@@ -35,7 +35,7 @@ class SingleNewsWidgetNew extends StatelessWidget {
               : ThemeData.dark().primaryColor,
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 15),
               child: InkWell(
                 onTap: (){
                   _onShare(context, "Новость РГППУ: ${singleNewsModelNew.linkToNews}", "Новость РГППУ: ${singleNewsModelNew.linkToNews}");
@@ -58,6 +58,8 @@ class SingleNewsWidgetNew extends StatelessWidget {
                 width: double.maxFinite,
                 height: double.maxFinite,
                 alignment: Alignment.topCenter,
+                fadeInDuration: const Duration(milliseconds: 0),
+                fadeOutDuration: const Duration(milliseconds: 0),
               ),
             ),
             Padding(
@@ -218,6 +220,8 @@ class SingleNewsWidgetNew extends StatelessWidget {
                             width: double.maxFinite,
                             height: double.maxFinite,
                             alignment: Alignment.topCenter,
+                            fadeInDuration: const Duration(milliseconds: 0),
+                            fadeOutDuration: const Duration(milliseconds: 0),
                           ),
                         ),
                       );
