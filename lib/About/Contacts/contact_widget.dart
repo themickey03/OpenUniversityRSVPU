@@ -94,7 +94,11 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
       return Scaffold(
         appBar: EasySearchBar(
           systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(statusBarIconBrightness: Brightness.light),
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)

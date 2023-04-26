@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:open_university_rsvpu/About/Contacts/contact_widget.dart';
 import 'package:open_university_rsvpu/About/Information/about_project.dart';
 import 'package:open_university_rsvpu/About/Settings/app_settings.dart';
@@ -21,6 +22,12 @@ class _AboutWidgetState extends State<AboutWidget> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           leadingWidth: 40,
           leading:
           const Padding(
@@ -82,20 +89,6 @@ class _AboutWidgetState extends State<AboutWidget> {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
               ),
               const Divider(),
-              // ListTile(
-              //   onTap: (){
-              //     Navigator.of(context).push(
-              //         MaterialPageRoute(
-              //             builder: (context) => const VideoSettingsWidget()
-              //         )
-              //     );
-              //   },
-              //   visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-              //   title: const Text("Настройки видео", style:TextStyle(fontSize: 15)),
-              //   leading: const Icon(Icons.video_settings, size: 15.0),
-              //   trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
-              // ),
-              // const Divider(),
               ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(

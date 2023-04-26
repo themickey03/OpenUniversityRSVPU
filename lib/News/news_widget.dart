@@ -88,7 +88,11 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
         appBar: EasySearchBar(
           leading: const Icon(RsvpuIconClass.universityLogo, color: Colors.white),
           systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(statusBarIconBrightness: Brightness.light),
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           title: const Align(
               alignment: Alignment.centerLeft,
               child: Text("Новости", style: TextStyle(fontSize: 24))),

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:open_university_rsvpu/News/single_news_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +29,12 @@ class SingleNewsWidgetNew extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           title: const Text("Новость", style: TextStyle(fontSize: 24),),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark

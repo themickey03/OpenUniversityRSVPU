@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 import 'package:package_info_plus/package_info_plus.dart';
@@ -34,6 +35,12 @@ class _AboutAppWidgetState extends State<AboutAppWidget> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)

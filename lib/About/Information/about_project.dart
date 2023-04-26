@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 
@@ -16,6 +17,12 @@ class _AboutProjectWidgetState extends State<AboutProjectWidget> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)

@@ -237,6 +237,12 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                   !themeNotifier.isDark ? Colors.black : Colors.white));
       return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           title: const Text("Видео"),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark

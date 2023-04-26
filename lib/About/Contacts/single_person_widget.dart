@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,12 @@ class SinglePersonWidget extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle()
+              .copyWith(
+              statusBarIconBrightness: Brightness.light,
+              systemNavigationBarColor: themeNotifier.isDark
+                  ? Colors.black
+                  : Colors.white),
           title: const Text(""),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
