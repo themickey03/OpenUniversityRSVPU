@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset('images/logo.png'),
+                child: Image.asset('images/Logo.png'),
               ),
               const Align(
                   alignment: Alignment.center,
