@@ -3,21 +3,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:open_university_rsvpu/Videos/Lections/SingleLectionModel.dart';
-import 'package:open_university_rsvpu/Videos/Lections/SingleLectionWidget.dart';
+import 'package:open_university_rsvpu/Videos/SingleVideoWidget.dart';
+import 'package:open_university_rsvpu/Videos/SingleVideoModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 import 'package:provider/provider.dart';
 
-class LectionsWidget extends StatefulWidget {
-  const LectionsWidget({super.key});
+class VideoListWidget extends StatefulWidget {
+  final String type;
+  const VideoListWidget({super.key, required this.type});
 
   @override
-  State<LectionsWidget> createState() => _LectionsWidgetState();
+  State<VideoListWidget> createState() => _VideoListWidgetState();
 }
 
-class _LectionsWidgetState extends State<LectionsWidget>
-    with AutomaticKeepAliveClientMixin<LectionsWidget> {
+class _VideoListWidgetState extends State<VideoListWidget>
+    with AutomaticKeepAliveClientMixin<VideoListWidget> {
   var _url = "";
   var _postsJson = [];
   var _savedPosition = List.filled(999, 0);
@@ -28,11 +29,11 @@ class _LectionsWidgetState extends State<LectionsWidget>
       if (kIsWeb) {
         setState(() {
           _url =
-              "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/lections";
+              "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/${widget.type}";
         });
       } else {
         setState(() {
-          _url = 'http://api.bytezone.online/lections';
+          _url = 'http://api.bytezone.online/${widget.type}';
         });
       }
       final response = await get(Uri.parse(_url));
@@ -40,7 +41,7 @@ class _LectionsWidgetState extends State<LectionsWidget>
 
       final prefs = await SharedPreferences.getInstance();
       setState(() {
-        prefs.setString("lections_output", json.encode(jsonData));
+        prefs.setString("${widget.type}_output", json.encode(jsonData));
         _postsJson = jsonData;
         if (_savedPosition.isEmpty) {
           _savedPosition = List.filled(_postsJson.length + 1, 0);
@@ -49,8 +50,8 @@ class _LectionsWidgetState extends State<LectionsWidget>
     } catch (err) {
       final prefs = await SharedPreferences.getInstance();
       setState(() {
-        if (prefs.containsKey("lections_output")) {
-          _postsJson = json.decode(prefs.getString("lections_output")!);
+        if (prefs.containsKey("${widget.type}_output")) {
+          _postsJson = json.decode(prefs.getString("${widget.type}_output")!);
         }
         if (_savedPosition.isEmpty) {
           _savedPosition = List.filled(_postsJson.length + 1, 0);
@@ -74,8 +75,8 @@ class _LectionsWidgetState extends State<LectionsWidget>
   void getData(id) async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getInt("lections_${id.toString()}") != null) {
-        _savedPosition[id] = prefs.getInt("lections_${id.toString()}")!;
+      if (prefs.getInt("${widget.type}_${id.toString()}") != null) {
+        _savedPosition[id] = prefs.getInt("${widget.type}_${id.toString()}")!;
       } else {
         _savedPosition[id] = 0;
       }
@@ -213,9 +214,9 @@ class _LectionsWidgetState extends State<LectionsWidget>
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SingleLectionWidget(
-                                singleLectionModel: SingleLectionModel(id, name,
-                                    videoLink, duration, desc, imgLink))));
+                            builder: (context) => SingleVideoWidget(
+                                singleVideoModel: SingleVideoModel(id, name,
+                                    videoLink, duration, desc, imgLink, widget.type))));
                       },
                       child: Column(
                         children: [

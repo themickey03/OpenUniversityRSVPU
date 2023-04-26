@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/Videos/Lections/LectionsWidget.dart';
-import 'package:open_university_rsvpu/Videos/Stories/StoriesWidget.dart';
+import 'package:open_university_rsvpu/Videos/VideoListWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
@@ -66,8 +65,8 @@ class VideoWidget extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              StoriesWidget(),
-              LectionsWidget(),
+              VideoListWidget(type: "stories"),
+              VideoListWidget(type: "lections")
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'News/news_widget_new.dart';
-import 'Videos/video_widget.dart';
+import 'Videos/VideoWidget.dart';
 import 'About/AboutWidget.dart';
 
 class MainWidget extends StatefulWidget {

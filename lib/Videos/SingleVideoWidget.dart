@@ -3,52 +3,51 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'SingleStorieModel.dart';
+import 'SingleVideoModel.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/About/Settings/ThemeProvider/model_theme.dart';
 
-class SingleStorieWidget extends StatefulWidget {
-  final SingleStorieModel singleStorieModel;
-  const SingleStorieWidget({Key? key, required this.singleStorieModel})
+class SingleVideoWidget extends StatefulWidget {
+  final SingleVideoModel singleVideoModel;
+  const SingleVideoWidget({Key? key, required this.singleVideoModel})
       : super(key: key);
 
   @override
-  State<SingleStorieWidget> createState() => _SingleStorieWidgetState();
+  State<SingleVideoWidget> createState() => _SingleVideoWidgetState();
 }
 
-class _SingleStorieWidgetState extends State<SingleStorieWidget>
-    with AutomaticKeepAliveClientMixin<SingleStorieWidget> {
+class _SingleVideoWidgetState extends State<SingleVideoWidget>
+    with AutomaticKeepAliveClientMixin<SingleVideoWidget> {
   final GlobalKey _betterPlayerKey = GlobalKey();
   late int? _currentPosition;
   var _isVideoStorySaving = true;
   late int _savedPosition = 0;
   late BetterPlayerController _betterPlayerController;
   late BetterPlayerDataSource _betterPlayerDataSource;
-
   @override
   void initState() {
     super.initState();
     getData();
-
     Map<String, String> resolutions = {
       "1080p":
-          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}1080.mp4",
+          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}1080.mp4",
       "720p":
-          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}720.mp4",
+          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}720.mp4",
       "480p":
-          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}480.mp4",
+          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}480.mp4",
       "360p":
-          "${widget.singleStorieModel.videoLink.substring(0, widget.singleStorieModel.videoLink.length - 4)}360.mp4",
+          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}360.mp4",
     };
+
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      widget.singleStorieModel.videoLink,
+      widget.singleVideoModel.videoLink,
       resolutions: resolutions,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
         showNotification: true,
-        title: widget.singleStorieModel.name,
+        title: widget.singleVideoModel.name,
         author: "Открытый университет РГППУ",
-        imageUrl: widget.singleStorieModel.imgLink,
+        imageUrl: widget.singleVideoModel.imgLink,
         activityName: "MainActivity",
       ),
       bufferingConfiguration: const BetterPlayerBufferingConfiguration(
@@ -62,7 +61,6 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
         BetterPlayerConfiguration(
       controlsConfiguration: const BetterPlayerControlsConfiguration(
           enableSubtitles: false,
-          enablePip: true,
           enableAudioTracks: false,
           enableQualities: true,
           enablePlaybackSpeed: true,
@@ -121,16 +119,16 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
   void saveData(data) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(
-        "stories_${widget.singleStorieModel.id.toString()}", data);
+        "${widget.singleVideoModel.typeOfVideo}_${widget.singleVideoModel.id.toString()}", data);
   }
 
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getInt("stories_${widget.singleStorieModel.id.toString()}") !=
+      if (prefs.getInt("${widget.singleVideoModel.typeOfVideo}_${widget.singleVideoModel.id.toString()}") !=
           null) {
-        _savedPosition =
-            prefs.getInt("stories_${widget.singleStorieModel.id.toString()}")!;
+        _savedPosition = prefs
+            .getInt("${widget.singleVideoModel.typeOfVideo}_${widget.singleVideoModel.id.toString()}")!;
       }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoStorySaving = prefs.getBool("VideoWatchedSaving")!;
@@ -200,7 +198,7 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
                 padding:
                     const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
                 child: Text(
-                  widget.singleStorieModel.name,
+                  widget.singleVideoModel.name,
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -211,7 +209,7 @@ class _SingleStorieWidgetState extends State<SingleStorieWidget>
                   padding:
                       const EdgeInsets.only(top: 5.0, right: 10.0, left: 10.0),
                   child: Text(
-                    widget.singleStorieModel.desc,
+                    widget.singleVideoModel.desc,
                     style: const TextStyle(
                       fontSize: 16,
                     ),

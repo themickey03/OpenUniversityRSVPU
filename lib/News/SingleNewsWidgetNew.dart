@@ -141,16 +141,26 @@ class SingleNewsWidgetNew extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 singleNewsModelNew.content[index]["value"]
+                                ["text"] !=
+                                    ""
+                                    ? Text(
+                                    singleNewsModelNew.content[index]
+                                    ["value"]["text"],
+                                    style: const TextStyle(fontSize: 16),
+                                    softWrap: true,
+                                    textAlign: TextAlign.justify)
+                                    : Container(),
+                                singleNewsModelNew.content[index]["value"]
                                             ["name"] !=
                                         ""
                                     ? Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 8.0),
+                                            const EdgeInsets.only(top: 8.0),
                                         child: Align(
                                           alignment: Alignment.center,
                                           child: Text(
-                                              singleNewsModelNew.content[index]
-                                                  ["value"]["name"],
+                                              "— ${singleNewsModelNew.content[index]
+                                              ["value"]["name"]}",
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),
@@ -158,16 +168,6 @@ class SingleNewsWidgetNew extends StatelessWidget {
                                               textAlign: TextAlign.center),
                                         ),
                                       )
-                                    : Container(),
-                                singleNewsModelNew.content[index]["value"]
-                                            ["text"] !=
-                                        ""
-                                    ? Text(
-                                        singleNewsModelNew.content[index]
-                                            ["value"]["text"],
-                                        style: const TextStyle(fontSize: 16),
-                                        softWrap: true,
-                                        textAlign: TextAlign.justify)
                                     : Container()
                               ],
                             ),
