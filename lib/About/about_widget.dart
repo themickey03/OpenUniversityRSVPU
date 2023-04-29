@@ -35,7 +35,7 @@ class _AboutWidgetState extends State<AboutWidget> {
               : ThemeData.dark().primaryColor,
           title: const Align(
               alignment: Alignment.centerLeft,
-              child: Text("О нас", style: TextStyle(fontSize: 24))),
+              child: Text("О проекте", style: TextStyle(fontSize: 24))),
           elevation: 0,
         ),
         body: Center(

@@ -4,6 +4,7 @@ import 'News/news_widget.dart';
 import 'Videos/video_widget_entrypoint.dart';
 import 'About/about_widget.dart';
 import 'Settings/settings_widget.dart';
+import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 
 class MainWidget extends StatefulWidget {
   const MainWidget({Key? key}) : super(key: key);
@@ -56,8 +57,8 @@ class _WithMainWidgetState extends State<MainWidget> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.info_outline),
-            label: 'О нас',
+            icon: Icon(RsvpuIconClass.universityLogo),
+            label: 'О проекте',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
