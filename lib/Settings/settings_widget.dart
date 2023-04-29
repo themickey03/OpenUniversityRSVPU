@@ -1,31 +1,51 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
-class AppSettingsWidget extends StatefulWidget {
-  const AppSettingsWidget({super.key});
+class SettingsWidget extends StatefulWidget {
+  const SettingsWidget({super.key});
 
   @override
-  State<AppSettingsWidget> createState() => _AppSettingsWidgetState();
+  State<SettingsWidget> createState() => _SettingsWidgetState();
 }
 
-class _AppSettingsWidgetState extends State<AppSettingsWidget> {
+class _SettingsWidgetState extends State<SettingsWidget> {
   var _isVideoWatchedSaving = true;
+  var _preffedScreenForOpen = 0;
+
+  String _versionNumber = "9.9.9";
+
+  void getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      setState(() {
+        _versionNumber = packageInfo.version.toString();
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     getSettings();
+    getVersion();
   }
 
   void getSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
+      if (prefs.getInt("preffed_screen_for_open") != null) {
+        _preffedScreenForOpen = prefs.getInt("preffed_screen_for_open")!;
+      } else {
+        prefs.setInt("preffed_screen_for_open", 0);
+      }
       if (prefs.getBool("VideoWatchedSaving") != null) {
         _isVideoWatchedSaving = prefs.getBool("VideoWatchedSaving")!;
       } else {
@@ -90,12 +110,15 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
               statusBarIconBrightness: Brightness.light,
-              systemNavigationBarColor: themeNotifier.isDark
-                  ? Colors.black
-                  : Colors.white),
+              systemNavigationBarColor:
+                  themeNotifier.isDark ? Colors.black : Colors.white),
+          leadingWidth: 40,
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
+          ),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
@@ -108,6 +131,24 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
         body: Center(
           child: ListView(
             children: [
+              const Padding(
+                padding: EdgeInsets.only(
+                    top: 15.0, bottom: 5.0, left: 5.0, right: 5.0),
+                child: Image(
+                  image: AssetImage('images/Logo.png'),
+                  width: 250,
+                  height: 141,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text("Открытый университет РГППУ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold))),
+              ),
               const Padding(
                 padding: EdgeInsets.only(
                     top: 15.0, left: 5.0, right: 5.0, bottom: 5.0),
@@ -127,7 +168,7 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                         ? Icons.nightlight_round_sharp
                         : Icons.sunny),
                     const Expanded(
-                        child: Text("   Темная тема",
+                        child: Text("    Темная тема",
                             style: TextStyle(fontSize: 16))),
                   ],
                 ),
@@ -137,6 +178,57 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                       ? themeNotifier.isDark = false
                       : themeNotifier.isDark = true;
                 },
+              ),
+              const Divider(),
+              ListTile(
+                visualDensity:
+                    const VisualDensity(vertical: -4, horizontal: -4),
+                title: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Icon(Icons.screenshot),
+                    ),
+                    Expanded(
+                        child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Начальный экран",
+                          style: TextStyle(fontSize: 16)),
+                    )),
+                  ],
+                ),
+                trailing: DecoratedBox(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width:0.1),
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton<int>(
+                        hint: const Text("Выбрать"),
+                        value: _preffedScreenForOpen,
+                        underline: Container(),
+                        items: <int>[0, 1, 2, 3].map((int value) {
+                          return DropdownMenuItem<int>(
+                              value: value,
+                              child: value == 0
+                                  ? const Text("О нас")
+                                  : value == 1
+                                      ? const Text("Новости")
+                                      : value == 2
+                                          ? const Text("Видео")
+                                          : value == 3
+                                              ? const Text("Настройки")
+                                              : Text(value.toString()));
+                        }).toList(),
+                        onChanged: (newVal) {
+                          setState(() {
+                            _preffedScreenForOpen = newVal!;
+                            setSettings("preffed_screen_for_open", newVal);
+                          });
+                        }),
+                  ),
+                ),
               ),
               const Divider(),
               const Padding(
@@ -236,8 +328,9 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                   );
                 },
                 child: ListTile(
-                  visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-                  title:  Row(children: const [
+                  visualDensity:
+                      const VisualDensity(horizontal: -4, vertical: -4),
+                  title: Row(children: const [
                     Icon(Icons.sd_storage),
                     Expanded(
                         child: Text("   Очистить историю просмотра видео",
@@ -276,7 +369,8 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                   );
                 },
                 child: ListTile(
-                  visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                  visualDensity:
+                      const VisualDensity(horizontal: -4, vertical: -4),
                   title: Row(children: const [
                     Icon(Icons.newspaper_sharp),
                     Expanded(
@@ -284,7 +378,23 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
                             style: TextStyle(fontSize: 16))),
                   ]),
                 ),
-              )
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30.0, top: 15.0),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
+                    child: Text(
+                      "Версия: $_versionNumber - ${!kIsWeb ? Platform.isIOS ? "IOS" : "Android" : "Browser Version"}\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
+                      style: const TextStyle(color: Colors.grey),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

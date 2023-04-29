@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'News/news_widget.dart';
 import 'Videos/video_widget_entrypoint.dart';
 import 'About/about_widget.dart';
+import 'Settings/settings_widget.dart';
 
 class MainWidget extends StatefulWidget {
   const MainWidget({Key? key}) : super(key: key);
@@ -13,15 +15,34 @@ class MainWidget extends StatefulWidget {
 class _WithMainWidgetState extends State<MainWidget> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    getSettings();
+  }
+
   static const List<Widget> _pages = <Widget>[
+    AboutWidget(),
     NewsWidgetNew(),
     VideoWidgetMain(),
-    AboutWidget(),
+    SettingsWidget(),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void getSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+     if (prefs.getInt("preffed_screen_for_open") != null){
+       _selectedIndex = prefs.getInt("preffed_screen_for_open")!;
+     }
+     else{
+       prefs.setInt("preffed_screen_for_open", 0);
+     }
     });
   }
 
@@ -33,7 +54,12 @@ class _WithMainWidgetState extends State<MainWidget> {
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info_outline),
+            label: 'О нас',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
             label: 'Новости',
@@ -43,8 +69,8 @@ class _WithMainWidgetState extends State<MainWidget> {
             label: 'Видео',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info_outline),
-            label: 'О нас',
+            icon: Icon(Icons.settings),
+            label: 'Настройки',
           ),
         ],
         currentIndex: _selectedIndex,

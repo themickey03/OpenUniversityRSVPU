@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_university_rsvpu/About/Contacts/contact_widget.dart';
-import 'package:open_university_rsvpu/About/Information/about_project.dart';
-import 'package:open_university_rsvpu/About/Settings/app_settings.dart';
-import 'package:open_university_rsvpu/About/Information/about_app.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
+import 'about_project.dart';
+import 'Contacts/contact_widget.dart';
 
 class AboutWidget extends StatefulWidget {
   const AboutWidget({super.key});
@@ -22,16 +20,13 @@ class _AboutWidgetState extends State<AboutWidget> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
               statusBarIconBrightness: Brightness.light,
-              systemNavigationBarColor: themeNotifier.isDark
-                  ? Colors.black
-                  : Colors.white),
+              systemNavigationBarColor:
+                  themeNotifier.isDark ? Colors.black : Colors.white),
           leadingWidth: 40,
-          leading:
-          const Padding(
-            padding: EdgeInsets.only(left: 3),
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 10),
             child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
           ),
           foregroundColor: Colors.white,
@@ -44,79 +39,86 @@ class _AboutWidgetState extends State<AboutWidget> {
           elevation: 0,
         ),
         body: Center(
-          child: ListView(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                    top: 15.0, bottom: 5.0, left: 5.0, right: 5.0),
-                child: Image(
-                  image: AssetImage('images/Logo.png'),
-                  width: 250,
-                  height: 141,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
+            child: ListView(
+          children: [
+            Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Align(
-                    alignment: Alignment.center,
-                    child: Text("Открытый университет РГППУ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold))),
-              ),
-              const Divider(),
-              ListTile(
+                  alignment: Alignment.center,
+                  child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width - 10,
+                      minWidth: 30.0,
+                    ),
+                    child: Wrap(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Image(
+                            image: AssetImage(
+                                'images/Front_page_screen_project_logo.png'),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )),
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 5.0),
+              child: Align(
+                  alignment: Alignment.center,
+                  child: Text("Открытый университет РГППУ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold))),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              child: Text(
+                  "Открытый университет РГППУ – это новый проект центра развития образовательных проектов Университета, который рассматривается как модель неформального образования взрослых.\n\n"
+                  "Цель проекта «Открытого университета» - формирование нового образа Университета как лидера современных разработок и сценариев гуманитарного действия, соразмерного сегодняшней региональной, национальной и мировой ситуации.",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16)),
+            ),
+            InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const AboutProjectWidget()));
                 },
-                visualDensity:
-                    const VisualDensity(vertical: -4, horizontal: -4),
-                title: const Text("О проекте", style: TextStyle(fontSize: 15)),
-                leading: const Icon(Icons.info_rounded, size: 15.0),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
-              ),
-              const Divider(),
-              ListTile(
+                child: Column(
+                  children: const [
+                    Divider(),
+                    ListTile(
+                      title: Text("Подробнее о проекте"),
+                      leading: Icon(Icons.text_snippet),
+                      visualDensity:
+                          VisualDensity(vertical: -4, horizontal: -4),
+                    ),
+                    Divider(),
+                  ],
+                )
+            ),
+            InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ContactWidgetNew()));
                 },
-                visualDensity:
-                    const VisualDensity(vertical: -4, horizontal: -4),
-                title: const Text("Наставники", style: TextStyle(fontSize: 15)),
-                leading: const Icon(Icons.people, size: 15.0),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
-              ),
-              const Divider(),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AppSettingsWidget()));
-                },
-                visualDensity:
-                    const VisualDensity(vertical: -4, horizontal: -4),
-                title: const Text("Настройки", style: TextStyle(fontSize: 15)),
-                leading: const Icon(Icons.settings, size: 15.0),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
-              ),
-              const Divider(),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AboutAppWidget()));
-                },
-                visualDensity:
-                    const VisualDensity(vertical: -4, horizontal: -4),
-                title:
-                    const Text("О приложении", style: TextStyle(fontSize: 15)),
-                leading: const Icon(Icons.perm_device_information, size: 15.0),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 15.0),
-              ),
-              const Divider(),
-            ],
-          ),
-        ),
+                child: Column(
+                  children: const [
+                    ListTile(
+                      title: Text("Наставники проекта"),
+                      leading: Icon(Icons.people),
+                      visualDensity:
+                      VisualDensity(vertical: -4, horizontal: -4),
+                    ),
+                    Divider(),
+                  ],
+                )
+            ),
+          ],
+        )),
       );
     });
   }

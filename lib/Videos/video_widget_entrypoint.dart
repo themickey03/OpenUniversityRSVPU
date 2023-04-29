@@ -21,7 +21,7 @@ class VideoWidgetMain extends StatelessWidget {
             leadingWidth: 40,
             leading:
               const Padding(
-                padding: EdgeInsets.only(left: 3),
+                padding: EdgeInsets.only(left: 10),
                 child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
               ),
             foregroundColor: Colors.white,
@@ -64,10 +64,10 @@ class VideoWidget extends StatelessWidget {
                 TabBar(
                   tabs: [
                     Tab(
-                      text: 'Истории',
+                      text: 'Лекции',
                     ),
                     Tab(
-                      text: 'Лекции',
+                      text: 'Истории',
                     ),
                   ],
                   indicatorColor: Colors.blueAccent,
@@ -77,8 +77,8 @@ class VideoWidget extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              VideoListWidget(type: "stories"),
-              VideoListWidget(type: "lections")
+              VideoListWidget(type: "lections"),
+              VideoListWidget(type: "stories")
             ],
           ),
         ),

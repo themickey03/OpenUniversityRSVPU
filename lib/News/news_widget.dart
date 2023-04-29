@@ -86,7 +86,10 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: EasySearchBar(
-          leading: const Icon(RsvpuIconClass.universityLogo, color: Colors.white),
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
+          ),
           systemOverlayStyle: const SystemUiOverlayStyle()
               .copyWith(
               statusBarIconBrightness: Brightness.light,
