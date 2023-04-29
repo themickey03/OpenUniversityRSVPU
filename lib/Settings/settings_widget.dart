@@ -199,9 +199,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 ),
                 trailing: DecoratedBox(
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width:0.1),
-                      borderRadius: BorderRadius.circular(5)
-                  ),
+                      border: Border.all(color: Colors.black, width: 0.1),
+                      borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButton<int>(

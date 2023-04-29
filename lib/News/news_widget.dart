@@ -13,7 +13,6 @@ import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 class NewsWidgetNew extends StatefulWidget {
   const NewsWidgetNew({Key? key}) : super(key: key);
 
@@ -90,12 +89,10 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
             padding: EdgeInsets.only(left: 5.0),
             child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
           ),
-          systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
               statusBarIconBrightness: Brightness.light,
-              systemNavigationBarColor: themeNotifier.isDark
-                  ? Colors.black
-                  : Colors.white),
+              systemNavigationBarColor:
+                  themeNotifier.isDark ? Colors.black : Colors.white),
           title: const Align(
               alignment: Alignment.centerLeft,
               child: Text("Новости", style: TextStyle(fontSize: 24))),
@@ -195,8 +192,10 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
                                       width: double.maxFinite,
                                       height: double.maxFinite,
                                       alignment: Alignment.center,
-                                      fadeInDuration: const Duration(milliseconds: 0),
-                                      fadeOutDuration: const Duration(milliseconds: 0),
+                                      fadeInDuration:
+                                          const Duration(milliseconds: 0),
+                                      fadeOutDuration:
+                                          const Duration(milliseconds: 0),
                                     ),
                                   ),
                                   newsTags != ""

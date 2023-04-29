@@ -98,8 +98,7 @@ class _AboutWidgetState extends State<AboutWidget> {
                     ),
                     Divider(),
                   ],
-                )
-            ),
+                )),
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -111,12 +110,11 @@ class _AboutWidgetState extends State<AboutWidget> {
                       title: Text("Наставники проекта"),
                       leading: Icon(Icons.people),
                       visualDensity:
-                      VisualDensity(vertical: -4, horizontal: -4),
+                          VisualDensity(vertical: -4, horizontal: -4),
                     ),
                     Divider(),
                   ],
-                )
-            ),
+                )),
           ],
         )),
       );

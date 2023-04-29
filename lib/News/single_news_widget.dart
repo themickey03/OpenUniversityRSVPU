@@ -13,8 +13,7 @@ class SingleNewsWidgetNew extends StatelessWidget {
   const SingleNewsWidgetNew({Key? key, required this.singleNewsModelNew})
       : super(key: key);
 
-
-  void _onShare(context, shareText, shareSubject) async{
+  void _onShare(context, shareText, shareSubject) async {
     final box = context.findRenderObject() as RenderBox?;
     await Share.share(
       shareText,
@@ -29,13 +28,14 @@ class SingleNewsWidgetNew extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
               statusBarIconBrightness: Brightness.light,
-              systemNavigationBarColor: themeNotifier.isDark
-                  ? Colors.black
-                  : Colors.white),
-          title: const Text("Новость", style: TextStyle(fontSize: 24),),
+              systemNavigationBarColor:
+                  themeNotifier.isDark ? Colors.black : Colors.white),
+          title: const Text(
+            "Новость",
+            style: TextStyle(fontSize: 24),
+          ),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)
@@ -44,8 +44,11 @@ class SingleNewsWidgetNew extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15),
               child: InkWell(
-                onTap: (){
-                  _onShare(context, "Новость РГППУ: ${singleNewsModelNew.linkToNews}", "Новость РГППУ: ${singleNewsModelNew.linkToNews}");
+                onTap: () {
+                  _onShare(
+                      context,
+                      "Новость РГППУ: ${singleNewsModelNew.linkToNews}",
+                      "Новость РГППУ: ${singleNewsModelNew.linkToNews}");
                 },
                 child: const Icon(Icons.share),
               ),
@@ -173,14 +176,14 @@ class SingleNewsWidgetNew extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 singleNewsModelNew.content[index]["value"]
-                                ["text"] !=
-                                    ""
+                                            ["text"] !=
+                                        ""
                                     ? Text(
-                                    singleNewsModelNew.content[index]
-                                    ["value"]["text"],
-                                    style: const TextStyle(fontSize: 16),
-                                    softWrap: true,
-                                    textAlign: TextAlign.justify)
+                                        singleNewsModelNew.content[index]
+                                            ["value"]["text"],
+                                        style: const TextStyle(fontSize: 16),
+                                        softWrap: true,
+                                        textAlign: TextAlign.justify)
                                     : Container(),
                                 singleNewsModelNew.content[index]["value"]
                                             ["name"] !=
@@ -191,8 +194,7 @@ class SingleNewsWidgetNew extends StatelessWidget {
                                         child: Align(
                                           alignment: Alignment.center,
                                           child: Text(
-                                              "— ${singleNewsModelNew.content[index]
-                                              ["value"]["name"]}",
+                                              "— ${singleNewsModelNew.content[index]["value"]["name"]}",
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),

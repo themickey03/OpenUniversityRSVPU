@@ -20,12 +20,10 @@ class _InterviewWidgetState extends State<InterviewWidget> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
               statusBarIconBrightness: Brightness.light,
-              systemNavigationBarColor: themeNotifier.isDark
-                  ? Colors.black
-                  : Colors.white),
+              systemNavigationBarColor:
+                  themeNotifier.isDark ? Colors.black : Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
               ? const Color.fromRGBO(34, 76, 164, 1)

@@ -215,11 +215,15 @@ class _VideoListWidgetState extends State<VideoListWidget>
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => SingleVideoWidget(
-                                singleVideoModel: SingleVideoModel(id, _postsJson, name,
-                                    videoLink, duration, desc, imgLink, widget.type)
-                            )
-                          )
-                        );
+                                singleVideoModel: SingleVideoModel(
+                                    id,
+                                    _postsJson,
+                                    name,
+                                    videoLink,
+                                    duration,
+                                    desc,
+                                    imgLink,
+                                    widget.type))));
                       },
                       child: Column(
                         children: [
@@ -246,8 +250,10 @@ class _VideoListWidgetState extends State<VideoListWidget>
                                         width: double.maxFinite,
                                         height: double.maxFinite,
                                         alignment: Alignment.topCenter,
-                                        fadeInDuration: const Duration(milliseconds: 0),
-                                        fadeOutDuration: const Duration(milliseconds: 0),
+                                        fadeInDuration:
+                                            const Duration(milliseconds: 0),
+                                        fadeOutDuration:
+                                            const Duration(milliseconds: 0),
                                       ),
                                       Padding(
                                           padding: const EdgeInsets.only(
@@ -332,8 +338,7 @@ class _VideoListWidgetState extends State<VideoListWidget>
                               ])),
                         ],
                       ),
-                    )
-                );
+                    ));
               },
             ),
           ),

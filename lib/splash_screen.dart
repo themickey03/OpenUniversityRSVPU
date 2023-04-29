@@ -30,7 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
               const Align(
                   alignment: Alignment.center,
                   child: Text("Открытый университет РГППУ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center))
             ],
           ),

@@ -99,13 +99,15 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
         betterPlayerDataSource: _betterPlayerDataSource);
     _betterPlayerController.addEventsListener((event) {
       if (event.betterPlayerEventType.name == "initialized") {
-        _betterPlayerController.play().then((_) => _betterPlayerController.seekTo(Duration(seconds: _savedPosition)).then((_) => {
-          _betterPlayerController.play().then((_) => {
-            _betterPlayerController.pause().then((_) => {
-              _betterPlayerController.play()
-            })
-          })
-        }));
+        _betterPlayerController.play().then((_) => _betterPlayerController
+            .seekTo(Duration(seconds: _savedPosition))
+            .then((_) => {
+                  _betterPlayerController.play().then((_) => {
+                        _betterPlayerController
+                            .pause()
+                            .then((_) => {_betterPlayerController.play()})
+                      })
+                }));
       }
       if (event.betterPlayerEventType.name == "openFullscreen") {
         _betterPlayerController.setOverriddenFit(BoxFit.fitHeight);
@@ -147,11 +149,15 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
       }
     });
   }
+
   void getAnotherData(id) async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getInt("${widget.singleVideoModel.typeOfVideo}_${id.toString()}") != null) {
-        _savedAnotherPosition[id] = prefs.getInt("${widget.singleVideoModel.typeOfVideo}_${id.toString()}")!;
+      if (prefs.getInt(
+              "${widget.singleVideoModel.typeOfVideo}_${id.toString()}") !=
+          null) {
+        _savedAnotherPosition[id] = prefs
+            .getInt("${widget.singleVideoModel.typeOfVideo}_${id.toString()}")!;
       } else {
         _savedAnotherPosition[id] = 0;
       }
@@ -214,7 +220,6 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -237,12 +242,10 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                   !themeNotifier.isDark ? Colors.black : Colors.white));
       return Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle()
-              .copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
               statusBarIconBrightness: Brightness.light,
-              systemNavigationBarColor: themeNotifier.isDark
-                  ? Colors.black
-                  : Colors.white),
+              systemNavigationBarColor:
+                  themeNotifier.isDark ? Colors.black : Colors.white),
           title: const Text("Видео"),
           foregroundColor: Colors.white,
           backgroundColor: !themeNotifier.isDark
@@ -319,9 +322,7 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                               ? 'Еще из раздела "Лекции": '
                               : 'Еще из раздела "Истории": ',
                           style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.justify,
                         ),
                       ),
@@ -331,7 +332,6 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-
                           if (widget.singleVideoModel.dataOfVideo[index]
                                   ['id'] !=
                               widget.singleVideoModel.id) {

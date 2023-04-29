@@ -4,6 +4,7 @@ import 'package:open_university_rsvpu/Videos/video_list_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
+
 class VideoWidgetMain extends StatelessWidget {
   const VideoWidgetMain({super.key});
   @override
@@ -12,18 +13,15 @@ class VideoWidgetMain extends StatelessWidget {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
           appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle()
-                .copyWith(
+            systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
                 statusBarIconBrightness: Brightness.light,
-                systemNavigationBarColor: themeNotifier.isDark
-                    ? Colors.black
-                    : Colors.white),
+                systemNavigationBarColor:
+                    themeNotifier.isDark ? Colors.black : Colors.white),
             leadingWidth: 40,
-            leading:
-              const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
-              ),
+            leading: const Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Icon(RsvpuIconClass.universityLogo, color: Colors.white),
+            ),
             foregroundColor: Colors.white,
             backgroundColor: !themeNotifier.isDark
                 ? const Color.fromRGBO(34, 76, 164, 1)
@@ -49,12 +47,10 @@ class VideoWidget extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle()
-                .copyWith(
+            systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
                 statusBarIconBrightness: Brightness.light,
-                systemNavigationBarColor: themeNotifier.isDark
-                    ? Colors.black
-                    : Colors.white),
+                systemNavigationBarColor:
+                    themeNotifier.isDark ? Colors.black : Colors.white),
             backgroundColor: !themeNotifier.isDark
                 ? const Color.fromRGBO(34, 76, 164, 1)
                 : ThemeData.dark().primaryColor,

@@ -37,12 +37,11 @@ class _WithMainWidgetState extends State<MainWidget> {
   void getSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-     if (prefs.getInt("preffed_screen_for_open") != null){
-       _selectedIndex = prefs.getInt("preffed_screen_for_open")!;
-     }
-     else{
-       prefs.setInt("preffed_screen_for_open", 0);
-     }
+      if (prefs.getInt("preffed_screen_for_open") != null) {
+        _selectedIndex = prefs.getInt("preffed_screen_for_open")!;
+      } else {
+        prefs.setInt("preffed_screen_for_open", 0);
+      }
     });
   }
 
