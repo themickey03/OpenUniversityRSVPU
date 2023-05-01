@@ -86,6 +86,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     }
   }
 
+  void clearWelcomePageValue() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getKeys().contains("isFirstStart") == true){
+      prefs.remove("isFirstStart");
+    }
+  }
+
   void setSettings(id, value) async {
     final prefs = await SharedPreferences.getInstance();
     switch (value.runtimeType) {
@@ -164,11 +171,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     const VisualDensity(horizontal: -4, vertical: -4),
                 title: Row(
                   children: [
-                    Icon(themeNotifier.isDark
-                        ? Icons.nightlight_round_sharp
-                        : Icons.sunny),
+                    Padding(
+                      padding: const EdgeInsets.only(right:12),
+                      child: Icon(themeNotifier.isDark
+                          ? Icons.nightlight_round_sharp
+                          : Icons.sunny),
+                    ),
                     const Expanded(
-                        child: Text("    Темная тема",
+                        child: Text("Темная тема",
                             style: TextStyle(fontSize: 16))),
                   ],
                 ),
@@ -245,11 +255,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     const VisualDensity(horizontal: -4, vertical: -4),
                 title: Row(
                   children: [
-                    Icon(_isVideoWatchedSaving
-                        ? Icons.videocam
-                        : Icons.videocam_off),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Icon(_isVideoWatchedSaving
+                          ? Icons.videocam
+                          : Icons.videocam_off),
+                    ),
                     const Expanded(
-                        child: Text("   Сохранять историю просмотра",
+                        child: Text("Сохранять историю просмотра",
                             style: TextStyle(fontSize: 16))),
                   ],
                 ),
@@ -330,9 +343,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   visualDensity:
                       const VisualDensity(horizontal: -4, vertical: -4),
                   title: Row(children: const [
-                    Icon(Icons.sd_storage),
+                    Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Icon(Icons.sd_storage),
+                    ),
                     Expanded(
-                        child: Text("   Очистить историю просмотра видео",
+                        child: Text("Очистить историю просмотра видео",
                             style: TextStyle(fontSize: 16))),
                   ]),
                 ),
@@ -371,9 +387,31 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   visualDensity:
                       const VisualDensity(horizontal: -4, vertical: -4),
                   title: Row(children: const [
-                    Icon(Icons.newspaper_sharp),
+                    Padding(
+                      padding: EdgeInsets.only(right:12),
+                      child: Icon(Icons.newspaper_sharp),
+                    ),
                     Expanded(
-                        child: Text("   Очистить предзагруженные данные",
+                        child: Text("Очистить предзагруженные данные",
+                            style: TextStyle(fontSize: 16),)),
+                  ]),
+                ),
+              ),
+              const Divider(),
+              InkWell(
+                onTap: () {
+                  clearWelcomePageValue();
+                },
+                child: ListTile(
+                  visualDensity:
+                  const VisualDensity(horizontal: -4, vertical: -4),
+                  title: Row(children: const [
+                    Padding(
+                      padding: EdgeInsets.only(right:12),
+                      child: Icon(Icons.restart_alt),
+                    ),
+                    Expanded(
+                        child: Text("[DELETE_IN_PROD] Сбросить настройку приветственной страницы",
                             style: TextStyle(fontSize: 16))),
                   ]),
                 ),

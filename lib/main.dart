@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_university_rsvpu/splash_screen.dart';
+import 'package:open_university_rsvpu/SplashScreen/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:flutter/services.dart';

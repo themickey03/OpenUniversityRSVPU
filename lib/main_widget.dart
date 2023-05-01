@@ -57,7 +57,10 @@ class _WithMainWidgetState extends State<MainWidget> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(RsvpuIconClass.universityLogo),
+            icon: Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Icon(RsvpuIconClass.universityLogo),
+            ),
             label: 'О проекте',
           ),
           BottomNavigationBarItem(

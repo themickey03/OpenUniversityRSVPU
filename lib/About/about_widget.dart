@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
-import 'about_project.dart';
+import 'ProjectText/about_project.dart';
 import 'Contacts/contact_widget.dart';
 
 class AboutWidget extends StatefulWidget {
@@ -82,6 +82,7 @@ class _AboutWidgetState extends State<AboutWidget> {
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 16)),
             ),
+            const Divider(),
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -89,16 +90,15 @@ class _AboutWidgetState extends State<AboutWidget> {
                 },
                 child: Column(
                   children: const [
-                    Divider(),
                     ListTile(
                       title: Text("Подробнее о проекте"),
                       leading: Icon(Icons.text_snippet),
                       visualDensity:
                           VisualDensity(vertical: -4, horizontal: -4),
                     ),
-                    Divider(),
                   ],
                 )),
+            const Divider(),
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -112,9 +112,9 @@ class _AboutWidgetState extends State<AboutWidget> {
                       visualDensity:
                           VisualDensity(vertical: -4, horizontal: -4),
                     ),
-                    Divider(),
                   ],
                 )),
+            const Divider()
           ],
         )),
       );

@@ -40,6 +40,10 @@ flutter:
      - images/Loading_icon.gif
      - images/Logo.png
      - images/Front_page_screen_project_logo.png
+     - images/AboutWelcomePage.png
+     - images/NewsWelcomePage.png
+     - images/SettingsWelcomePage.png
+     - images/VideoLectionsWelcomePage.png
   fonts:
     - family:  RsvpuIconClass
       fonts:
