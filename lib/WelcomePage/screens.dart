@@ -8,6 +8,14 @@ List items = [
     'settings_page': 'false'
   },
   {
+    'header': 'О проекте',
+    'description': 'Университеты в нашем отечестве во все времена решали задачи не только профессиональной подготовки студентов, но и являлись центрами науки, культуры, посвящения в своих регионах. Проект "Открытый университет" создан РГППУ для выполнения этой важной миссии.',
+    'image': 'images/AboutWelcomePage.png',
+    'last_page': 'false',
+    'video_page': 'false',
+    'settings_page': 'false'
+  },
+  {
     'header': 'Новости',
     'description': 'Актуальные новости из жизни университета',
     'image': 'images/NewsWelcomePage.png',
@@ -22,22 +30,6 @@ List items = [
     'last_page': 'false',
     'video_page': 'true',
     'settings_page': 'false'
-  },
-  {
-    'header': 'О проекте',
-    'description': 'Информация о проекте и Наставниках проекта',
-    'image': 'images/AboutWelcomePage.png',
-    'last_page': 'false',
-    'video_page': 'false',
-    'settings_page': 'false'
-  },
-  {
-    'header': 'Настройки',
-    'description': 'Управление приложением и сохраненными данными',
-    'image': 'images/SettingsWelcomePage.png',
-    'last_page': 'false',
-    'video_page': 'false',
-    'settings_page': 'true'
   },
   {
     'header': 'Добро пожаловать!',

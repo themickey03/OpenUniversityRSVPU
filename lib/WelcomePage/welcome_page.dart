@@ -77,7 +77,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               child: Image.asset(
                                 item['image'],
                                 fit: BoxFit.fitWidth,
-                                width: 175.0,
+                                width: 200.0,
                                 alignment: Alignment.center,
                               ),
                             ),
@@ -88,7 +88,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     fit: FlexFit.loose,
                     child: Container(
                       padding:
-                          const EdgeInsets.only(top: 30, left: 10, right: 10),
+                          const EdgeInsets.only(top: 10, left: 5, right: 5),
                       child: Column(
                         children: <Widget>[
                           Text(item['header'],
@@ -102,15 +102,18 @@ class _WelcomePageState extends State<WelcomePage> {
                                     ? Colors.white
                                     : Colors.black,
                               )),
-                          Text(
-                            item['description'],
-                            textScaleFactor: 1.0,
-                            style: TextStyle(
-                                color: themeNotifier.isDark == true
-                                    ? Colors.white
-                                    : Colors.black,
-                                fontSize: 14.0),
-                            textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              item['description'],
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  color: themeNotifier.isDark == true
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontSize: 14.0),
+                              textAlign: TextAlign.center,
+                            ),
                           )
                         ],
                       ),
