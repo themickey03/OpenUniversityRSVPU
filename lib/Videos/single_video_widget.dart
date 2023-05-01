@@ -307,7 +307,6 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                                 style: const TextStyle(
                                   fontSize: 16,
                                 ),
-                                textAlign: TextAlign.justify,
                               ),
                             ),
                           )

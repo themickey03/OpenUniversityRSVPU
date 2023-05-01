@@ -88,7 +88,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   void clearWelcomePageValue() async {
     final prefs = await SharedPreferences.getInstance();
-    if (prefs.getKeys().contains("isFirstStart") == true){
+    if (prefs.getKeys().contains("isFirstStart") == true) {
       prefs.remove("isFirstStart");
     }
   }
@@ -172,7 +172,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 title: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right:12),
+                      padding: const EdgeInsets.only(right: 12),
                       child: Icon(themeNotifier.isDark
                           ? Icons.nightlight_round_sharp
                           : Icons.sunny),
@@ -388,12 +388,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       const VisualDensity(horizontal: -4, vertical: -4),
                   title: Row(children: const [
                     Padding(
-                      padding: EdgeInsets.only(right:12),
+                      padding: EdgeInsets.only(right: 12),
                       child: Icon(Icons.newspaper_sharp),
                     ),
                     Expanded(
-                        child: Text("Очистить предзагруженные данные",
-                            style: TextStyle(fontSize: 16),)),
+                        child: Text(
+                      "Очистить предзагруженные данные",
+                      style: TextStyle(fontSize: 16),
+                    )),
                   ]),
                 ),
               ),
@@ -404,14 +406,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 },
                 child: ListTile(
                   visualDensity:
-                  const VisualDensity(horizontal: -4, vertical: -4),
+                      const VisualDensity(horizontal: -4, vertical: -4),
                   title: Row(children: const [
                     Padding(
-                      padding: EdgeInsets.only(right:12),
+                      padding: EdgeInsets.only(right: 12),
                       child: Icon(Icons.restart_alt),
                     ),
                     Expanded(
-                        child: Text("[DELETE_IN_PROD] Сбросить настройку приветственной страницы",
+                        child: Text(
+                            "[DELETE_IN_PROD] Сбросить настройку приветственной страницы",
                             style: TextStyle(fontSize: 16))),
                   ]),
                 ),

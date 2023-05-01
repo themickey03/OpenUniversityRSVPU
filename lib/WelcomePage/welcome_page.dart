@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_university_rsvpu/main_widget.dart';
@@ -40,102 +38,6 @@ class _WelcomePageState extends State<WelcomePage> {
         currentPage = _pageViewController.page!;
       });
     });
-
-    _slides = items
-        .map((item) => Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  flex: 2,
-                  fit: FlexFit.loose,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: item['image'] == "images/Logo.png"
-                        ? Image.asset(
-                            item['image'],
-                            fit: BoxFit.fitWidth,
-                            width: 175.0,
-                            alignment: Alignment.center,
-                          )
-                        : Container(
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(color: Colors.black.withOpacity(0.7), blurRadius: 30.0, blurStyle: BlurStyle.normal)
-                            ]),
-                            child: Image.asset(
-                              item['image'],
-                              fit: BoxFit.fitWidth,
-                              width: 175.0,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.loose,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 10, right: 10),
-                    child: Column(
-                      children: <Widget>[
-                        Text(item['header'],
-                            textScaleFactor: 1.0,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                              height: 1,
-                              color: Colors.black,
-                            )),
-                        Text(
-                          item['description'],
-                          textScaleFactor: 1.0,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 14.0),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                item['last_page'] == "true"
-                    ? Flexible(
-                        flex: 2,
-                        fit: FlexFit.loose,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: MaterialButton(
-                            color: const Color.fromRGBO(34, 76, 164, 1),
-                            textColor: Color(Colors.white.value),
-                            onPressed: () {
-                              setState(() {
-                                setInfo(false);
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                  return const MainWidget();
-                                }));
-                              });
-                            },
-                            child: const Text(
-                              "Начать!",
-                              textScaleFactor: 1.0,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Flexible(
-                        flex: 0,
-                        fit: FlexFit.loose,
-                        child: Container(
-                          height: 0,
-                        ),
-                      )
-              ],
-            )))
-        .toList();
   }
 
   void setInfo(value) async {
@@ -147,6 +49,110 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
+      _slides = items
+          .map((item) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    flex: 2,
+                    fit: FlexFit.loose,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: item['image'] == "images/Logo.png"
+                          ? Image.asset(
+                              item['image'],
+                              fit: BoxFit.fitWidth,
+                              width: 175.0,
+                              alignment: Alignment.center,
+                            )
+                          : Container(
+                              decoration: BoxDecoration(boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.7),
+                                    blurRadius: 30.0,
+                                    blurStyle: BlurStyle.normal)
+                              ]),
+                              child: Image.asset(
+                                item['image'],
+                                fit: BoxFit.fitWidth,
+                                width: 175.0,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    fit: FlexFit.loose,
+                    child: Container(
+                      padding:
+                          const EdgeInsets.only(top: 30, left: 10, right: 10),
+                      child: Column(
+                        children: <Widget>[
+                          Text(item['header'],
+                              textScaleFactor: 1.0,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                                height: 1,
+                                color: themeNotifier.isDark == true
+                                    ? Colors.white
+                                    : Colors.black,
+                              )),
+                          Text(
+                            item['description'],
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                                color: themeNotifier.isDark == true
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 14.0),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  item['last_page'] == "true"
+                      ? Flexible(
+                          flex: 2,
+                          fit: FlexFit.loose,
+                          child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            child: MaterialButton(
+                              color: const Color.fromRGBO(34, 76, 164, 1),
+                              textColor: Color(Colors.white.value),
+                              onPressed: () {
+                                setState(() {
+                                  setInfo(false);
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                    return const MainWidget();
+                                  }));
+                                });
+                              },
+                              child: const Text(
+                                "Начать!",
+                                textScaleFactor: 1.0,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Flexible(
+                          flex: 0,
+                          fit: FlexFit.loose,
+                          child: Container(
+                            height: 0,
+                          ),
+                        )
+                ],
+              )))
+          .toList();
       return Scaffold(
           appBar: AppBar(
             systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
@@ -177,10 +183,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: indicator(),
                     ),
-                  )
-                  //  ),
-                  )
-              // )
+                  ))
             ],
           ));
     });

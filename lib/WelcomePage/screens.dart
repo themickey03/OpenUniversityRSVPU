@@ -1,8 +1,7 @@
 List items = [
   {
     'header': 'Открытый университет РГППУ',
-    'description':
-    'Мобильное приложение',
+    'description': 'Мобильное приложение',
     'image': 'images/Logo.png',
     'last_page': 'false',
     'video_page': 'false',
@@ -10,8 +9,7 @@ List items = [
   },
   {
     'header': 'Новости',
-    'description':
-    'Актуальные новости из жизни университета',
+    'description': 'Актуальные новости из жизни университета',
     'image': 'images/NewsWelcomePage.png',
     'last_page': 'false',
     'video_page': 'false',
@@ -19,8 +17,7 @@ List items = [
   },
   {
     'header': 'Видео',
-    'description':
-    'Лекции и сюжеты от Наставников проекта',
+    'description': 'Лекции и сюжеты от Наставников проекта',
     'image': 'images/VideoLectionsWelcomePage.png',
     'last_page': 'false',
     'video_page': 'true',
@@ -28,8 +25,7 @@ List items = [
   },
   {
     'header': 'О проекте',
-    'description':
-    'Информация о проекте и Наставниках проекта',
+    'description': 'Информация о проекте и Наставниках проекта',
     'image': 'images/AboutWelcomePage.png',
     'last_page': 'false',
     'video_page': 'false',
@@ -37,8 +33,7 @@ List items = [
   },
   {
     'header': 'Настройки',
-    'description':
-    'Управление приложением и сохранеными данными',
+    'description': 'Управление приложением и сохраненными данными',
     'image': 'images/SettingsWelcomePage.png',
     'last_page': 'false',
     'video_page': 'false',
@@ -46,8 +41,7 @@ List items = [
   },
   {
     'header': 'Добро пожаловать!',
-    'description':
-    'Открытый университет РГППУ',
+    'description': 'Открытый университет РГППУ',
     'image': 'images/Logo.png',
     'last_page': 'true',
     'video_page': 'false',
