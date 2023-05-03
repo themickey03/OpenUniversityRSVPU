@@ -185,25 +185,16 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                           child: SizedBox(
                             width: 200,
                             height: 200,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width - 10.0,
-                              height:
-                                  (MediaQuery.of(context).size.width - 10.0) /
-                                      16 *
-                                      9,
-                              child: CachedNetworkImage(
-                                placeholder: (context, url) => const Image(
-                                    image:
-                                        AssetImage('images/Loading_icon.gif')),
-                                imageUrl: imgLink,
-                                fit: BoxFit.cover,
-                                width: double.maxFinite,
-                                height: double.maxFinite,
-                                alignment: Alignment.topCenter,
-                                fadeInDuration: const Duration(milliseconds: 0),
-                                fadeOutDuration:
-                                    const Duration(milliseconds: 0),
-                              ),
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => const Image(
+                                  image: AssetImage('images/Loading_icon.gif')),
+                              imageUrl: imgLink,
+                              fit: BoxFit.contain,
+                              width: double.maxFinite,
+                              height: double.maxFinite,
+                              alignment: Alignment.topCenter,
+                              fadeInDuration: const Duration(milliseconds: 0),
+                              fadeOutDuration: const Duration(milliseconds: 0),
                             ),
                           ),
                         ),

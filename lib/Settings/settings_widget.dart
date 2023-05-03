@@ -158,7 +158,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
               const Padding(
                 padding: EdgeInsets.only(
-                    top: 15.0, left: 5.0, right: 5.0, bottom: 5.0),
+                    top: 15.0, left: 10.0, right: 5.0, bottom: 5.0),
                 child: Text(
                   "Настройки оформления",
                   textAlign: TextAlign.left,
@@ -221,7 +221,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           return DropdownMenuItem<int>(
                               value: value,
                               child: value == 0
-                                  ? const Text("О нас")
+                                  ? const Text("О проекте")
                                   : value == 1
                                       ? const Text("Новости")
                                       : value == 2
@@ -242,7 +242,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               const Divider(),
               const Padding(
                 padding: EdgeInsets.only(
-                    top: 15.0, left: 5.0, right: 5.0, bottom: 5.0),
+                    top: 15.0, left: 10.0, right: 5.0, bottom: 5.0),
                 child: Text(
                   "Настройки видео",
                   textAlign: TextAlign.left,
@@ -396,26 +396,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       "Очистить предзагруженные данные",
                       style: TextStyle(fontSize: 16),
                     )),
-                  ]),
-                ),
-              ),
-              const Divider(),
-              InkWell(
-                onTap: () {
-                  clearWelcomePageValue();
-                },
-                child: ListTile(
-                  visualDensity:
-                      const VisualDensity(horizontal: -4, vertical: -4),
-                  title: Row(children: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Icon(Icons.restart_alt),
-                    ),
-                    Expanded(
-                        child: Text(
-                            "[DELETE_IN_PROD] Сбросить настройку приветственной страницы",
-                            style: TextStyle(fontSize: 16))),
                   ]),
                 ),
               ),
