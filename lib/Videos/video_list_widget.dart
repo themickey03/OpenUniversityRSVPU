@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:open_university_rsvpu/Videos/single_video_widget.dart';
 import 'package:open_university_rsvpu/Videos/single_video_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,16 +25,7 @@ class _VideoListWidgetState extends State<VideoListWidget>
 
   void fetchDataPersons() async {
     try {
-      if (kIsWeb) {
-        setState(() {
-          _url =
-              "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/${widget.type}";
-        });
-      } else {
-        setState(() {
-          _url = 'http://api.bytezone.online/${widget.type}';
-        });
-      }
+      _url = 'https://ouapi.koralex.fun/${widget.type}?order=id';
       final response = await get(Uri.parse(_url));
       final jsonData = jsonDecode(response.body) as List;
 
@@ -156,61 +146,55 @@ class _VideoListWidgetState extends State<VideoListWidget>
               itemCount: _postsJson.length,
               itemBuilder: (context, index) {
                 var id = 0;
-                if (_postsJson[index]['id'] != "" &&
-                    _postsJson[index]['id'] != null) {
-                  id = _postsJson[index]['id'];
+                if (_postsJson[_postsJson.length - index - 1]['id'] != "" &&
+                    _postsJson[_postsJson.length - index - 1]['id'] != null) {
+                  id = _postsJson[_postsJson.length - index - 1]['id'];
                 }
                 getData(id);
                 var name = "";
-                if (_postsJson[index]['title'] != "" &&
-                    _postsJson[index]['title'] != null) {
-                  name = _postsJson[index]['title'];
-                }
-                var mainDesc = <String, dynamic>{};
-                if (_postsJson[index]['description'] != null) {
-                  mainDesc = _postsJson[index]['description'];
-                }
-                var imgLink = "";
-                if (_postsJson[index]['img'] != "" &&
-                    _postsJson[index]['img'] != null) {
-                  if (_postsJson[index]['img']['id'] != "" &&
-                      _postsJson[index]['img']['id'] != null) {
-                    if (_postsJson[index]['img']['format'] != "" &&
-                        _postsJson[index]['img']['format'] != null) {
-                      if (kIsWeb) {
-                        imgLink =
-                            "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
-                      } else {
-                        imgLink =
-                            "http://api.bytezone.online/imgs/${_postsJson[index]["img"]["id"]}.${_postsJson[index]["img"]["format"]}";
-                      }
-                    }
-                  }
-                }
-                var duration = "";
-                if (_postsJson[index]['duration'] != "" &&
-                    _postsJson[index]['duration'] != null) {
-                  duration = _postsJson[index]['duration'];
+                if (_postsJson[_postsJson.length - index - 1]['title'] != "" &&
+                    _postsJson[_postsJson.length - index - 1]['title'] !=
+                        null) {
+                  name = _postsJson[_postsJson.length - index - 1]['title'];
                 }
                 var desc = "";
-                if (mainDesc['Описание'] != "" &&
-                    mainDesc['Описание'] != null) {
-                  desc = mainDesc['Описание'];
+                if (_postsJson[_postsJson.length - index - 1]['description'] !=
+                    null) {
+                  desc =
+                      _postsJson[_postsJson.length - index - 1]['description'];
+                }
+                var imgLink = "";
+                if (_postsJson[_postsJson.length - index - 1]['img_id'] != "" &&
+                    _postsJson[_postsJson.length - index - 1]['img_id'] !=
+                        null) {
+                  imgLink =
+                      "https://ouimg.koralex.fun/${_postsJson[_postsJson.length - index - 1]['img_id']}.png";
+                }
+                var duration = "";
+                if (_postsJson[_postsJson.length - index - 1]['duration'] !=
+                        "" &&
+                    _postsJson[_postsJson.length - index - 1]['duration'] !=
+                        null) {
+                  duration =
+                      _postsJson[_postsJson.length - index - 1]['duration'];
                 }
                 var videoLink = "";
-                if (_postsJson[index]['path'] != "" &&
-                    _postsJson[index]['path'] != null) {
-                  if (kIsWeb) {
-                    videoLink =
-                        "https://koralex.fun/news_api/buffer.php?type=video&link=${_postsJson[index]['path']}";
-                  } else {
-                    videoLink = _postsJson[index]['path'];
-                  }
+                if (_postsJson[_postsJson.length - index - 1]['path'] != "" &&
+                    _postsJson[_postsJson.length - index - 1]['path'] != null) {
+                  videoLink = _postsJson[_postsJson.length - index - 1]['path'];
+                }
+                var resolutions = [];
+                if (_postsJson[_postsJson.length - index - 1]['resolutions'] !=
+                        null &&
+                    _postsJson[_postsJson.length - index - 1]['resolutions'] !=
+                        "") {
+                  resolutions =
+                      _postsJson[_postsJson.length - index - 1]['resolutions'];
                 }
 
                 return Card(
                     shadowColor: Colors.black,
-                    elevation: 20,
+                    elevation: 10,
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -218,6 +202,7 @@ class _VideoListWidgetState extends State<VideoListWidget>
                                 singleVideoModel: SingleVideoModel(
                                     id,
                                     _postsJson,
+                                    resolutions,
                                     name,
                                     videoLink,
                                     duration,

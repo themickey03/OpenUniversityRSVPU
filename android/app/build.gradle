@@ -35,7 +35,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.themickey03.open_university_rsvpu"
+        applicationId "com.mickey.open_university_rsvpu"
         minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled = true

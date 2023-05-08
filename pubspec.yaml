@@ -1,7 +1,7 @@
 name: open_university_rsvpu
 description: Open University for RSVPU
 publish_to: 'none'
-version: 1.0.5+6
+version: 1.0.6+7
 
 environment:
   sdk: '>=2.19.4 <3.0.0'

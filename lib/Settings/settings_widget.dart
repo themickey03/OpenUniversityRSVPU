@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -83,13 +81,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         .toList();
     for (int i = 0; i < list.length; i++) {
       prefs.remove(list[i]);
-    }
-  }
-
-  void clearWelcomePageValue() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getKeys().contains("isFirstStart") == true) {
-      prefs.remove("isFirstStart");
     }
   }
 
@@ -408,7 +399,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     padding: const EdgeInsets.only(
                         top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
                     child: Text(
-                      "Версия: $_versionNumber - ${!kIsWeb ? Platform.isIOS ? "IOS" : "Android" : "Browser Version"}\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
+                      "Версия: $_versionNumber - ${Platform.isIOS ? "IOS" : "Android"}\nРоссийский Государственный Профессионально-Педагогический Университет\n2023 г.",
                       style: const TextStyle(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),

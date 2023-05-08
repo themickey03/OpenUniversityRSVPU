@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -31,20 +30,16 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
   void initState() {
     super.initState();
     getData();
-    Map<String, String> resolutions = {
-      "1080p":
-          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}1080.mp4",
-      "720p":
-          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}720.mp4",
-      "480p":
-          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}480.mp4",
-      "360p":
-          "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}360.mp4",
-    };
-
+    Map<String, String> resolutions = {};
+    for (final item in widget.singleVideoModel.resolutions) {
+      resolutions.addAll({
+        "${item.toString()}p":
+            "${widget.singleVideoModel.videoLink}/${item.toString()}.mp4"
+      });
+    }
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      "${widget.singleVideoModel.videoLink.substring(0, widget.singleVideoModel.videoLink.length - 4)}1080.mp4",
+      "${widget.singleVideoModel.videoLink}/${widget.singleVideoModel.resolutions.last.toString()}.mp4",
       videoExtension: "mp4",
       resolutions: resolutions,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
@@ -256,32 +251,16 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              kIsWeb
-                  ? Container(
-                      height: 300,
-                      decoration: BoxDecoration(
-                          border: Border.all(),
-                          color: Colors.red,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8.0))),
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Тут находится видео",
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    )
-                  : SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width / 16 * 9,
-                      child: AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: BetterPlayer(
-                          controller: _betterPlayerController,
-                          key: _betterPlayerKey,
-                        ),
-                      )),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width / 16 * 9,
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: BetterPlayer(
+                      controller: _betterPlayerController,
+                      key: _betterPlayerKey,
+                    ),
+                  )),
               Expanded(
                 child: ListView(
                   children: [
@@ -331,95 +310,140 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          if (widget.singleVideoModel.dataOfVideo[index]
-                                  ['id'] !=
+                          if (widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['id'] !=
                               widget.singleVideoModel.id) {
                             var id = 0;
-                            if (widget.singleVideoModel.dataOfVideo[index]
-                                        ['id'] !=
+                            if (widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['id'] !=
                                     "" &&
-                                widget.singleVideoModel.dataOfVideo[index]
-                                        ['id'] !=
+                                widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['id'] !=
                                     null) {
-                              id = widget.singleVideoModel.dataOfVideo[index]
-                                  ['id'];
+                              id = widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['id'];
                             }
                             getAnotherData(id);
                             var name = "";
-                            if (widget.singleVideoModel.dataOfVideo[index]
-                                        ['title'] !=
+                            if (widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['title'] !=
                                     "" &&
-                                widget.singleVideoModel.dataOfVideo[index]
-                                        ['title'] !=
+                                widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['title'] !=
                                     null) {
-                              name = widget.singleVideoModel.dataOfVideo[index]
-                                  ['title'];
-                            }
-                            var mainDesc = <String, dynamic>{};
-                            if (widget.singleVideoModel.dataOfVideo[index]
-                                    ['description'] !=
-                                null) {
-                              mainDesc = widget.singleVideoModel
-                                  .dataOfVideo[index]['description'];
-                            }
-                            var imgLink = "";
-                            if (widget.singleVideoModel.dataOfVideo[index]
-                                        ['img'] !=
-                                    "" &&
-                                widget.singleVideoModel.dataOfVideo[index]
-                                        ['img'] !=
-                                    null) {
-                              if (widget.singleVideoModel.dataOfVideo[index]
-                                          ['img']['id'] !=
-                                      "" &&
-                                  widget.singleVideoModel.dataOfVideo[index]
-                                          ['img']['id'] !=
-                                      null) {
-                                if (widget.singleVideoModel.dataOfVideo[index]
-                                            ['img']['format'] !=
-                                        "" &&
-                                    widget.singleVideoModel.dataOfVideo[index]
-                                            ['img']['format'] !=
-                                        null) {
-                                  if (kIsWeb) {
-                                    imgLink =
-                                        "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${widget.singleVideoModel.dataOfVideo[index]["img"]["id"]}.${widget.singleVideoModel.dataOfVideo[index]["img"]["format"]}";
-                                  } else {
-                                    imgLink =
-                                        "http://api.bytezone.online/imgs/${widget.singleVideoModel.dataOfVideo[index]["img"]["id"]}.${widget.singleVideoModel.dataOfVideo[index]["img"]["format"]}";
-                                  }
-                                }
-                              }
-                            }
-                            var duration = "";
-                            if (widget.singleVideoModel.dataOfVideo[index]
-                                        ['duration'] !=
-                                    "" &&
-                                widget.singleVideoModel.dataOfVideo[index]
-                                        ['duration'] !=
-                                    null) {
-                              duration = widget.singleVideoModel
-                                  .dataOfVideo[index]['duration'];
+                              name = widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['title'];
                             }
                             var desc = "";
-                            if (mainDesc['Описание'] != "" &&
-                                mainDesc['Описание'] != null) {
-                              desc = mainDesc['Описание'];
+                            if (widget.singleVideoModel.dataOfVideo[
+                                    widget.singleVideoModel.dataOfVideo.length -
+                                        index -
+                                        1]['description'] !=
+                                null) {
+                              desc = widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['description'];
+                            }
+                            var imgLink = "";
+                            if (widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['img_id'] !=
+                                    "" &&
+                                widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['img_id'] !=
+                                    null) {
+                              imgLink =
+                                  "https://ouimg.koralex.fun/${widget.singleVideoModel.dataOfVideo[widget.singleVideoModel.dataOfVideo.length - index - 1]['img_id']}.png";
+                            }
+                            var duration = "";
+                            if (widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['duration'] !=
+                                    "" &&
+                                widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['duration'] !=
+                                    null) {
+                              duration = widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['duration'];
                             }
                             var videoLink = "";
-                            if (widget.singleVideoModel.dataOfVideo[index]
-                                        ['path'] !=
+                            if (widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['path'] !=
                                     "" &&
-                                widget.singleVideoModel.dataOfVideo[index]
-                                        ['path'] !=
+                                widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['path'] !=
                                     null) {
-                              if (kIsWeb) {
-                                videoLink =
-                                    "https://koralex.fun/news_api/buffer.php?type=video&link=${widget.singleVideoModel.dataOfVideo[index]['path']}";
-                              } else {
-                                videoLink = widget.singleVideoModel
-                                    .dataOfVideo[index]['path'];
-                              }
+                              videoLink = widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['path'];
+                            }
+                            var resolutions = [];
+                            if (widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['resolutions'] !=
+                                    null &&
+                                widget.singleVideoModel.dataOfVideo[widget
+                                            .singleVideoModel
+                                            .dataOfVideo
+                                            .length -
+                                        index -
+                                        1]['resolutions'] !=
+                                    "") {
+                              resolutions = widget.singleVideoModel.dataOfVideo[
+                                  widget.singleVideoModel.dataOfVideo.length -
+                                      index -
+                                      1]['resolutions'];
                             }
                             return InkWell(
                                 onTap: () {
@@ -430,6 +454,7 @@ class _SingleVideoWidgetState extends State<SingleVideoWidget>
                                         singleVideoModel: SingleVideoModel(
                                             id,
                                             widget.singleVideoModel.dataOfVideo,
+                                            resolutions,
                                             name,
                                             videoLink,
                                             duration,

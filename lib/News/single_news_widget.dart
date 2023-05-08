@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_university_rsvpu/News/single_news_model.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -222,9 +221,8 @@ class SingleNewsWidgetNew extends StatelessWidget {
                           child: CachedNetworkImage(
                             placeholder: (context, url) => const Image(
                                 image: AssetImage('images/Loading_icon.gif')),
-                            imageUrl: kIsWeb
-                                ? "https://koralex.fun/news_api/buffer.php?type=image&link=${singleNewsModelNew.content[index]["value"]}"
-                                : singleNewsModelNew.content[index]["value"],
+                            imageUrl: singleNewsModelNew.content[index]
+                                ["value"],
                             fit: BoxFit.cover,
                             width: double.maxFinite,
                             height: double.maxFinite,

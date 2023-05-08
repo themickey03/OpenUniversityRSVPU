@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
@@ -26,16 +26,9 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
   String _searchValue = '';
   void fetchDataPersons() async {
     try {
-      if (kIsWeb) {
-        setState(() {
-          _url =
-              "https://koralex.fun/news_api/buffer.php?type=json&link=http://api.bytezone.online/persons";
-        });
-      } else {
-        setState(() {
-          _url = 'http://api.bytezone.online/persons';
-        });
-      }
+      setState(() {
+        _url = 'https://ouapi.koralex.fun/persons?order=id';
+      });
       final response = await get(Uri.parse(_url));
       var jsonData = jsonDecode(response.body) as List;
       var prefs = await SharedPreferences.getInstance();
@@ -73,11 +66,19 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
       if (_searchValue != "") {
         _postsJsonFiltered.clear();
         for (int i = 0; i < _postsJson.length; i++) {
-          if (_postsJson[i]["name"]
+          if (_postsJson[i]["last_name"]
                   .toString()
                   .toLowerCase()
                   .contains(_searchValue.toLowerCase()) ||
-              _postsJson[i]["description"]["Должность"]
+              _postsJson[i]["middle_name"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(_searchValue.toLowerCase()) ||
+              _postsJson[i]["first_name"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(_searchValue.toLowerCase()) ||
+              _postsJson[i]["job_title"]
                   .toString()
                   .toLowerCase()
                   .contains(_searchValue.toLowerCase())) {
@@ -117,50 +118,107 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
             child: ListView.builder(
               itemCount: _postsJsonFiltered.length,
               itemBuilder: (context, index) {
-                var name = "";
-                if (_postsJsonFiltered[index]['name'] != "" &&
-                    _postsJsonFiltered[index]['name'] != null) {
-                  name = _postsJsonFiltered[index]['name'];
-                  name = name.replaceAll(r"\n", " ");
-                  name = name.replaceAll(r"/n", " ");
-                  name = name.toUpperCase();
+                var firstName = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['first_name'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['first_name'] !=
+                        "") {
+                  firstName =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['first_name'];
                 }
-                var mainDesc = <String, dynamic>{};
-                if (_postsJsonFiltered[index]['description'] != null) {
-                  mainDesc = _postsJsonFiltered[index]['description'];
+                var lastName = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['last_name'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['last_name'] !=
+                        "") {
+                  lastName =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['last_name'];
+                }
+                var middleName = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['middle_name'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['middle_name'] !=
+                        "") {
+                  middleName =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['middle_name'];
+                }
+                var imgLink = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['img_id'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['img_id'] !=
+                        "") {
+                  imgLink =
+                      "https://ouimg.koralex.fun/${_postsJsonFiltered[_postsJsonFiltered.length - index - 1]['img_id']}.png";
                 }
                 var jobTitle = "";
-                if (mainDesc['Должность'] != null &&
-                    mainDesc['Должность'] != "") {
-                  jobTitle = mainDesc['Должность'];
-                  jobTitle = jobTitle.replaceAll(r"/n", " ");
-                  jobTitle = jobTitle.replaceAll(r"\n", " ");
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['job_title'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['job_title'] !=
+                        "") {
+                  jobTitle =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['job_title'];
                 }
-
+                var academDegree = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['academ_degree'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['academ_degree'] !=
+                        "") {
+                  academDegree =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['academ_degree'];
+                }
+                var academTitle = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['academ_title'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['academ_title'] !=
+                        "") {
+                  academTitle =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['academ_title'];
+                }
+                var awards = "";
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['awards'] !=
+                        null &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['awards'] !=
+                        "") {
+                  awards =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['awards'];
+                }
                 var interview = "";
-                if (_postsJsonFiltered[index]['interview'] != "" &&
-                    _postsJsonFiltered[index]['interview'] != null) {
-                  interview = _postsJsonFiltered[index]['interview'];
+                if (_postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['interview'] !=
+                        "" &&
+                    _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                            ['interview'] !=
+                        null) {
+                  interview =
+                      _postsJsonFiltered[_postsJsonFiltered.length - index - 1]
+                          ['interview'];
                   String br = " ";
                   interview = interview.replaceAll(r"\n", br);
                 }
-                var imgLink = "";
-                if (_postsJsonFiltered[index]['img'] != "" &&
-                    _postsJsonFiltered[index]['img'] != null) {
-                  if (_postsJsonFiltered[index]['img']['id'] != "" &&
-                      _postsJsonFiltered[index]['img']['id'] != null) {
-                    if (_postsJsonFiltered[index]['img']['format'] != "" &&
-                        _postsJsonFiltered[index]['img']['format'] != null) {
-                      if (kIsWeb) {
-                        imgLink =
-                            "https://koralex.fun/news_api/buffer.php?type=image&link=http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
-                      } else {
-                        imgLink =
-                            "http://api.bytezone.online/imgs/${_postsJsonFiltered[index]["img"]["id"]}.${_postsJsonFiltered[index]["img"]["format"]}";
-                      }
-                    }
-                  }
-                }
+
                 return Card(
                   shadowColor: Colors.black,
                   elevation: 20,
@@ -169,7 +227,15 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SinglePersonWidget(
                               singlePersonModelNew: SinglePersonModelNew(
-                                  name, mainDesc, interview, imgLink))));
+                                  firstName,
+                                  middleName,
+                                  lastName,
+                                  jobTitle,
+                                  academDegree,
+                                  academTitle,
+                                  awards,
+                                  interview,
+                                  imgLink))));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -185,23 +251,51 @@ class _WithContactWidgetNewState extends State<ContactWidgetNew>
                           child: SizedBox(
                             width: 200,
                             height: 200,
-                            child: CachedNetworkImage(
-                              placeholder: (context, url) => const Image(
-                                  image: AssetImage('images/Loading_icon.gif')),
-                              imageUrl: imgLink,
-                              fit: BoxFit.contain,
-                              width: double.maxFinite,
-                              height: double.maxFinite,
-                              alignment: Alignment.topCenter,
-                              fadeInDuration: const Duration(milliseconds: 0),
-                              fadeOutDuration: const Duration(milliseconds: 0),
-                            ),
+                            child:
+                                Stack(alignment: Alignment.center, children: [
+                              Opacity(
+                                  opacity: 0.5,
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => const Image(
+                                        image: AssetImage(
+                                            'images/Loading_icon.gif')),
+                                    imageUrl: imgLink,
+                                    fit: BoxFit.contain,
+                                    width: double.maxFinite,
+                                    height: double.maxFinite,
+                                    alignment: Alignment.topCenter,
+                                    fadeInDuration:
+                                        const Duration(milliseconds: 0),
+                                    fadeOutDuration:
+                                        const Duration(milliseconds: 0),
+                                  )),
+                              ClipRect(
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => const Image(
+                                        image: AssetImage(
+                                            'images/Loading_icon.gif')),
+                                    imageUrl: imgLink,
+                                    fit: BoxFit.contain,
+                                    width: double.maxFinite,
+                                    height: double.maxFinite,
+                                    alignment: Alignment.topCenter,
+                                    fadeInDuration:
+                                        const Duration(milliseconds: 0),
+                                    fadeOutDuration:
+                                        const Duration(milliseconds: 0),
+                                  ),
+                                ),
+                              ),
+                            ]),
                           ),
                         ),
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            name,
+                            "$lastName $firstName $middleName",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -36,11 +35,9 @@ class _InterviewWidgetState extends State<InterviewWidget> {
         body: Center(
           child: ListView(
             children: [
-              kIsWeb
-                  ? HtmlWidget(widget.data)
-                  : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: HtmlWidget(widget.data))
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: HtmlWidget(widget.data))
             ],
           ),
         ),
