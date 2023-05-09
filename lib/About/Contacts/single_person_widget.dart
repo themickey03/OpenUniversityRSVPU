@@ -124,7 +124,7 @@ class SinglePersonWidget extends StatelessWidget {
                                     fontSize: 15), //apply style to all
                                 children: [
                                   const TextSpan(
-                                      text: "Ученая степерь:",
+                                      text: "Ученая степень:",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
                                   TextSpan(
