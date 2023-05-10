@@ -46,7 +46,7 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
   }
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     fetchDataNews();
   }

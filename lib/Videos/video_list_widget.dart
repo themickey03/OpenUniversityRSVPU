@@ -52,8 +52,8 @@ class _VideoListWidgetState extends State<VideoListWidget>
 
   @override
   void initState() {
-    fetchDataPersons();
     super.initState();
+    fetchDataPersons();
   }
 
   Future onRefresh() async {
