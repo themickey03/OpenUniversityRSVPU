@@ -70,6 +70,10 @@ class _WithNewsWidgetNewState extends State<NewsWidgetNew>
             _postsJson[i]["subtitle"]
                 .toString()
                 .toLowerCase()
+                .contains(_searchValue.toLowerCase()) ||
+            _postsJson[i]["news_tags"]
+                .toString()
+                .toLowerCase()
                 .contains(_searchValue.toLowerCase())) {
           _postsJsonFiltered.add(_postsJson[i]);
         }

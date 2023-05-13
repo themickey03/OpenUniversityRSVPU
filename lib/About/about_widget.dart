@@ -91,11 +91,11 @@ class _AboutWidgetState extends State<AboutWidget> {
                 child: Column(
                   children: const [
                     ListTile(
-                      title: Text("Подробнее о проекте"),
-                      leading: Icon(Icons.text_snippet),
-                      visualDensity:
-                          VisualDensity(vertical: -4, horizontal: -4),
-                    ),
+                        title: Text("Подробнее о проекте"),
+                        leading: Icon(Icons.text_snippet),
+                        visualDensity:
+                            VisualDensity(vertical: -4, horizontal: -4),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 15.0)),
                   ],
                 )),
             const Divider(),
@@ -111,6 +111,7 @@ class _AboutWidgetState extends State<AboutWidget> {
                       leading: Icon(Icons.people),
                       visualDensity:
                           VisualDensity(vertical: -4, horizontal: -4),
+                      trailing: Icon(Icons.arrow_forward_ios, size: 15.0),
                     ),
                   ],
                 )),
