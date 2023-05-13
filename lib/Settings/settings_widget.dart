@@ -7,6 +7,7 @@ import 'package:open_university_rsvpu/Tech/rsvpu_icon_class_icons.dart';
 import 'package:open_university_rsvpu/Tech/ThemeProvider/model_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({super.key});
@@ -17,6 +18,9 @@ class SettingsWidget extends StatefulWidget {
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   var _isVideoWatchedSaving = true;
+  var _newsSubscription = true;
+  var _videoSubscription = true;
+  var _notificationEnabled = true;
   var _preffedScreenForOpen = 0;
 
   String _versionNumber = "9.9.9";
@@ -29,11 +33,38 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     });
   }
 
+  void getUserTagsFromOneSignal() {
+    OneSignal.shared.getTags().then((tags) {
+      if (tags['video'] == "True"){
+        setState(() {
+          _videoSubscription = true;
+        });
+      }
+      else{
+        setState(() {
+          _videoSubscription = false;
+        });
+      }
+      if (tags['news'] == "True"){
+        setState(() {
+          _newsSubscription = true;
+        });
+      }
+      else{
+        setState(() {
+          _newsSubscription = false;
+        });
+      }
+      setSettings("videoSubscription", _videoSubscription);
+      setSettings("newsSubscription", _newsSubscription);
+    });
+  }
   @override
   void initState() {
     super.initState();
     getSettings();
     getVersion();
+    getUserTagsFromOneSignal();
   }
 
   void getSettings() async {
@@ -48,6 +79,16 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         _isVideoWatchedSaving = prefs.getBool("VideoWatchedSaving")!;
       } else {
         prefs.setBool("VideoWatchedSaving", true);
+      }
+      if (prefs.getBool("newsSubscription") != null) {
+        _newsSubscription = prefs.getBool("newsSubscription")!;
+      } else {
+        prefs.setBool("newsSubscription", true);
+      }
+      if (prefs.getBool("videoSubscription") != null) {
+        _videoSubscription = prefs.getBool("videoSubscription")!;
+      } else {
+        prefs.setBool("videoSubscription", true);
       }
     });
   }
@@ -391,6 +432,128 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 ),
               ),
               const Divider(),
+              const Padding(
+                padding: EdgeInsets.only(
+                    top: 15.0, left: 10.0, right: 5.0, bottom: 5.0),
+                child: Text(
+                  "Уведомления",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
+              ),
+              const Divider(),
+              SwitchListTile(
+                visualDensity:
+                const VisualDensity(horizontal: -4, vertical: -4),
+                title: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Icon(_notificationEnabled
+                          ? Icons.notifications
+                          : Icons.notifications_off),
+                    ),
+                    const Expanded(
+                        child: Text("Все уведомления",
+                            style: TextStyle(fontSize: 16))),
+                  ],
+                ),
+                value: _notificationEnabled,
+                onChanged: (bool value) {
+                  if (_notificationEnabled){
+                    setState(() {
+                      _notificationEnabled = false;
+                      setSettings("notificationsEnabled", true);
+                      setSettings("videoSubscription", false);
+                      _videoSubscription = false;
+                      setSettings("newsSubscription", false);
+                      _newsSubscription = false;
+                      OneSignal.shared.sendTag("news", "False");
+                      OneSignal.shared.sendTag("video", "False");
+                      OneSignal.shared.disablePush(true);
+                    });
+                  }
+                  else{
+                    setState(() {
+                      _notificationEnabled = true;
+                      setSettings("notificationsEnabled", false);
+                      setSettings("videoSubscription", true);
+                      _videoSubscription = true;
+                      setSettings("newsSubscription", true);
+                      _newsSubscription = true;
+                      OneSignal.shared.sendTag("news", "True");
+                      OneSignal.shared.sendTag("video", "True");
+                      OneSignal.shared.disablePush(false);
+                    });
+                  }
+                },
+              ),
+              const Divider(),
+              SwitchListTile(
+                visualDensity:
+                const VisualDensity(horizontal: -4, vertical: -4),
+                title: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Icon(Icons.newspaper),
+                    ),
+                    Expanded(
+                        child: Text("Свежая новость",
+                            style: TextStyle(fontSize: 16))),
+                  ],
+                ),
+                value: _newsSubscription,
+                onChanged: (bool value) {
+                  if (_newsSubscription){
+                    setState(() {
+                      _newsSubscription = false;
+                      setSettings("newsSubscription", false);
+                      OneSignal.shared.sendTag("news", "False");
+                    });
+                  }
+                  else{
+                    setState(() {
+                      _newsSubscription = true;
+                      setSettings("newsSubscription", true);
+                      OneSignal.shared.sendTag("news", "True");
+                    });
+                  }
+                },
+              ),
+              const Divider(),
+              SwitchListTile(
+                visualDensity:
+                const VisualDensity(horizontal: -4, vertical: -4),
+                title: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Icon(Icons.videocam),
+                    ),
+                    Expanded(
+                        child: Text("Новые видео",
+                            style: TextStyle(fontSize: 16))),
+                  ],
+                ),
+                value: _videoSubscription,
+                onChanged: (bool value) {
+                  if (_videoSubscription){
+                    setState(() {
+                      _videoSubscription = false;
+                      setSettings("videoSubscription", false);
+                      OneSignal.shared.sendTag("video", "False");
+                    });
+                  }
+                  else{
+                    setState(() {
+                      _videoSubscription = true;
+                      setSettings("videoSubscription", true);
+                      OneSignal.shared.sendTag("video", "True");
+                    });
+                  }
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 30.0, top: 15.0),
                 child: Align(
