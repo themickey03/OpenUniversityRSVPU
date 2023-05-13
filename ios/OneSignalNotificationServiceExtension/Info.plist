@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>OneSignal_app_groups_key</key>
-	<string>com.mickey.openuniversityrsvpu.onesignal</string>
+	<string>group.com.mickey.openuniversityrsvpu.onesignal</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

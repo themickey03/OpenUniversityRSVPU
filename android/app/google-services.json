@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "947157668178",
+    "project_id": "rsvpuopenuniversity",
+    "storage_bucket": "rsvpuopenuniversity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947157668178:android:efd5a06452960416ceaa8b",
+        "android_client_info": {
+          "package_name": "com.mickey.open_university_rsvpu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947157668178-pfcidun9388mq41u40m2nbjal2kbii42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWZYD9bUHaaS9ux0_oZljCGEaCRklAbIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947157668178-pfcidun9388mq41u40m2nbjal2kbii42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947157668178:android:6456e7100fb9327eceaa8b",
+        "android_client_info": {
+          "package_name": "com.mickey.rsvpuOpenUniversity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947157668178-pfcidun9388mq41u40m2nbjal2kbii42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWZYD9bUHaaS9ux0_oZljCGEaCRklAbIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947157668178-pfcidun9388mq41u40m2nbjal2kbii42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
