@@ -8,13 +8,12 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   OneSignal.shared.setAppId("52934883-8034-4dea-a064-27bf09bfd328");
   OneSignal.shared.getTags().then((tags) {
-    if (!tags.containsKey("video")){
+    if (!tags.containsKey("video")) {
       OneSignal.shared.sendTag("video", "True");
     }
-    if (!tags.containsKey("news")){
+    if (!tags.containsKey("news")) {
       OneSignal.shared.sendTag("news", "True");
     }
   });

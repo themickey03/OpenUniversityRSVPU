@@ -20,7 +20,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   var _isVideoWatchedSaving = true;
   var _newsSubscription = true;
   var _videoSubscription = true;
-  var _notificationEnabled = true;
   var _preffedScreenForOpen = 0;
 
   String _versionNumber = "9.9.9";
@@ -35,22 +34,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   void getUserTagsFromOneSignal() {
     OneSignal.shared.getTags().then((tags) {
-      if (tags['video'] == "True"){
+      if (tags['video'] == "True") {
         setState(() {
           _videoSubscription = true;
         });
-      }
-      else{
+      } else {
         setState(() {
           _videoSubscription = false;
         });
       }
-      if (tags['news'] == "True"){
+      if (tags['news'] == "True") {
         setState(() {
           _newsSubscription = true;
         });
-      }
-      else{
+      } else {
         setState(() {
           _newsSubscription = false;
         });
@@ -59,6 +56,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       setSettings("newsSubscription", _newsSubscription);
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -444,54 +442,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               const Divider(),
               SwitchListTile(
                 visualDensity:
-                const VisualDensity(horizontal: -4, vertical: -4),
-                title: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Icon(_notificationEnabled
-                          ? Icons.notifications
-                          : Icons.notifications_off),
-                    ),
-                    const Expanded(
-                        child: Text("Все уведомления",
-                            style: TextStyle(fontSize: 16))),
-                  ],
-                ),
-                value: _notificationEnabled,
-                onChanged: (bool value) {
-                  if (_notificationEnabled){
-                    setState(() {
-                      _notificationEnabled = false;
-                      setSettings("notificationsEnabled", true);
-                      setSettings("videoSubscription", false);
-                      _videoSubscription = false;
-                      setSettings("newsSubscription", false);
-                      _newsSubscription = false;
-                      OneSignal.shared.sendTag("news", "False");
-                      OneSignal.shared.sendTag("video", "False");
-                      OneSignal.shared.disablePush(true);
-                    });
-                  }
-                  else{
-                    setState(() {
-                      _notificationEnabled = true;
-                      setSettings("notificationsEnabled", false);
-                      setSettings("videoSubscription", true);
-                      _videoSubscription = true;
-                      setSettings("newsSubscription", true);
-                      _newsSubscription = true;
-                      OneSignal.shared.sendTag("news", "True");
-                      OneSignal.shared.sendTag("video", "True");
-                      OneSignal.shared.disablePush(false);
-                    });
-                  }
-                },
-              ),
-              const Divider(),
-              SwitchListTile(
-                visualDensity:
-                const VisualDensity(horizontal: -4, vertical: -4),
+                    const VisualDensity(horizontal: -4, vertical: -4),
                 title: Row(
                   children: const [
                     Padding(
@@ -499,20 +450,19 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       child: Icon(Icons.newspaper),
                     ),
                     Expanded(
-                        child: Text("Свежая новость",
+                        child: Text("Свежие новости",
                             style: TextStyle(fontSize: 16))),
                   ],
                 ),
                 value: _newsSubscription,
                 onChanged: (bool value) {
-                  if (_newsSubscription){
+                  if (_newsSubscription) {
                     setState(() {
                       _newsSubscription = false;
                       setSettings("newsSubscription", false);
                       OneSignal.shared.sendTag("news", "False");
                     });
-                  }
-                  else{
+                  } else {
                     setState(() {
                       _newsSubscription = true;
                       setSettings("newsSubscription", true);
@@ -524,7 +474,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               const Divider(),
               SwitchListTile(
                 visualDensity:
-                const VisualDensity(horizontal: -4, vertical: -4),
+                    const VisualDensity(horizontal: -4, vertical: -4),
                 title: Row(
                   children: const [
                     Padding(
@@ -538,14 +488,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 ),
                 value: _videoSubscription,
                 onChanged: (bool value) {
-                  if (_videoSubscription){
+                  if (_videoSubscription) {
                     setState(() {
                       _videoSubscription = false;
                       setSettings("videoSubscription", false);
                       OneSignal.shared.sendTag("video", "False");
                     });
-                  }
-                  else{
+                  } else {
                     setState(() {
                       _videoSubscription = true;
                       setSettings("videoSubscription", true);
@@ -554,6 +503,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   }
                 },
               ),
+              const Divider(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 30.0, top: 15.0),
                 child: Align(
